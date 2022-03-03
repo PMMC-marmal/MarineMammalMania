@@ -3,6 +3,8 @@ package com.pmmc.app.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 
 
@@ -12,22 +14,26 @@ import com.pmmc.app.GameLauncher;
 
 public class MainMenuScreen extends Menu {
 
-    private final Texture continueButton;
-    private final Texture continueButtonActive;
-    private final Texture newGameButton;
-    private final Texture newGameButtonActive;
-    private final Texture background;
+    private Sprite continueButton,
+            continueButtonActive,
+            newGameButton,
+            newGameButtonActive,
+            background;
 
     private static final int BUTTON_WIDTH = Gdx.graphics.getWidth()/4;
     private static final int BUTTON_HEIGHT = Gdx.graphics.getHeight()/12;
 
     public MainMenuScreen(final GameLauncher game){
         super(game);
-        this.continueButton = new Texture("continue_button.png");
-        this.continueButtonActive = new Texture("continue_button_active.png");
-        this.newGameButton = new Texture("new_game_button.png");
-        this.newGameButtonActive = new Texture("new_game_button_active.png");
-        this.background = new Texture("mainmenu_background.png");
+    }
+
+    @Override
+    public void show(){
+        this.continueButton = new Sprite(AssetHandler.assetManager.get(AssetHandler.continueButton, Texture.class));
+        this.continueButtonActive = new Sprite(AssetHandler.assetManager.get(AssetHandler.continueButtonActive, Texture.class));
+        this.newGameButton = new Sprite(AssetHandler.assetManager.get(AssetHandler.newGameButton, Texture.class));
+        this.newGameButtonActive = new Sprite(AssetHandler.assetManager.get(AssetHandler.newGameButtonActive, Texture.class));
+        this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.mainMenuBackground, Texture.class));
     }
 
     @Override

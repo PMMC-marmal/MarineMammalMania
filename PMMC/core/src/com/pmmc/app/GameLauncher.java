@@ -18,6 +18,10 @@ public class GameLauncher extends Game {
 		this.levelMenuScreen = new LevelMenuScreen(this);
 		this.batch = new SpriteBatch();
 
+		// Load assets
+		AssetHandler.load();
+		AssetHandler.assetManager.finishLoading();
+
 		this.setScreen(mainMenuScreen);
 	}
 
@@ -29,5 +33,7 @@ public class GameLauncher extends Game {
 	@Override
 	public void dispose () {
 		mainMenuScreen.dispose();
+		levelMenuScreen.dispose();
+		AssetHandler.dispose();
 	}
 }
