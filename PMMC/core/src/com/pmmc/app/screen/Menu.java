@@ -3,6 +3,7 @@ package com.pmmc.app.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pmmc.app.GameLauncher;
@@ -30,7 +31,7 @@ public abstract class Menu extends AbstractScreen {
         stage.setViewport(viewPort);
     }
 
-    public void renderBackground(Texture background){
+    public void renderBackground(Sprite background){
         stage.act();
         stage.getBatch().begin();
         stage.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -38,7 +39,7 @@ public abstract class Menu extends AbstractScreen {
         stage.draw();
     }
 
-    public boolean displayButton(Texture button, Texture buttonActive, float x, float y, float buttonWidth, float buttonHeight){
+    public boolean displayButton(Sprite button, Sprite buttonActive, float x, float y, float buttonWidth, float buttonHeight){
         // Input coordinate system is flipped from the graphical coordinate system, must flip the y to match
         float yConverted = Gdx.graphics.getHeight() - y - buttonHeight;
 
@@ -56,7 +57,7 @@ public abstract class Menu extends AbstractScreen {
         return false;
     }
 
-    public boolean displayButton(Texture button, float x, float y, float buttonWidth, float buttonHeight){
+    public boolean displayButton(Sprite button, float x, float y, float buttonWidth, float buttonHeight){
         // Input coordinate system is flipped from the graphical coordinate system, must flip the y to match
         float yConverted = Gdx.graphics.getHeight() - y - buttonHeight;
 

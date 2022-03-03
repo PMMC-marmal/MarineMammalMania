@@ -2,6 +2,8 @@ package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 
 /**
@@ -9,24 +11,22 @@ import com.pmmc.app.GameLauncher;
  */
 public class LevelMenuScreen extends Menu {
 
-    private final Texture seaLionButton;
-    private final Texture seaLionButtonActive;
-    private final Texture dolphinButton;
-    private final Texture dolphinButtonActive;
-    private final Texture killerWhaleButton;
-    private final Texture killerWhaleButtonActive;
-    private final Texture blueWhaleButton;
-    private final Texture blueWhaleButtonActive;
-    private final Texture polarBearButton;
-    private final Texture polarBearButtonActive;
-    private final Texture background;
-    private final Texture backArrow;
-
-    private final Texture seaLionTexture;
-    private final Texture dolphinTexture;
-    private final Texture killerWhaleTexture;
-    private final Texture blueWhaleTexture;
-    private final Texture polarBearTexture;
+    private Sprite seaLionButton,
+                    seaLionButtonActive,
+                    dolphinButton,
+                    dolphinButtonActive,
+                    killerWhaleButton,
+                    killerWhaleButtonActive,
+                    blueWhaleButton,
+                    blueWhaleButtonActive, polarBearButton,
+                    polarBearButtonActive,
+                    background,
+                    backArrow,
+                    seaLionSprite,
+                    dolphinSprite,
+                    killerWhaleSprite,
+                    blueWhaleSprite,
+                    polarBearSprite;
 
     private final float BUTTON_WIDTH = Gdx.graphics.getWidth() * 0.8f;
     private final float BUTTON_HEIGHT = Gdx.graphics.getHeight() * 0.15f;
@@ -34,24 +34,30 @@ public class LevelMenuScreen extends Menu {
 
     public LevelMenuScreen(GameLauncher game){
         super(game);
-        this.seaLionButton = new Texture("sea_lion_button.png");
-        this.seaLionButtonActive = new Texture("sea_lion_button_active.png");
-        this.dolphinButton = new Texture("dolphin_button.png");
-        this.dolphinButtonActive = new Texture("dolphin_button_active.png");
-        this.killerWhaleButton = new Texture("killer_whale_button.png");
-        this.killerWhaleButtonActive = new Texture("killer_whale_button_active.png");
-        this.blueWhaleButton = new Texture("blue_whale_button.png");
-        this.blueWhaleButtonActive = new Texture("blue_whale_button_active.png");
-        this.polarBearButton = new Texture("polar_bear_button.png");
-        this.polarBearButtonActive = new Texture("polar_bear_button_active.png");
-        this.background = new Texture("level_select_background.png");
-        this.backArrow = new Texture("back_arrow.png");
+    }
 
-        this.seaLionTexture = new Texture("sea_lion.png");
-        this.dolphinTexture = new Texture("dolphin.png");
-        this.killerWhaleTexture = new Texture("killer_whale.png");
-        this.blueWhaleTexture = new Texture("blue_whale.png");
-        this.polarBearTexture = new Texture("polar_bear.png");
+    @Override
+    public void show(){
+        // Buttons
+        this.seaLionButton = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionButton, Texture.class));
+        this.seaLionButtonActive = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionButtonActive, Texture.class));
+        this.dolphinButton = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinButton, Texture.class));
+        this.dolphinButtonActive = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinButtonActive, Texture.class));
+        this.killerWhaleButton = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleButton, Texture.class));
+        this.killerWhaleButtonActive = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleButtonActive, Texture.class));
+        this.blueWhaleButton = new Sprite(AssetHandler.assetManager.get(AssetHandler.blueWhaleButton, Texture.class));
+        this.blueWhaleButtonActive = new Sprite(AssetHandler.assetManager.get(AssetHandler.blueWhaleButtonActive, Texture.class));
+        this.polarBearButton = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarBearButton, Texture.class));
+        this.polarBearButtonActive = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarBearButtonActive, Texture.class));
+        this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.levelMenuBackground, Texture.class));
+        this.backArrow = new Sprite(AssetHandler.assetManager.get(AssetHandler.backArrow, Texture.class));
+
+        // Characters
+        this.seaLionSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
+        this.dolphinSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinSprite, Texture.class));
+        this.killerWhaleSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class));
+        this.blueWhaleSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.blueWhaleSprite, Texture.class));
+        this.polarBearSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarBearSprite, Texture.class));
     }
 
     @Override
@@ -80,35 +86,35 @@ public class LevelMenuScreen extends Menu {
         displayButton(polarBearButton, polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING*4, BUTTON_WIDTH, BUTTON_HEIGHT);
 
         // Draw characters on screen
-        game.batch.draw(seaLionTexture,
+        game.batch.draw(seaLionSprite,
                 Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/5f,
                 Gdx.graphics.getHeight() - BUTTON_SPACING*1.5f,
                 Gdx.graphics.getWidth()/5f,
                 Gdx.graphics.getHeight()/6f
         );
 
-        game.batch.draw(dolphinTexture,
+        game.batch.draw(dolphinSprite,
                 0,
                 Gdx.graphics.getHeight() - (BUTTON_HEIGHT*2) - BUTTON_SPACING,
                 Gdx.graphics.getWidth()/6f,
                 Gdx.graphics.getHeight()/4f
         );
 
-        game.batch.draw(killerWhaleTexture,
+        game.batch.draw(killerWhaleSprite,
                 Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/6f,
                 Gdx.graphics.getHeight() - (BUTTON_HEIGHT*3) - (BUTTON_SPACING*2),
                 Gdx.graphics.getWidth()/5f,
                 Gdx.graphics.getHeight()/3f
         );
 
-        game.batch.draw(blueWhaleTexture,
+        game.batch.draw(blueWhaleSprite,
                 0 - Gdx.graphics.getWidth()/4f,
                 BUTTON_HEIGHT*1.25f,
                 Gdx.graphics.getWidth()/2f,
                 Gdx.graphics.getHeight()/2f
         );
 
-        game.batch.draw(polarBearTexture,
+        game.batch.draw(polarBearSprite,
                 Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/4f,
                 Gdx.graphics.getHeight()/20f,
                 Gdx.graphics.getWidth()/6f,
