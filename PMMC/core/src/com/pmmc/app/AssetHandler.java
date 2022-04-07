@@ -30,8 +30,9 @@ public class AssetHandler {
             dolphinSprite = "dolphin.png",
             killerWhaleSprite = "killer_whale.png",
             blueWhaleSprite = "blue_whale.png",
-            polarBearSprite = "polar_bear.png";
+            polarBearSprite = "polar_bear.png",
 
+            testbear = "bear-1.png";
 
 
     public static void load(){
@@ -58,6 +59,8 @@ public class AssetHandler {
         assetManager.load(killerWhaleSprite, Texture.class);
         assetManager.load(blueWhaleSprite, Texture.class);
         assetManager.load(polarBearSprite, Texture.class);
+
+        assetManager.load(testbear, Texture.class);
     }
 
     public static void dispose(){
