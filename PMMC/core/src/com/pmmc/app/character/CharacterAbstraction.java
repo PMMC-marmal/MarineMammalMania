@@ -56,4 +56,8 @@ public abstract class CharacterAbstraction extends Sprite {
     public void setStillImage(String path){
         this.stillImage = new Texture(path);
     }
+
+
+
+
 }

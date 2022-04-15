@@ -4,18 +4,22 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pmmc.app.screen.LevelMenuScreen;
 import com.pmmc.app.screen.MainMenuScreen;
+import com.pmmc.app.screen.PolarBearLevel;
 
 public class GameLauncher extends Game {
 
 	private MainMenuScreen mainMenuScreen;
 	private LevelMenuScreen levelMenuScreen;
+	private PolarBearLevel polarBearLevel;
 
 	public SpriteBatch batch;
+
 
 	@Override
 	public void create () {
 		this.mainMenuScreen = new MainMenuScreen(this);
 		this.levelMenuScreen = new LevelMenuScreen(this);
+		this.polarBearLevel = new PolarBearLevel(this);
 		this.batch = new SpriteBatch();
 
 		// Load assets
@@ -34,6 +38,7 @@ public class GameLauncher extends Game {
 	public void dispose () {
 		mainMenuScreen.dispose();
 		levelMenuScreen.dispose();
+		polarBearLevel.dispose();
 		AssetHandler.dispose();
 	}
 }
