@@ -79,11 +79,16 @@ public class LevelMenuScreen extends Menu {
             game.setScreen(new MainMenuScreen(game));
         }
 
+
         displayButton(seaLionButton, seaLionButtonActive, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT);
         displayButton(dolphinButton, dolphinButtonActive, x, y_sea_lion - BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT);
         displayButton(killerWhaleButton, killerWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING*2, BUTTON_WIDTH, BUTTON_HEIGHT);
         displayButton(blueWhaleButton, blueWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING*3, BUTTON_WIDTH, BUTTON_HEIGHT);
-        displayButton(polarBearButton, polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING*4, BUTTON_WIDTH, BUTTON_HEIGHT);
+        if(displayButton(polarBearButton, polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING*4, BUTTON_WIDTH, BUTTON_HEIGHT)){
+            game.setScreen(new PolarBearLevel(game));
+        }
+
+        // Continue Button: If clicked, proceed to LevelSelectScreen
 
         // Draw characters on screen
         game.batch.draw(seaLionSprite,

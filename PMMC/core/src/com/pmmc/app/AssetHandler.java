@@ -30,7 +30,15 @@ public class AssetHandler {
             dolphinSprite = "dolphin.png",
             killerWhaleSprite = "killer_whale.png",
             blueWhaleSprite = "blue_whale.png",
-            polarBearSprite = "polar_bear.png";
+            polarBearSprite = "polar_bear.png",
+    //polarbear
+//            waterWithSand = "water-with-sand.png",
+            waterWithSand = "ocean-2.png",
+            icebergAddon = "iceberg-top.png",
+
+    iceberg2 = "iceberg2.png";
+            //Iceberge3 = "iceberge3.png",
+            //Iceberge4 = "iceberge4.png";
 
 
 
@@ -58,6 +66,9 @@ public class AssetHandler {
         assetManager.load(killerWhaleSprite, Texture.class);
         assetManager.load(blueWhaleSprite, Texture.class);
         assetManager.load(polarBearSprite, Texture.class);
+        assetManager.load(waterWithSand,Texture.class);
+        assetManager.load(iceberg2,Texture.class);
+        assetManager.load(icebergAddon, Texture.class);
     }
 
     public static void dispose(){
