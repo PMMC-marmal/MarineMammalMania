@@ -11,14 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
+import com.pmmc.app.character.PolarBear;
 
 public class TestScreen extends Menu{
-    private Sprite bear;
-    float bear_speed = 1.0f;
-    float bear_x = 100;
-    float bear_y = 0;
-    int currentFrame = 1;
-    int MAX_FRAMES = 64;
+    private PolarBear bear;
+    // the different frames of the animation
     TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("PolarBearWalkingSpriteSheet.atlas"));
 
     public TestScreen(final GameLauncher game){
@@ -27,9 +24,10 @@ public class TestScreen extends Menu{
 
     @Override
     public void show(){
+        // gets the first frame of the animation
         TextureRegion textureRegion = textureAtlas.findRegion("1");
-        bear = new Sprite(textureRegion);
-        bear.setPosition(bear_x, bear_y);
+        bear = new PolarBear(new Sprite(textureRegion), textureAtlas);
+        bear.setPosition(bear.getX_position(), bear.getY_position());
     }
 
     @Override
@@ -42,16 +40,16 @@ public class TestScreen extends Menu{
 
         // get user key inputs
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            updateFrame(false,false);
+            bear.updateFrame(false,false);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            updateFrame(false,true);
+            bear.updateFrame(false,true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            updateFrame(true,false);
+            bear.updateFrame(true,false);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            updateFrame(true, true);
+            bear.updateFrame(true, true);
         }
 
         // get user touch/mouse inputs
@@ -60,46 +58,22 @@ public class TestScreen extends Menu{
             float yTouchPixels = Gdx.input.getY();
             // move up
             if(yTouchPixels < 2*Gdx.graphics.getHeight()/3)
-                updateFrame(false,false);
+                bear.updateFrame(false,false);
             // move down
             if(yTouchPixels > Gdx.graphics.getHeight()/3)
-                updateFrame(false,true);
+                bear.updateFrame(false,true);
             // move right
             if(xTouchPixels > Gdx.graphics.getWidth()/2)
-                updateFrame(true,false);
+                bear.updateFrame(true,false);
             //move left
             if(xTouchPixels < Gdx.graphics.getWidth()/2)
-                updateFrame(true,true);
+                bear.updateFrame(true,true);
         }
 
-        bear.setPosition(bear_x, bear_y);
+        bear.setPosition(bear.getX_position(), bear.getY_position());
         bear.draw(game.batch);
 
         game.batch.end();
     }
-
-    private void updateFrame(boolean horizontal, boolean flip){
-        currentFrame++;
-        if(currentFrame >= MAX_FRAMES){
-            currentFrame = 1;
-        }
-        bear.setRegion(textureAtlas.findRegion(Integer.toString(currentFrame/16+1)));
-
-        if(horizontal)
-            if(flip){
-                bear.flip(true,false);
-                bear_x-=Gdx.graphics.getDeltaTime()+bear_speed;
-            }
-            else{
-                bear_x+=Gdx.graphics.getDeltaTime()+bear_speed;
-            }
-        else{
-            if(flip){
-                bear_y-=Gdx.graphics.getDeltaTime()+bear_speed;
-            }
-            else{
-                bear_y+=Gdx.graphics.getDeltaTime()+bear_speed;
-            }
-        }
-    }
 }
+
