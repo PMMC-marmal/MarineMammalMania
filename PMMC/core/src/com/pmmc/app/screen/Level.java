@@ -2,6 +2,7 @@ package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -37,12 +38,14 @@ public abstract class Level extends AbstractScreen {
     public void renderBackground(Sprite background){
         stage.act();
         stage.getBatch().begin();
+
         generateBackground(background);
         Sprite icebergBackground = new Sprite(AssetHandler.assetManager.get(AssetHandler.icebergAddon, Texture.class));;
         stage.getBatch().draw(icebergBackground, 0, Gdx.graphics.getHeight()/2 - 200, spacing * 4, Gdx.graphics.getHeight()/2);
         stage.getBatch().end();
         stage.draw();
     }
+
 
     public void generateBackground(Sprite background){
 

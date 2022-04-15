@@ -1,9 +1,14 @@
 package com.pmmc.app.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public abstract class CharacterAbstraction extends Sprite {
+
+    private final int MAX_FRAMES = 64;
 
     private float speed;
     private int health;
@@ -11,19 +16,28 @@ public abstract class CharacterAbstraction extends Sprite {
     private int hunger;
     private int toxicity;
     private final int maxLevels;
+    private int currentFrame;
+    private float x_position;
+    private float y_position;
 
-    private Texture stillImage;
+    public Sprite character;
+    // manages the sprites in a sprite sheet
+    private TextureAtlas textureAtlas;
 
 
-    public CharacterAbstraction(Sprite character, String stillImagePath){
+
+    public CharacterAbstraction(Sprite character, TextureAtlas textureAtlas){
         super(character);
-        speed = 50.0f;
+        this.character = character;
+        speed = 3.0f;
         health = 5;
         air = 5;
         hunger = 5;
         toxicity = 0;
         maxLevels = 5;
-        stillImage = new Texture(stillImagePath);
+        x_position = 0;
+        y_position = 0;
+        this.textureAtlas = textureAtlas;
     }
 
     public int getHealth() {
@@ -53,11 +67,37 @@ public abstract class CharacterAbstraction extends Sprite {
     public void setSpeed(float speed){
         if (speed >= 0){this.speed = speed;}
     }
-    public void setStillImage(String path){
-        this.stillImage = new Texture(path);
+    public void setTextureAtlas(TextureAtlas textureAtlas){this.textureAtlas = textureAtlas;}
+    public void setX_position(float x_position){this.x_position = x_position;}
+    public void setY_position(float y_position){this.y_position = y_position;}
+    public float getX_position(){return x_position;}
+    public float getY_position(){return y_position;}
+    public void updateFrame(boolean horizontal, boolean flip){
+        currentFrame++;
+        if(currentFrame >= MAX_FRAMES){
+            currentFrame = 1;
+        }
+        character.setRegion(textureAtlas.findRegion(Integer.toString(currentFrame/16+1)));
+
+        if(horizontal) {
+            if (flip) {
+                character.flip(true, false);
+                x_position -= Gdx.graphics.getDeltaTime() + speed;
+            } else {
+                x_position += Gdx.graphics.getDeltaTime() + speed;
+            }
+        }
+        else{
+            if(flip){
+                y_position-=Gdx.graphics.getDeltaTime()+speed;
+            }
+            else{
+                y_position+=Gdx.graphics.getDeltaTime()+speed;
+            }
+        }
     }
 
-
-
+    public void setPosition(float x, float y){character.setPosition(x,y);}
+    public void draw(SpriteBatch batch){character.draw(batch);}
 
 }
