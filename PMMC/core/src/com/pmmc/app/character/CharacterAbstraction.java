@@ -99,4 +99,5 @@ public abstract class CharacterAbstraction extends Sprite {
 
     public void setPosition(float x, float y){character.setPosition(x,y);}
     public void draw(SpriteBatch batch){character.draw(batch);}
+
 }
