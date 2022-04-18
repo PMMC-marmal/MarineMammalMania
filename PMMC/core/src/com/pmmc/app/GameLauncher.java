@@ -8,7 +8,7 @@ import com.pmmc.app.screen.TestLevel;
 import com.pmmc.app.screen.TestScreen;
 
 import com.pmmc.app.screen.PolarBearLevel;
- main
+
 
 public class GameLauncher extends Game {
 
@@ -34,7 +34,7 @@ public class GameLauncher extends Game {
 		AssetHandler.load();
 		AssetHandler.assetManager.finishLoading();
 
-		this.setScreen(testScreen);
+		this.setScreen(mainMenuScreen);
 	}
 
 	@Override

@@ -40,8 +40,8 @@ public abstract class Level extends AbstractScreen {
         stage.getBatch().begin();
 
         generateBackground(background);
-        Sprite icebergBackground = new Sprite(AssetHandler.assetManager.get(AssetHandler.icebergAddon, Texture.class));;
-        stage.getBatch().draw(icebergBackground, 0, Gdx.graphics.getHeight()/2 - 200, spacing * 4, Gdx.graphics.getHeight()/2);
+//        Sprite icebergBackground = new Sprite(AssetHandler.assetManager.get(AssetHandler.icebergAddon, Texture.class));;
+//        stage.getBatch().draw(icebergBackground, 0, Gdx.graphics.getHeight()/2 - 200, spacing * 4, Gdx.graphics.getHeight()/2);
         stage.getBatch().end();
         stage.draw();
     }
