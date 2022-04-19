@@ -34,7 +34,7 @@ public class GameLauncher extends Game {
 		AssetHandler.load();
 		AssetHandler.assetManager.finishLoading();
 
-		this.setScreen(testLevel);
+		this.setScreen(testScreen);
 	}
 
 	@Override

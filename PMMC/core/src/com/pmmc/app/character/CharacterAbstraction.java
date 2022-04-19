@@ -52,6 +52,9 @@ public abstract class CharacterAbstraction extends Sprite {
     public int getToxicity() {
         return toxicity;
     }
+    public float getSpeed(){
+        return speed;
+    }
     public void setHealth(int health) {
         if (health <= maxLevels && health >= 0){this.health = health;}
     }
