@@ -20,8 +20,7 @@ import com.pmmc.app.character.PolarBear;
 public class PolarBearLevel extends Level {
     private PolarBear bear;
     TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("PolarBearWalkingSpriteSheet.atlas"));
-    private Sprite polarBear,
-            background,
+    private Sprite background,
             iceberg2,iceberg3,iceberg4;
 
 
@@ -36,7 +35,8 @@ public class PolarBearLevel extends Level {
     public void show(){
         TextureRegion textureRegion = textureAtlas.findRegion("1");
         bear = new PolarBear(new Sprite(textureRegion), textureAtlas);
-        bear.setPosition(bear.getX_position(), bear.getY_position());        this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
+        bear.setPosition(bear.getX_position(), bear.getY_position());
+        this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2,Texture.class));
         this.iceberg3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2,Texture.class));
         this.iceberg4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2,Texture.class));
