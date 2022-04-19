@@ -18,6 +18,7 @@ public class TestScreen extends Menu{
     private PolarBear bear;
     // the different frames of the animation
     private TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("PolarBearWalkingSpriteSheet.atlas"));
+    // camera
     private OrthographicCamera camera;
     private Sprite background;
 
@@ -27,10 +28,10 @@ public class TestScreen extends Menu{
 
     @Override
     public void show(){
-        // gets the first frame of the animation
+        // camera screen size
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.levelMenuBackground, Texture.class));
-
+        // gets the first frame of the animation
         TextureRegion textureRegion = textureAtlas.findRegion("1");
         bear = new PolarBear(new Sprite(textureRegion), textureAtlas);
         bear.setPosition(bear.getX_position(), bear.getY_position());
@@ -41,14 +42,18 @@ public class TestScreen extends Menu{
         // Set default background to blue
         Gdx.gl.glClearColor(0,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // updates the camera
         camera.update();
+        // links camera to screen
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.batch.draw(background, 0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        // adjusted due to the background being drawn at 0,0
+        game.batch.draw(background, -Gdx.graphics.getWidth()/2,-Gdx.graphics.getHeight()/2,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // get user key inputs
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             bear.updateFrame(false,false);
+            // moves camera
             camera.translate(0, bear.getSpeed());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
