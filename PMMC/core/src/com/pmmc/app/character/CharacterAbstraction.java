@@ -85,17 +85,17 @@ public abstract class CharacterAbstraction extends Sprite {
         if(horizontal) {
             if (flip) {
                 character.flip(true, false);
-                x_position -= Gdx.graphics.getDeltaTime() + speed;
+                x_position-=speed;
             } else {
-                x_position += Gdx.graphics.getDeltaTime() + speed;
+                x_position+=speed;
             }
         }
         else{
             if(flip){
-                y_position-=Gdx.graphics.getDeltaTime()+speed;
+                y_position-=speed;
             }
             else{
-                y_position+=Gdx.graphics.getDeltaTime()+speed;
+                y_position+=speed;
             }
         }
     }
