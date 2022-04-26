@@ -46,7 +46,6 @@ public class GameLauncher extends Game {
 	public void dispose () {
 		mainMenuScreen.dispose();
 		levelMenuScreen.dispose();
-		testLevel.dispose();
 		polarBearLevel.dispose();
 		AssetHandler.dispose();
 	}

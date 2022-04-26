@@ -30,13 +30,15 @@ public class PolarBearLevel extends Level {
     public PolarBearLevel(final GameLauncher game){
         super(game);
         obstacles = generateObstacles();
+        placeBox2DObstacles(1,obstacles);
     }
 
     @Override
     public void show(){
         TextureRegion textureRegion = textureAtlas.findRegion("1");
         bear = new PolarBear(new Sprite(textureRegion), textureAtlas);
-        bear.setPosition(bear.getX_position(), bear.getY_position());        this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
+
+        this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2,Texture.class));
         this.iceberg3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2,Texture.class));
         this.iceberg4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2,Texture.class));
@@ -44,6 +46,10 @@ public class PolarBearLevel extends Level {
 
     @Override
     public void render(float delta){
+        Render();
+        bear.setPosition(gameWidth/2f, gameHeight/2f);
+        bear.setX_position(gameWidth/2f - 145);
+        bear.setY_position(gameHeight/2f);
         // Set default background to black
         Gdx.gl.glClearColor(0.8f,0.9f,1f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -67,6 +73,7 @@ public class PolarBearLevel extends Level {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             bear.updateFrame(true, true);
+
         }
 
         // get user touch/mouse inputs
@@ -87,6 +94,7 @@ public class PolarBearLevel extends Level {
                 bear.updateFrame(true,true);
         }
 
+//        System.out.println(bear.getX_position());
         bear.setPosition(bear.getX_position(), bear.getY_position());
         bear.draw(game.batch);
 

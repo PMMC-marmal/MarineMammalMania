@@ -72,6 +72,7 @@ public abstract class CharacterAbstraction extends Sprite {
     public void setY_position(float y_position){this.y_position = y_position;}
     public float getX_position(){return x_position;}
     public float getY_position(){return y_position;}
+
     public void updateFrame(boolean horizontal, boolean flip){
         currentFrame++;
         if(currentFrame >= MAX_FRAMES){
@@ -82,19 +83,19 @@ public abstract class CharacterAbstraction extends Sprite {
         if(horizontal) {
             if (flip) {
                 character.flip(true, false);
-                x_position -= Gdx.graphics.getDeltaTime() + speed;
-            } else {
-                x_position += Gdx.graphics.getDeltaTime() + speed;
+//                x_position -= Gdx.graphics.getDeltaTime() + speed;
+//            } else {
+//                x_position += Gdx.graphics.getDeltaTime() + speed;
             }
         }
-        else{
-            if(flip){
-                y_position-=Gdx.graphics.getDeltaTime()+speed;
-            }
-            else{
-                y_position+=Gdx.graphics.getDeltaTime()+speed;
-            }
-        }
+//        else{
+//            if(flip){
+//                y_position-=Gdx.graphics.getDeltaTime()+speed;
+//            }
+//            else{
+//                y_position+=Gdx.graphics.getDeltaTime()+speed;
+//            }
+//        }
     }
 
     public void setPosition(float x, float y){character.setPosition(x,y);}
