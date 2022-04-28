@@ -7,6 +7,7 @@ public class PolarBear extends CharacterAbstraction {
 
     public PolarBear(Sprite character, TextureAtlas textureAtlas) {
         super(character, textureAtlas);
+        setSpeed(10);
     }
 
     // Power related to polar bear (method here)
