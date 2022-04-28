@@ -8,11 +8,11 @@ public class AssetHandler {
 
     // Main Menu
     public static final String
-            continueButton = "continue_button.png",
-            continueButtonActive = "continue_button_active.png",
-            newGameButton = "new_game_button.png",
-            newGameButtonActive = "new_game_button_active.png",
-            mainMenuBackground = "mainmenu_background.png",
+            continueButton = "main_menu/continue_button.png",
+            continueButtonActive = "main_menu/continue_button_active.png",
+            newGameButton = "main_menu/new_game_button.png",
+            newGameButtonActive = "main_menu/new_game_button_active.png",
+            mainMenuBackground = "main_menu/mainmenu_background.png",
     // Level Select
             seaLionButton = "sea_lion_button.png",
             seaLionButtonActive = "sea_lion_button_active.png",
