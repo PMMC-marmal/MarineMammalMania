@@ -35,11 +35,13 @@ public class AssetHandler {
     //polarbear
 //            waterWithSand = "water-with-sand.png",
             waterWithSand = "ocean-2.png",
-            icebergAddon = "iceberg-top.png",
-
-    iceberg2 = "iceberg2.png",
-            //Iceberge3 = "iceberge3.png",
-            //Iceberge4 = "iceberge4.png";
+            icebergAddon = "icebergs/iceberg-background.png",
+            iceberg1 = "icebergs/starting_ice_berg.png",
+            iceberg2 = "icebergs/iceberg_medium.png",
+            iceberg3 = "icebergs/iceberg_medium2.png",
+            iceberg4 = "icebergs/iceberg_medium2.png",
+            iceberg5 = "icebergs/iceberg_small.png",
+            iceberg6 = "icebergs/iceberg_small2.png",
 
             testbear = "bear-1.png";
 
@@ -71,7 +73,12 @@ public class AssetHandler {
 
         assetManager.load(testbear, Texture.class);
         assetManager.load(waterWithSand,Texture.class);
+        assetManager.load(iceberg1,Texture.class);
         assetManager.load(iceberg2,Texture.class);
+        assetManager.load(iceberg3,Texture.class);
+        assetManager.load(iceberg4,Texture.class);
+        assetManager.load(iceberg5,Texture.class);
+        assetManager.load(iceberg6,Texture.class);
         assetManager.load(icebergAddon, Texture.class);
     }
 

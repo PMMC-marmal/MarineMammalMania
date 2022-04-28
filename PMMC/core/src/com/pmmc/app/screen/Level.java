@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.CharacterAbstraction;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -97,7 +98,7 @@ public abstract class Level extends AbstractScreen {
         int verticalForce = 0;
         float speed = player.getSpeed() ;
 
-        System.out.println("x:" + player2d.getPosition().x * PPM + " y:" + player2d.getPosition().y * PPM);
+//        System.out.println("x:" + player2d.getPosition().x * PPM + " y:" + player2d.getPosition().y * PPM);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player2d.getPosition().x > 0) {
             horizontalForce -= 1;
         }
@@ -130,9 +131,6 @@ public abstract class Level extends AbstractScreen {
         } else {
             position.y = -200;
         }
-//        if (player2d.getPosition().x >= Gdx.graphics.getWidth()/2) {
-//            position.x = player2d.getPosition().x * PPM;
-//        }
 
         camera.position.set(position);
         camera.update();
@@ -166,15 +164,29 @@ public abstract class Level extends AbstractScreen {
         }
     }
 
-    public boolean[] generateObstacles() {
-        boolean[] obstacles1 = {true, false, true, true, false, false, false, true, true, false};
-        boolean[] obstacles2 = {false, false, false, true, true, false, true, false, true, true};
-        boolean[] obstacles3 = {true, false, true, false, false, true, false, true, false, true};
-        boolean[] obstacles4 = {false, true, false, true, true, false, true, false, true, false};
-        boolean[] obstacles5 = {true, true, false, false, true, false, true, false, false, true};
-        boolean[][] arrays = {obstacles1, obstacles3, obstacles4, obstacles5};
-        int rnd = new Random().nextInt(arrays.length);
-        return arrays[rnd];
+    public boolean[] generateObstacles(int Section) {
+        if (Section == 2){
+            boolean[] obstacles1 = {true, false, true, true, false, false, false, true, true, false};
+            boolean[] obstacles2 = {false, false, false, true, true, false, true, false, true, true};
+            boolean[] obstacles3 = {true, false, true, false, false, true, false, true, false, true};
+            boolean[] obstacles4 = {false, true, false, true, true, false, true, false, true, false};
+            boolean[] obstacles5 = {true, true, false, false, true, false, true, false, false, true};
+            boolean[][] arrays = {obstacles1, obstacles2, obstacles3, obstacles4, obstacles5};
+            int rnd = new Random().nextInt(arrays.length);
+            return arrays[rnd];
+        } else if (Section == 3){
+            boolean[] obstacles6 = {false, false, true, false, false, false, false, false, false, true};
+            boolean[] obstacles7 = {false, false, false, true, false, false, false, false, false, true};
+            boolean[] obstacles8 = {false, false, false, false, true, false, false, false, false, true};
+            boolean[] obstacles9 = {false, false, false, false, false, true, false, false, false, true};
+            boolean[] obstacles10 = {false, false, false, false, false, false, true, false, false, true};
+            boolean[][] arrays = {obstacles6, obstacles7, obstacles8, obstacles9, obstacles10};
+            int rnd = new Random().nextInt(arrays.length);
+            return arrays[rnd];
+        }
+        else {
+            return new boolean[]{true};
+        }
     }
 
     public void placeBox2DObstacles(int section, boolean[] obstacles) {
@@ -186,17 +198,24 @@ public abstract class Level extends AbstractScreen {
         } else {
             i = 0;
         }
-
-        for (boolean o : obstacles) {
-            if (o) {
-                createBox(Gdx.graphics.getWidth() / 3 * i + (Gdx.graphics.getWidth() / 6), 100, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4, true, true);
+        if (obstacles.length == 1){
+            int x = (Gdx.graphics.getWidth() / 3 ) * 10;
+            System.out.println(x);
+            createBox(Gdx.graphics.getWidth() / 3 * i + (x/2), 100, x, Gdx.graphics.getHeight() / 4, true, true);
+        }
+        else if(obstacles.length == 10) {
+            for (boolean o : obstacles) {
+                if (o) {
+                    createBox(Gdx.graphics.getWidth() / 3 * i + (Gdx.graphics.getWidth() / 6), 100, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4, true, true);
+                }
+                i++;
             }
-            i++;
         }
     }
 
-    public void renderObstacles(int section, Sprite[] spritesArray, boolean[] obstacles) {
+    public void renderObstacles(int section, ArrayList<Sprite> choices, boolean[] obstacles) {
         int i;
+        int j = 0;
         stage.act();
         stage.getBatch().begin();
         if (section == 2) {
@@ -207,12 +226,18 @@ public abstract class Level extends AbstractScreen {
             i = 0;
         }
 
-        for (boolean o : obstacles) {
-            if (o) {
-                int rnd = new Random().nextInt(2);
-                stage.getBatch().draw(spritesArray[rnd], Gdx.graphics.getWidth() / 3 * i, 100, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4);
+        if (obstacles.length == 1){
+            stage.getBatch().draw(choices.get(0), Gdx.graphics.getWidth() / 3 * i, -650, (Gdx.graphics.getWidth() / 3 )* 10, choices.get(0).getHeight());
+        }
+        else if(obstacles.length == 10) {
+            for (boolean o : obstacles) {
+
+                if (o) {
+                    stage.getBatch().draw(choices.get(j), Gdx.graphics.getWidth() / 3 * i, 100, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4);
+                    j++;
+                }
+                i++;
             }
-            i++;
         }
 
         stage.getBatch().end();
