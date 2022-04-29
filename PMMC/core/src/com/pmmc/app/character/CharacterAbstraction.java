@@ -1,5 +1,6 @@
 package com.pmmc.app.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,7 +24,6 @@ public abstract class CharacterAbstraction extends Sprite {
 
     public CharacterAbstraction(Sprite character, TextureAtlas textureAtlas) {
         super(character);
-        this.character = character;
         speed = 3.0f;
         health = 5;
         air = 5;
@@ -110,33 +110,15 @@ public abstract class CharacterAbstraction extends Sprite {
         if (currentFrame >= MAX_FRAMES) {
             currentFrame = 1;
         }
-        character.setRegion(textureAtlas.findRegion(Integer.toString(currentFrame / 16 + 1)));
-
+            setRegion(textureAtlas.findRegion(Integer.toString(currentFrame / 16 + 1)));
         if (horizontal) {
             if (flip) {
-                character.flip(true, false);
-//                x_position -= Gdx.graphics.getDeltaTime() + speed;
-//            } else {
-//                x_position += Gdx.graphics.getDeltaTime() + speed;
+                flip(true, false);
             }
         }
-//        else{
-//            if(flip){
-//                y_position-=Gdx.graphics.getDeltaTime()+speed;
-//            }
-//            else{
-//                y_position+=Gdx.graphics.getDeltaTime()+speed;
-//            }
-//        }
     }
 
     public void setPosition(float x, float y) {
-        character.setPosition(x, y);
+        setPosition(x, y);
     }
-
-    public void draw(SpriteBatch batch) {
-        character.draw(batch);
-    }
-
-
 }

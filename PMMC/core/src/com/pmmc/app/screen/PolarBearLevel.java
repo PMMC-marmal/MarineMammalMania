@@ -25,8 +25,7 @@ public class PolarBearLevel extends Level {
     boolean[] obstacles1, obstacles2, obstacles3;
     ArrayList<Sprite> choices1, choices2, choices3 ;
     private PolarBear bear;
-    private Sprite polarBear,
-            background,
+    private Sprite background,
             iceberg1,
             iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
@@ -74,6 +73,7 @@ public class PolarBearLevel extends Level {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // Add background
         renderBackground(background);
+
         renderObstacles(1, choices1, obstacles1, 100);
         renderObstacles(2, choices2, obstacles2, 100);
         renderObstacles(3, choices3, obstacles3, 100);
@@ -110,6 +110,7 @@ public class PolarBearLevel extends Level {
 //                bear.updateFrame(true, true);
 //
 //        }
+
         game.batch.begin();
 //        bear.draw(game.batch);
         renderPlayer2D();
