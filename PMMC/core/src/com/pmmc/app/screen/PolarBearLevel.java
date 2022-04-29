@@ -26,8 +26,7 @@ public class PolarBearLevel extends Level {
     ArrayList<Sprite> choices1, choices2, choices3 ;
 
     private PolarBear bear;
-    private Sprite polarBear,
-            background,
+    private Sprite background,
             iceberg1,
             iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
@@ -85,39 +84,6 @@ public class PolarBearLevel extends Level {
         renderObstacles(1, choices1, obstacles1);
         renderObstacles(2, choices2, obstacles2);
         renderObstacles(3, choices3, obstacles3);
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            bear.updateFrame(false, false);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            bear.updateFrame(false, true);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            bear.updateFrame(true, false);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            bear.updateFrame(true, true);
-
-        }
-
-        // get user touch/mouse inputs
-        if (Gdx.input.isTouched()) {
-            float xTouchPixels = Gdx.input.getX();
-            float yTouchPixels = Gdx.input.getY();
-            // move up
-
-            if (yTouchPixels < 2 * Gdx.graphics.getHeight() / 3)
-                bear.updateFrame(false, false);
-            // move down
-            if (yTouchPixels > Gdx.graphics.getHeight() / 3)
-                bear.updateFrame(false, true);
-            // move right
-            if (xTouchPixels > Gdx.graphics.getWidth() / 2)
-                bear.updateFrame(true, false);
-            //move left
-            if (xTouchPixels < Gdx.graphics.getWidth() / 2)
-                bear.updateFrame(true, true);
-
-        }
         game.batch.begin();
 //        bear.draw(game.batch);
         renderPlayer2D();

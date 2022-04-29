@@ -99,21 +99,52 @@ public abstract class Level extends AbstractScreen {
         float speed = player.getSpeed() ;
 
 //        System.out.println("x:" + player2d.getPosition().x * PPM + " y:" + player2d.getPosition().y * PPM);
+        // keyboard input
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player2d.getPosition().x > 0) {
+            player.updateFrame(true,true);
             horizontalForce -= 1;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player2d.getPosition().x * PPM< 15000) {
+            player.updateFrame(true,false);
             horizontalForce += 1;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && (player2d.getPosition().y * PPM > -700)) {
+            player.updateFrame(false,true);
             verticalForce -= 1;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && (player2d.getPosition().y * PPM < 200)) {
+            player.updateFrame(false,false);
             verticalForce += 1;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
             speed = speed * 3;
         }
+
+        // touch input
+        /*if(Gdx.input.isTouched()){
+            float xTouchPixels = Gdx.input.getX();
+            float yTouchPixels = Gdx.input.getY();
+            //move left
+            if(xTouchPixels < Gdx.graphics.getWidth()/2 && player2d.getPosition().x > 0) {
+                player.updateFrame(true, true);
+                horizontalForce -= 1;
+            }
+            // move right
+            if(xTouchPixels > Gdx.graphics.getWidth()/2 && player2d.getPosition().x * PPM< 15000) {
+                player.updateFrame(true, false);
+                horizontalForce += 1;
+            }
+            // move down
+            if(yTouchPixels > Gdx.graphics.getHeight()/3 && (player2d.getPosition().y * PPM > -700)) {
+                player.updateFrame(false, true);
+                verticalForce -= 1;
+            }
+            // move up
+            if(yTouchPixels < 2*Gdx.graphics.getHeight()/3 && (player2d.getPosition().y * PPM < 200)) {
+                player.updateFrame(false, false);
+                verticalForce += 1;
+            }
+        }*/
         player2d.setLinearVelocity(horizontalForce * speed, verticalForce * speed);
     }
 
