@@ -79,7 +79,6 @@ public abstract class Level extends AbstractScreen {
 
     public void Render() {
         update(Gdx.graphics.getDeltaTime());
-        b2dr.render(world, camera.combined.scl(PPM));
     }
 
     private void update(float deltaTime) {
@@ -213,7 +212,7 @@ public abstract class Level extends AbstractScreen {
         }
     }
 
-    public void renderObstacles(int section, ArrayList<Sprite> choices, boolean[] obstacles) {
+    public void renderObstacles(int section, ArrayList<Sprite> choices, boolean[] obstacles, int yAxis) {
         int i;
         int j = 0;
         stage.act();
@@ -225,15 +224,13 @@ public abstract class Level extends AbstractScreen {
         } else {
             i = 0;
         }
-
         if (obstacles.length == 1){
             stage.getBatch().draw(choices.get(0), Gdx.graphics.getWidth() / 3 * i, -650, (Gdx.graphics.getWidth() / 3 )* 10, choices.get(0).getHeight());
         }
         else if(obstacles.length == 10) {
             for (boolean o : obstacles) {
-
                 if (o) {
-                    stage.getBatch().draw(choices.get(j), Gdx.graphics.getWidth() / 3 * i, 100, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4);
+                    stage.getBatch().draw(choices.get(j), Gdx.graphics.getWidth() / 3 * i, yAxis, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4);
                     j++;
                 }
                 i++;
