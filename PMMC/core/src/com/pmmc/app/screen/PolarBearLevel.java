@@ -24,14 +24,12 @@ public class PolarBearLevel extends Level {
     TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("PolarBearWalkingSpriteSheet.atlas"));
     boolean[] obstacles1, obstacles2, obstacles3;
     ArrayList<Sprite> choices1, choices2, choices3 ;
-
     private PolarBear bear;
     private Sprite background,
             iceberg1,
             iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
     public PolarBearLevel(final GameLauncher game){
-
         super(game);
         choices1 = new ArrayList<>();
         choices2 = new ArrayList<>();
@@ -39,8 +37,6 @@ public class PolarBearLevel extends Level {
         obstacles1 = generateObstacles(1);
         obstacles2 = generateObstacles(2);
         obstacles3 = generateObstacles(3);
-
-
     }
 
     @Override
@@ -68,22 +64,53 @@ public class PolarBearLevel extends Level {
         for (int i = 0 ; i < 2; i++) {
             choices3.add(options3[new Random().nextInt(1)]);
         }
-
     }
 
     @Override
     public void render(float delta) {
         Render();
-
-
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         // Add background
         renderBackground(background);
 
-        renderObstacles(1, choices1, obstacles1);
-        renderObstacles(2, choices2, obstacles2);
-        renderObstacles(3, choices3, obstacles3);
+        renderObstacles(1, choices1, obstacles1, 100);
+        renderObstacles(2, choices2, obstacles2, 100);
+        renderObstacles(3, choices3, obstacles3, 100);
+//        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+//            bear.updateFrame(false, false);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+//            bear.updateFrame(false, true);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+//            bear.updateFrame(true, false);
+//        }
+//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+//            bear.updateFrame(true, true);
+//
+//        }
+//
+//        // get user touch/mouse inputs
+//        if (Gdx.input.isTouched()) {
+//            float xTouchPixels = Gdx.input.getX();
+//            float yTouchPixels = Gdx.input.getY();
+//            // move up
+//
+//            if (yTouchPixels < 2 * Gdx.graphics.getHeight() / 3)
+//                bear.updateFrame(false, false);
+//            // move down
+//            if (yTouchPixels > Gdx.graphics.getHeight() / 3)
+//                bear.updateFrame(false, true);
+//            // move right
+//            if (xTouchPixels > Gdx.graphics.getWidth() / 2)
+//                bear.updateFrame(true, false);
+//            //move left
+//            if (xTouchPixels < Gdx.graphics.getWidth() / 2)
+//                bear.updateFrame(true, true);
+//
+//        }
+
         game.batch.begin();
 //        bear.draw(game.batch);
         renderPlayer2D();
