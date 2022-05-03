@@ -35,6 +35,9 @@ public class AssetHandler {
     //polarbear
 //            waterWithSand = "water-with-sand.png",
             waterWithSand = "ocean-2.png",
+            blur = "water-blur.png",
+
+
             icebergAddon = "icebergs/iceberg-background.png",
             iceberg1 = "icebergs/starting_ice_berg.png",
             iceberg2 = "icebergs/iceberg_medium.png",
@@ -73,6 +76,8 @@ public class AssetHandler {
 
         assetManager.load(testbear, Texture.class);
         assetManager.load(waterWithSand,Texture.class);
+        assetManager.load(blur,Texture.class);
+
         assetManager.load(iceberg1,Texture.class);
         assetManager.load(iceberg2,Texture.class);
         assetManager.load(iceberg3,Texture.class);
