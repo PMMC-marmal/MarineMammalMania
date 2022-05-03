@@ -58,7 +58,7 @@ public class PolarBearLevel extends Level {
         placeBox2DObstacles(1, obstacles1 );
         placeBox2DObstacles(2, obstacles2 );
         placeBox2DObstacles(3, obstacles3 );
-        createBox(6000,-300, 50,50, true, true,"food");
+        addPrey(createBox(4200,150, 300,300, true, true,"toxic food"));
         choices1.add(this.iceberg1);
         Sprite[] options2 = {this.iceberg2, this.iceberg3, this.iceberg4};
         for (int i = 0 ; i < 5; i++) {
@@ -79,6 +79,7 @@ public class PolarBearLevel extends Level {
         // Add background
         renderBackground(background);
 
+        renderPrey2D(food); // NEEEDS HIEGHT WIDTH
         // Add Obstacles
         renderObstacles(1, choices1, obstacles1, 100);
         renderObstacles(2, choices2, obstacles2, 100);

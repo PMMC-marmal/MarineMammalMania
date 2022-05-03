@@ -42,6 +42,7 @@ public abstract class Level extends AbstractScreen {
     int spacing = Gdx.graphics.getWidth() / 3;
     ScreenViewport viewPort;
     private int jumpforce;
+    private ArrayList<Body> prey;
 
     public Level(GameLauncher game) {
         super(game);
@@ -58,12 +59,14 @@ public abstract class Level extends AbstractScreen {
 
         player2d = createBox(200, 200, 290, 180, false, true, "Player");
         contacting = null;
+        prey = new ArrayList<>();
+
         viewPort = new ScreenViewport(camera);
         stage = new Stage();
         stage.setViewport(viewPort);
     }
 
-    public static Body createBox(float x, float y, int width, int height, boolean isStatic, boolean fixedRotation, String bodyDef) {
+    public static Body createBox(float x, float y, int width, int height, boolean isStatic, boolean fixedRotation, String b2dType) {
         Body pBody;
         BodyDef def = new BodyDef();
 
@@ -75,7 +78,7 @@ public abstract class Level extends AbstractScreen {
         def.position.set(x / PPM, y / PPM);
         def.fixedRotation = fixedRotation;
         pBody = world.createBody(def);
-        pBody.setUserData(bodyDef);
+        pBody.setUserData(b2dType);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
@@ -148,9 +151,11 @@ public abstract class Level extends AbstractScreen {
             player.setHunger(player.getHunger() - 1);
         }
         if (contacting != null) {
-            if (contacting.getBody().getUserData().equals("food")) {
+            if (prey.contains(contacting.getBody())) {
+                if(contacting.getBody().getUserData().equals("toxic food")) player.incrementToxicity();
                 player.incrementHunger();
 //                contacting.getBody().destroyFixture(contacting);
+                prey.remove(contacting.getBody());
                 world.destroyBody(contacting.getBody());
                 //delete food
             }
@@ -175,7 +180,7 @@ public abstract class Level extends AbstractScreen {
         int horizontalForce = 0;
         float speed = player.getSpeed() ;
 
-        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
+//        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
         // keyboard input
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player2d.getPosition().x > 0) {
             player.updateFrame(true,true, false);
@@ -262,6 +267,15 @@ public abstract class Level extends AbstractScreen {
         stage.act();
         stage.getBatch().begin();
         stage.getBatch().draw(player, player2d.getPosition().x * PPM - (player.getWidth() / 2), player2d.getPosition().y * PPM);
+        stage.getBatch().end();
+        stage.draw();
+    }
+    public void renderPrey2D(Sprite food) {
+        stage.act();
+        stage.getBatch().begin();
+        for (Body p: prey){
+            stage.getBatch().draw(food, p.getPosition().x * PPM - 150, p.getPosition().y * PPM, 300,300);
+        }
         stage.getBatch().end();
         stage.draw();
     }
@@ -365,7 +379,9 @@ public abstract class Level extends AbstractScreen {
         stage.draw();
     }
 
-
+    public void addPrey(Body p){
+        prey.add(p);
+    }
 
     @Override
     public void resize(int width, int height) {
