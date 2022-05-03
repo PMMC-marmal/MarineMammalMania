@@ -25,7 +25,7 @@ public class PolarBearLevel extends Level {
     boolean[] obstacles1, obstacles2, obstacles3;
     ArrayList<Sprite> choices1, choices2, choices3 ;
     private PolarBear bear;
-    private Sprite background, blur,
+    private Sprite background, blur, food,
             iceberg1,
             iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
@@ -47,6 +47,7 @@ public class PolarBearLevel extends Level {
         this.isSwimming = false;
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
+        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
 
         this.iceberg1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg1, Texture.class));
         this.iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2, Texture.class));
@@ -57,6 +58,7 @@ public class PolarBearLevel extends Level {
         placeBox2DObstacles(1, obstacles1 );
         placeBox2DObstacles(2, obstacles2 );
         placeBox2DObstacles(3, obstacles3 );
+        createBox(6000,-300, 50,50, true, true,"food");
         choices1.add(this.iceberg1);
         Sprite[] options2 = {this.iceberg2, this.iceberg3, this.iceberg4};
         for (int i = 0 ; i < 5; i++) {

@@ -57,7 +57,7 @@ public abstract class Level extends AbstractScreen {
         b2dr = new Box2DDebugRenderer();
 
         player2d = createBox(200, 200, 290, 180, false, true, "Player");
-
+        contacting = null;
         viewPort = new ScreenViewport(camera);
         stage = new Stage();
         stage.setViewport(viewPort);
@@ -147,12 +147,21 @@ public abstract class Level extends AbstractScreen {
         if (player.getTimeSinceFood() % player.getFoodLossRate() == 0){
             player.setHunger(player.getHunger() - 1);
         }
+        if (contacting != null) {
+            if (contacting.getBody().getUserData().equals("food")) {
+                player.incrementHunger();
+//                contacting.getBody().destroyFixture(contacting);
+                world.destroyBody(contacting.getBody());
+                //delete food
+            }
+        }
     }
+
     private void getPlayerParams(){
         if( player.getHealth() == 0) {
             player.updateFrame(false, false, true);
         }
-        System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger());
+        System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
     }
 
     private void inputUpdate(float deltaTime) {
@@ -166,7 +175,7 @@ public abstract class Level extends AbstractScreen {
         int horizontalForce = 0;
         float speed = player.getSpeed() ;
 
-//        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
+        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
         // keyboard input
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player2d.getPosition().x > 0) {
             player.updateFrame(true,true, false);

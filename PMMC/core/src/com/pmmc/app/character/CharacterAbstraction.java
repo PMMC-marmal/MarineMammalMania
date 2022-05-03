@@ -212,4 +212,12 @@ public abstract class CharacterAbstraction extends Sprite {
     public void setTimeSinceDamage(int timeSinceDamage) {
         this.timeSinceDamage = timeSinceDamage;
     }
+
+    public void incrementToxicity(){
+        this.toxicity++;
+    }
+
+    public void incrementHunger(){
+        this.hunger++;
+    }
 }
