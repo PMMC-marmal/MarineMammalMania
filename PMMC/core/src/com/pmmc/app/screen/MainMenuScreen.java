@@ -1,11 +1,18 @@
 package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
+import com.pmmc.app.transitions.FadeIn;
+import com.pmmc.app.transitions.FadeOut;
+import com.pmmc.app.transitions.TransitionEffect;
+
+import java.util.ArrayList;
 
 
 /**
@@ -54,12 +61,28 @@ public class MainMenuScreen extends Menu {
 
         // Continue Button: If clicked, proceed to LevelSelectScreen
         if(displayButton(continueButton, continueButtonActive, x, y_cont, BUTTON_WIDTH, BUTTON_HEIGHT)){
-            game.setScreen(new LevelMenuScreen(game));
+            Screen current = game.getScreen();
+            Screen next = new LevelMenuScreen(game);
+            // not sure why but if next screen is not set beforehand, exception happens
+            game.setScreen(next);
+            ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
+            effects.add(new FadeOut(1));
+            effects.add(new FadeIn(1));
+
+            game.setScreen(new TransitionScreen(game, current, next, effects));
         }
 
         // New Game Button: If clicked, restart progress and proceed to LevelSelectScreen
         if (displayButton(newGameButton, newGameButtonActive, x, y_new, BUTTON_WIDTH, BUTTON_HEIGHT)){
-            game.setScreen(new LevelMenuScreen(game));
+            Screen current = game.getScreen();
+            Screen next = new LevelMenuScreen(game);
+            // not sure why but if next screen is not set beforehand, exception happens
+            game.setScreen(next);
+            ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
+            effects.add(new FadeOut(1));
+            effects.add(new FadeIn(1));
+
+            game.setScreen(new TransitionScreen(game, current, next, effects));
         }
 
         game.batch.end();
