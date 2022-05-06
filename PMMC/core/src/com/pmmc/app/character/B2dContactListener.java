@@ -23,6 +23,7 @@ public class B2dContactListener implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
         System.out.println(fa.getBody().getUserData()+" has hit "+ fb.getBody().getUserData());
+        parent.contactor = fa;
         parent.contacting = fb;
 
 

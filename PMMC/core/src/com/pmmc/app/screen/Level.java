@@ -31,6 +31,7 @@ public abstract class Level extends AbstractScreen {
     private static final float SCALE = 2;
     private static World world;
     public final Body player2d;
+    public Fixture contactor;
     public Fixture contacting;
     final Stage stage;
     private final Box2DDebugRenderer b2dr;
@@ -58,6 +59,7 @@ public abstract class Level extends AbstractScreen {
         b2dr = new Box2DDebugRenderer();
 
         player2d = createBox(200, 200, 290, 180, false, true, "Player");
+        contactor = null;
         contacting = null;
         prey = new ArrayList<>();
 
@@ -122,6 +124,7 @@ public abstract class Level extends AbstractScreen {
         player.incrementTimeSinceFood();
         inputUpdate(deltaTime);
         playerUpdate(deltaTime);
+        preyUpdate(deltaTime);
         cameraUpdate(deltaTime);
         stage.getBatch().setProjectionMatrix(camera.combined);
     }
@@ -150,11 +153,13 @@ public abstract class Level extends AbstractScreen {
         if (player.getTimeSinceFood() % player.getFoodLossRate() == 0){
             player.setHunger(player.getHunger() - 1);
         }
-        if (contacting != null) {
-            if (prey.contains(contacting.getBody())) {
-                if(contacting.getBody().getUserData().equals("toxic food")) player.incrementToxicity();
+        if (contacting != null && contactor != null) {
+            if (prey.contains(contacting.getBody()) && contactor.getBody().getUserData().equals("Player")) {
+                if(contacting.getBody().getUserData().equals("toxic food")){
+                    player.incrementToxicity();
+                    if (player.getToxicity() > 5) player.setHealth(player.getHealth() -1 );
+                }
                 player.incrementHunger();
-//                contacting.getBody().destroyFixture(contacting);
                 prey.remove(contacting.getBody());
                 world.destroyBody(contacting.getBody());
                 //delete food
@@ -167,6 +172,30 @@ public abstract class Level extends AbstractScreen {
             player.updateFrame(false, false, true);
         }
         System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
+    }
+
+    private void preyUpdate(float deltaTime){
+        if (prey.isEmpty()){
+            addPrey(2, generateObstacles(2),300, 300, 150);
+            addPrey(3, generateObstacles(2),300, 300, 150);
+        }
+        ArrayList<Body> toRemove = new ArrayList<>();
+        for (Body p : prey){
+
+            if (isSwimming){
+                p.setLinearVelocity(0.5f,0);
+            }
+            else {
+                p.setLinearVelocity(2, 0);
+            }
+            if (p.getPosition().y * PPM < 0){
+                toRemove.add(p);
+                world.destroyBody(p);
+            }
+        }
+        for ( Body p : toRemove){
+            prey.remove(p);
+        }
     }
 
     private void inputUpdate(float deltaTime) {
@@ -182,20 +211,20 @@ public abstract class Level extends AbstractScreen {
 
 //        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
         // keyboard input
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player2d.getPosition().x > 0) {
+        if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A) )&& player2d.getPosition().x > 0) {
             player.updateFrame(true,true, false);
             horizontalForce -= 1;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player2d.getPosition().x * PPM< 15000) {
+        if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D) ) && player2d.getPosition().x * PPM< 15000) {
             player.updateFrame(true,false, false);
             horizontalForce += 1;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && (player2d.getPosition().y * PPM > -700)) {
+        if ((Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S) ) && (player2d.getPosition().y * PPM > -700)) {
             player.updateFrame(false,false, false);
             verticalForce -= 1;
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && isSwimming){
+        if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W) ) && isSwimming){
             if(isTouchingIceBerg && (player2d.getPosition().y * PPM > 190))
             {
                 player.updateFrame(false,false, false); // REPLACE WITH JUMP ANIMATION
@@ -274,6 +303,7 @@ public abstract class Level extends AbstractScreen {
         stage.act();
         stage.getBatch().begin();
         for (Body p: prey){
+            food.setRotation(p.getAngle());
             stage.getBatch().draw(food, p.getPosition().x * PPM - 150, p.getPosition().y * PPM, 300,300);
         }
         stage.getBatch().end();
@@ -379,8 +409,32 @@ public abstract class Level extends AbstractScreen {
         stage.draw();
     }
 
-    public void addPrey(Body p){
-        prey.add(p);
+    public void addPrey(int section, boolean[] obstacles, int y, int width, int height){
+        int i;
+        if (section == 2) {
+            i = 10;
+        } else if (section == 3) {
+            i = 20;
+        } else {
+            i = 0;
+        }
+        String[] toxicOptions = {"toxic food", "food"};
+        int rnd = new Random().nextInt(toxicOptions.length);
+        if(obstacles.length == 10) {
+            for (boolean o : obstacles) {
+                if (o) {
+//                    createBox(Gdx.graphics.getWidth() / 3 * i + (Gdx.graphics.getWidth() / 6), 100, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4, true, true);
+                    prey.add(createBox(Gdx.graphics.getWidth() / 3 * i , y, width,height, false, false,toxicOptions[rnd]));
+                }
+                i++;
+            }
+        }
+        else{
+            prey.add(createBox(4200,150, 300,300, true, true,"food"));
+        }
+    }
+    public void resetPrey(){
+        prey.clear();
     }
 
     @Override
