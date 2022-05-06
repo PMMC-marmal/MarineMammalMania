@@ -63,8 +63,11 @@ public class MainMenuScreen extends Menu {
         if(displayButton(continueButton, continueButtonActive, x, y_cont, BUTTON_WIDTH, BUTTON_HEIGHT)){
             Screen current = game.getScreen();
             Screen next = new LevelMenuScreen(game);
+            // not sure why but if next screen is not set beforehand, exception happens
+            game.setScreen(next);
             ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
             effects.add(new FadeOut(1));
+            effects.add(new FadeIn(1));
 
             game.setScreen(new TransitionScreen(game, current, next, effects));
         }
@@ -73,8 +76,11 @@ public class MainMenuScreen extends Menu {
         if (displayButton(newGameButton, newGameButtonActive, x, y_new, BUTTON_WIDTH, BUTTON_HEIGHT)){
             Screen current = game.getScreen();
             Screen next = new LevelMenuScreen(game);
+            // not sure why but if next screen is not set beforehand, exception happens
+            game.setScreen(next);
             ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
             effects.add(new FadeOut(1));
+            effects.add(new FadeIn(1));
 
             game.setScreen(new TransitionScreen(game, current, next, effects));
         }

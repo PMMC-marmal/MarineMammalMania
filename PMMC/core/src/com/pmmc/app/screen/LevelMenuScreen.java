@@ -1,10 +1,16 @@
 package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
+import com.pmmc.app.transitions.FadeIn;
+import com.pmmc.app.transitions.FadeOut;
+import com.pmmc.app.transitions.TransitionEffect;
+
+import java.util.ArrayList;
 
 /**
  * Screen for level selection after the MainMenuScreen
@@ -85,7 +91,15 @@ public class LevelMenuScreen extends Menu {
         displayButton(killerWhaleButton, killerWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING*2, BUTTON_WIDTH, BUTTON_HEIGHT);
         displayButton(blueWhaleButton, blueWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING*3, BUTTON_WIDTH, BUTTON_HEIGHT);
         if(displayButton(polarBearButton, polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING*4, BUTTON_WIDTH, BUTTON_HEIGHT)){
-            game.setScreen(new PolarBearLevel(game));
+            Screen current = game.getScreen();
+            Screen next = new PolarBearLevel(game);
+            // not sure why but if next screen is not set beforehand, exception happens
+            game.setScreen(next);
+            ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
+            effects.add(new FadeOut(1));
+            effects.add(new FadeIn(1));
+
+            game.setScreen(new TransitionScreen(game, current, next, effects));
         }
 
         // Continue Button: If clicked, proceed to LevelSelectScreen

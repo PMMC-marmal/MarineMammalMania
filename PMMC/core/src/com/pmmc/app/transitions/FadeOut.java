@@ -20,7 +20,7 @@ public class FadeOut extends TransitionEffect {
 
     @Override
     public void render(Screen current, Screen next) {
-        //current.render(Gdx.graphics.getDeltaTime());
+        current.render(Gdx.graphics.getDeltaTime());
         color.set(0f, 0f, 0f, getAlpha());
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
