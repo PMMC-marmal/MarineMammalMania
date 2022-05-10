@@ -33,7 +33,7 @@ public class AssetHandler {
             blueWhaleSprite = "blue_whale.png",
             polarBearSprite = "polar_bear.png",
 
-    // polar bear
+    //polarbear
 //            waterWithSand = "water-with-sand.png",
             waterWithSand = "ocean-2.png",
             blur = "water-blur.png",
@@ -48,8 +48,9 @@ public class AssetHandler {
             iceberg6 = "icebergs/iceberg_small2.png",
 
             polarBearWalking = "sprite_sheets/PolarBearWalkingSpriteSheet.atlas",
-            polarBearSwimming = "sprite_sheets/PolarBearSwimmingSpriteSheet.atlas";
-
+            polarBearSwimming = "sprite_sheets/PolarBearSwimmingSpriteSheet.atlas",
+            seaLionWalking = "sprite_sheets/SeaLionWalkingSpriteSheet.atlas",
+            seaLionSwimming = "sprite_sheets/SeaLionSwimmingSpriteSheet.atlas";
 
     public static void load(){
         assetManager.load(continueButton, Texture.class);
@@ -89,6 +90,8 @@ public class AssetHandler {
 
         assetManager.load(polarBearWalking, TextureAtlas.class);
         assetManager.load(polarBearSwimming, TextureAtlas.class);
+        assetManager.load(seaLionWalking, TextureAtlas.class);
+        assetManager.load(seaLionSwimming, TextureAtlas.class);
     }
 
     public static void dispose(){
