@@ -16,7 +16,7 @@ import com.pmmc.app.character.PolarBear;
 public class TestScreen extends Menu{
     private PolarBear bear;
     // the different frames of the animation
-    TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("PolarBearWalkingSpriteSheet.atlas"));
+    TextureAtlas textureAtlas;
 
     public TestScreen(final GameLauncher game){
         super(game);
@@ -25,8 +25,9 @@ public class TestScreen extends Menu{
     @Override
     public void show(){
         // gets the first frame of the animation
+        TextureAtlas textureAtlas = AssetHandler.assetManager.get(AssetHandler.polarBearWalking, TextureAtlas.class);
         TextureRegion textureRegion = textureAtlas.findRegion("1");
-        bear = new PolarBear(new Sprite(textureRegion), textureAtlas);
+        bear = new PolarBear();
         bear.setPosition(bear.getX_position(), bear.getY_position());
     }
 

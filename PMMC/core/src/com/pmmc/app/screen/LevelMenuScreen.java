@@ -82,8 +82,7 @@ public class LevelMenuScreen extends Menu {
 
         // Display back arrow. If clicked, return to main menu
         if(displayButton(backArrow, 0, Gdx.graphics.getHeight() - BUTTON_SPACING / 1.25f, backArrowWidth, backArrowHeight)){
-            game.setScreen(new MainMenuScreen(game));
-        }
+            transitionScreen(new MainMenuScreen(game));        }
 
 
         displayButton(seaLionButton, seaLionButtonActive, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT);
@@ -93,18 +92,8 @@ public class LevelMenuScreen extends Menu {
         game.setScreen(new BlueWhaleLevel(game));
     }
         if(displayButton(polarBearButton, polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING*4, BUTTON_WIDTH, BUTTON_HEIGHT)){
-            Screen current = game.getScreen();
-            Screen next = new PolarBearLevel(game);
-            // not sure why but if next screen is not set beforehand, exception happens
-            game.setScreen(next);
-            ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
-            effects.add(new FadeOut(1));
-            effects.add(new FadeIn(1));
-
-            game.setScreen(new TransitionScreen(game, current, next, effects));
+            transitionScreen(new PolarBearLevel(game));
         }
-
-        // Continue Button: If clicked, proceed to LevelSelectScreen
 
         // Draw characters on screen
         game.batch.draw(seaLionSprite,

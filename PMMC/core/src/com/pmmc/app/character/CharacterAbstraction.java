@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.pmmc.app.AssetHandler;
 
 public abstract class CharacterAbstraction extends Sprite {
 
-    private final int MAX_FRAMES = 64;
     private int timeInWater;
     private int timeOutWater;
     private int timeSinceFood;
@@ -15,7 +15,6 @@ public abstract class CharacterAbstraction extends Sprite {
     private int damageRate;
     private boolean flipped = true;
     private final int maxLevels;
-    public Sprite character;
     private float speed;
     private int health;
     private int air;
@@ -26,12 +25,15 @@ public abstract class CharacterAbstraction extends Sprite {
     private int currentFrame;
     private float x_position;
     private float y_position;
+    private boolean isSwimming;
     // manages the sprites in a sprite sheet
     private TextureAtlas textureAtlas;
+    private TextureAtlas walkingAtlas;
+    private TextureAtlas swimmingAtlas;
 
 
-    public CharacterAbstraction(Sprite character, TextureAtlas textureAtlas) {
-        super(character);
+    public CharacterAbstraction(TextureAtlas walkingAtlas, TextureAtlas swimmingAtlas) {
+        super(walkingAtlas.findRegion("1"));
         timeInWater = 0;
         timeOutWater = 0;
         speed = 3.0f;
@@ -42,7 +44,10 @@ public abstract class CharacterAbstraction extends Sprite {
         maxLevels = 5;
         x_position = 0;
         y_position = 0;
-        this.textureAtlas = textureAtlas;
+        isSwimming = false;
+        this.textureAtlas = walkingAtlas;
+        this.walkingAtlas = walkingAtlas;
+        this.swimmingAtlas = swimmingAtlas;
     }
 
     public int getHealth() {
@@ -95,10 +100,6 @@ public abstract class CharacterAbstraction extends Sprite {
         }
     }
 
-    public void setTextureAtlas(TextureAtlas textureAtlas) {
-        this.textureAtlas = textureAtlas;
-    }
-
     public float getX_position() {
         return x_position;
     }
@@ -115,12 +116,24 @@ public abstract class CharacterAbstraction extends Sprite {
         this.y_position = y_position;
     }
 
+    public boolean getSwimming(){return isSwimming;}
+
+    public void setSwimming(boolean swimming){
+        if(swimming) {
+            this.textureAtlas = swimmingAtlas;
+        } else {
+            this.textureAtlas = walkingAtlas;
+        }
+        this.isSwimming = swimming;
+    }
+
     public void updateFrame(boolean horizontal, boolean flip, boolean death) {
 
         currentFrame++;
-        if (currentFrame >= MAX_FRAMES) {
+        if (currentFrame >= textureAtlas.getRegions().size * 16) {
             currentFrame = 1;
         }
+        System.out.println(currentFrame / 16 + 1);
             setRegion(textureAtlas.findRegion(Integer.toString(currentFrame / 16 + 1)));
 
         if (death){
