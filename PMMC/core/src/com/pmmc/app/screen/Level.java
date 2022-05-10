@@ -38,7 +38,6 @@ public abstract class Level extends AbstractScreen {
     public float gameWidth;
     public float gameHeight;
     public CharacterAbstraction player;
-    public boolean isSwimming;
     public boolean isTouchingIceBerg;
     int spacing = Gdx.graphics.getWidth() / 3;
     ScreenViewport viewPort;
@@ -112,12 +111,12 @@ public abstract class Level extends AbstractScreen {
         world.step(deltaTime, 6, 2);
         if (player2d.getPosition().y * PPM > 200) {
             world.setGravity(new Vector2(0, -10f*PPM));
-            isSwimming = false;
+            player.setSwimming(false);
             player.setTimeInWater(0);
             player.incrementTimeOutWater();
         } else {
             world.setGravity(new Vector2(0, 0f));
-            isSwimming = true;
+            player.setSwimming(true);
             player.incrementTimeInWater();
             player.setTimeOutWater(0);
         }
@@ -141,7 +140,7 @@ public abstract class Level extends AbstractScreen {
                 player.setHealth(player.getHealth() -1 );
             }
         }
-        if (isSwimming) {
+        if (player.getSwimming()) {
             if (player.getTimeInWater() % player.getAirLossRate() == 0){
                 player.setAir(player.getAir() - 1);
             }
@@ -171,7 +170,7 @@ public abstract class Level extends AbstractScreen {
         if( player.getHealth() == 0) {
             player.updateFrame(false, false, true);
         }
-        System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
+        //System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
     }
 
     private void preyUpdate(float deltaTime){
@@ -182,7 +181,7 @@ public abstract class Level extends AbstractScreen {
         ArrayList<Body> toRemove = new ArrayList<>();
         for (Body p : prey){
 
-            if (isSwimming){
+            if (player.getSwimming()){
                 p.setLinearVelocity(0.5f,0);
             }
             else {
@@ -224,7 +223,7 @@ public abstract class Level extends AbstractScreen {
             verticalForce -= 1;
         }
 
-        if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W) ) && isSwimming){
+        if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W) ) && player.getSwimming()){
             if(isTouchingIceBerg && (player2d.getPosition().y * PPM > 190))
             {
                 player.updateFrame(false,false, false); // REPLACE WITH JUMP ANIMATION

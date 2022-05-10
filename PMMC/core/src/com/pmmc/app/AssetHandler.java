@@ -2,6 +2,7 @@ package com.pmmc.app;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class AssetHandler {
     public static final AssetManager assetManager = new AssetManager();
@@ -32,7 +33,7 @@ public class AssetHandler {
             blueWhaleSprite = "blue_whale.png",
             polarBearSprite = "polar_bear.png",
 
-    //polarbear
+    // polar bear
 //            waterWithSand = "water-with-sand.png",
             waterWithSand = "ocean-2.png",
             blur = "water-blur.png",
@@ -46,7 +47,8 @@ public class AssetHandler {
             iceberg5 = "icebergs/iceberg_small.png",
             iceberg6 = "icebergs/iceberg_small2.png",
 
-            testbear = "bear-1.png";
+            polarBearWalking = "sprite_sheets/PolarBearWalkingSpriteSheet.atlas",
+            polarBearSwimming = "sprite_sheets/PolarBearSwimmingSpriteSheet.atlas";
 
 
     public static void load(){
@@ -74,7 +76,6 @@ public class AssetHandler {
         assetManager.load(blueWhaleSprite, Texture.class);
         assetManager.load(polarBearSprite, Texture.class);
 
-        assetManager.load(testbear, Texture.class);
         assetManager.load(waterWithSand,Texture.class);
         assetManager.load(blur,Texture.class);
 
@@ -85,6 +86,9 @@ public class AssetHandler {
         assetManager.load(iceberg5,Texture.class);
         assetManager.load(iceberg6,Texture.class);
         assetManager.load(icebergAddon, Texture.class);
+
+        assetManager.load(polarBearWalking, TextureAtlas.class);
+        assetManager.load(polarBearSwimming, TextureAtlas.class);
     }
 
     public static void dispose(){

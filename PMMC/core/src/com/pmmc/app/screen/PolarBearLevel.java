@@ -5,8 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
@@ -21,7 +19,6 @@ import java.util.Random;
  */
 
 public class PolarBearLevel extends Level {
-    TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("PolarBearWalkingSpriteSheet.atlas"));
     boolean[] obstacles1, obstacles2, obstacles3;
     int preyReset;
     int preyResetTimer;
@@ -45,10 +42,10 @@ public class PolarBearLevel extends Level {
 
     @Override
     public void show() {
-        TextureRegion textureRegion = textureAtlas.findRegion("1");
-        bear = new PolarBear(new Sprite(textureRegion), textureAtlas);
+        bear = new PolarBear();
+
         setPlayer(bear);
-        this.isSwimming = false;
+        player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
@@ -87,7 +84,7 @@ public class PolarBearLevel extends Level {
         // Add background
         renderBackground(background);
 
-        renderPrey2D(food); // NEEEDS HIEGHT WIDTH
+        renderPrey2D(food); // NEEDS HEIGHT WIDTH
         // Add Obstacles
         renderObstacles(1, choices1, obstacles1, 100);
         renderObstacles(2, choices2, obstacles2, 100);

@@ -41,9 +41,9 @@ public class BlueWhaleLevel extends Level{
     @Override
     public void show() {
         TextureRegion textureRegion = textureAtlas.findRegion("1");
-        whale = new BlueWhale(new Sprite(textureRegion), textureAtlas);
+        whale = new BlueWhale();
         setPlayer(whale);
-        this.isSwimming = false;
+        player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
