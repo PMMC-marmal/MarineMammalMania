@@ -34,7 +34,7 @@ public class GameLauncher extends Game {
 		AssetHandler.load();
 		AssetHandler.assetManager.finishLoading();
 
-		this.setScreen(mainMenuScreen);
+		this.setScreen(this.polarBearLevel);
 	}
 
 	@Override
