@@ -7,8 +7,8 @@ import com.pmmc.app.AssetHandler;
 public class PolarBear extends CharacterAbstraction {
 
     public PolarBear() {
-        super(AssetHandler.assetManager.get(AssetHandler.seaLionWalking, TextureAtlas.class),
-                AssetHandler.assetManager.get(AssetHandler.seaLionSwimming, TextureAtlas.class));
+        super(AssetHandler.assetManager.get(AssetHandler.polarBearWalking, TextureAtlas.class),
+                AssetHandler.assetManager.get(AssetHandler.polarBearSwimming, TextureAtlas.class));
         setSpeed(10);
         setAirLossRate(200);
         setFoodLossRate(300);
