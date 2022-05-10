@@ -3,6 +3,7 @@ package com.pmmc.app.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.B2dContactListener;
 import com.pmmc.app.character.CharacterAbstraction;
@@ -179,7 +181,67 @@ public abstract class Level extends AbstractScreen {
         if( player.getHealth() == 0) {
             player.updateFrame(false, false, true);
         }
+
         //System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
+    }
+
+    public void renderHealthBars(){
+        drawHealthBar(player.getHealth(),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.healthBar, Texture.class)),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.healthBarEmpty, Texture.class)),
+                -Gdx.graphics.getWidth()*0.5f,
+                Gdx.graphics.getHeight()*0.38f
+        );
+        drawHealthBar(player.getAir(),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.airBar, Texture.class)),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.airBarEmpty, Texture.class)),
+                -Gdx.graphics.getWidth()*0.5f,
+                Gdx.graphics.getHeight()*0.25f
+        );
+        drawHealthBar(player.getHunger(),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.hungerBar, Texture.class)),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.hungerBarEmpty, Texture.class)),
+                Gdx.graphics.getWidth()*0.22f,
+                Gdx.graphics.getHeight()*0.38f
+        );
+        drawHealthBar(player.getToxicity(),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicBar, Texture.class)),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicBarEmpty, Texture.class)),
+                Gdx.graphics.getWidth()*0.22f,
+                Gdx.graphics.getHeight()*0.25f
+        );
+
+    }
+
+    private void drawHealthBar(int barValue, Sprite bar, Sprite emptyBar, float x_offset, float y_offset){
+        stage.act();
+        stage.getBatch().begin();
+        // Positioning
+        Vector3 barPosition = camera.position;
+        barPosition.set(barPosition.x + x_offset, barPosition.y + y_offset, 0);
+
+        switch (barValue){
+            case 1:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth()*0.22f, bar.getHeight()*0.7f);
+                break;
+            case 2:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth()*0.34f, bar.getHeight()*0.7f);
+                break;
+            case 3:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth()*0.46f, bar.getHeight()*0.7f);
+                break;
+            case 4:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth()*0.58f, bar.getHeight()*0.7f);
+                break;
+            case 5:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth()*0.7f, bar.getHeight()*0.7f);
+                break;
+            default:
+                break;
+        }
+        stage.getBatch().draw(emptyBar, barPosition.x, barPosition.y, bar.getWidth()*0.7f, bar.getHeight()*0.7f);
+        stage.getBatch().end();
+        stage.draw();
     }
 
     private void preyUpdate(float deltaTime){

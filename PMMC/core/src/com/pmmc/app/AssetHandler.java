@@ -34,6 +34,15 @@ public class AssetHandler {
             polarBearSprite = "polar_bear.png",
 
     //polarbear
+            healthBarEmpty = "player-bars/health/healthbar_0.png",
+            healthBar = "player-bars/health/health_bar.png",
+            airBarEmpty = "player-bars/air/air_0.png",
+            airBar = "player-bars/air/air_bar.png",
+            hungerBarEmpty = "player-bars/food/hunger_0.png",
+            hungerBar = "player-bars/food/hunger_bar.png",
+            toxicBarEmpty = "player-bars/toxic/toxic_0.png",
+            toxicBar = "player-bars/toxic/toxic_bar.png",
+
 //            waterWithSand = "water-with-sand.png",
             waterWithSand = "ocean-2.png",
             blur = "water-blur.png",
@@ -76,6 +85,17 @@ public class AssetHandler {
         assetManager.load(killerWhaleSprite, Texture.class);
         assetManager.load(blueWhaleSprite, Texture.class);
         assetManager.load(polarBearSprite, Texture.class);
+
+        assetManager.load(healthBar, Texture.class);
+        assetManager.load(healthBarEmpty, Texture.class);
+        assetManager.load(airBar, Texture.class);
+        assetManager.load(airBarEmpty, Texture.class);
+        assetManager.load(hungerBar, Texture.class);
+        assetManager.load(hungerBarEmpty, Texture.class);
+        assetManager.load(toxicBar, Texture.class);
+        assetManager.load(toxicBarEmpty, Texture.class);
+
+        assetManager.load(testbear, Texture.class);
 
         assetManager.load(waterWithSand,Texture.class);
         assetManager.load(blur,Texture.class);

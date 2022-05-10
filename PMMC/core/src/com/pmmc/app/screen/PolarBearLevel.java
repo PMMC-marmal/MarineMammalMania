@@ -94,6 +94,7 @@ public class PolarBearLevel extends Level {
 
         game.batch.begin();
         renderPlayer2D();
+        renderHealthBars();
         renderEndGoal2D(staticBear);
         game.batch.end();
 //        renderBackground(blur);
