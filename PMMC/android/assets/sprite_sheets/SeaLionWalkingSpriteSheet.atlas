@@ -1,0 +1,40 @@
+
+SeaLionWalkingSpriteSheet.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+4
+  rotate: false
+  xy: 1, 217
+  size: 293, 213
+  orig: 293, 213
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 1, 3
+  size: 286, 212
+  orig: 286, 212
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 296, 226
+  size: 287, 204
+  orig: 287, 204
+  offset: 0, 0
+  index: -1
+3
+  rotate: false
+  xy: 585, 221
+  size: 273, 209
+  orig: 273, 209
+  offset: 0, 0
+  index: -1
+1
+  rotate: false
+  xy: 296, 1
+  size: 266, 223
+  orig: 266, 223
+  offset: 0, 0
+  index: -1

@@ -2,11 +2,13 @@ package com.pmmc.app.character;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.pmmc.app.AssetHandler;
 
 public class PolarBear extends CharacterAbstraction {
 
-    public PolarBear(Sprite character, TextureAtlas textureAtlas) {
-        super(character, textureAtlas);
+    public PolarBear() {
+        super(AssetHandler.assetManager.get(AssetHandler.polarBearWalking, TextureAtlas.class),
+                AssetHandler.assetManager.get(AssetHandler.polarBearSwimming, TextureAtlas.class));
         setSpeed(10);
         setAirLossRate(200);
         setFoodLossRate(300);

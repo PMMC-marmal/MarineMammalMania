@@ -5,8 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
@@ -21,13 +19,11 @@ import java.util.Random;
  */
 
 public class PolarBearLevel extends Level {
-    TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("PolarBearWalkingSpriteSheet.atlas"));
     boolean[] obstacles1, obstacles2, obstacles3;
-    int preyReset;
-    int preyResetTimer;
+
     ArrayList<Sprite> choices1, choices2, choices3 ;
     private PolarBear bear;
-    private Sprite background, blur, food,
+    private Sprite background, staticBear, food,
             iceberg1,
             iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
@@ -39,18 +35,21 @@ public class PolarBearLevel extends Level {
         obstacles1 = generateObstacles(1);
         obstacles2 = generateObstacles(2);
         obstacles3 = generateObstacles(3);
-        preyReset = 0;
-        preyResetTimer = 0;
+        preySpawnHeight = 300;
+        preyDespawnable = true;
+
+
     }
 
     @Override
     public void show() {
-        TextureRegion textureRegion = textureAtlas.findRegion("1");
-        bear = new PolarBear(new Sprite(textureRegion), textureAtlas);
+        bear = new PolarBear();
+
         setPlayer(bear);
-        this.isSwimming = false;
+        player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
-        this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
+        this.staticBear = new Sprite(AssetHandler.assetManager.get(AssetHandler.testbear, Texture.class));
+        staticBear.flip(true,false);
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
 
         this.iceberg1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg1, Texture.class));
@@ -62,7 +61,7 @@ public class PolarBearLevel extends Level {
         placeBox2DObstacles(1, obstacles1 );
         placeBox2DObstacles(2, obstacles2 );
         placeBox2DObstacles(3, obstacles3 );
-        addPrey(1, new boolean[]{true} ,1000, 300, 150);
+        addPrey(1, generateObstacles(1) ,1000, 300, 150);
         addPrey(2, generateObstacles(2),1000, 300, 150);
         addPrey(3, generateObstacles(2),1000, 300, 150);
 
@@ -70,11 +69,11 @@ public class PolarBearLevel extends Level {
         choices1.add(this.iceberg1);
         Sprite[] options2 = {this.iceberg2, this.iceberg3, this.iceberg4};
         for (int i = 0 ; i < 5; i++) {
-            choices2.add(options2[new Random().nextInt(2)]);
+            choices2.add(options2[new Random().nextInt(options2.length-1)]);
         }
         Sprite[] options3 = {this.iceberg5, this.iceberg6};
         for (int i = 0 ; i < 2; i++) {
-            choices3.add(options3[new Random().nextInt(1)]);
+            choices3.add(options3[new Random().nextInt(options3.length-1)]);
         }
     }
 
@@ -87,7 +86,7 @@ public class PolarBearLevel extends Level {
         // Add background
         renderBackground(background);
 
-        renderPrey2D(food); // NEEEDS HIEGHT WIDTH
+        renderPrey2D(food); // NEEDS HEIGHT WIDTH
         // Add Obstacles
         renderObstacles(1, choices1, obstacles1, 100);
         renderObstacles(2, choices2, obstacles2, 100);
@@ -95,6 +94,7 @@ public class PolarBearLevel extends Level {
 
         game.batch.begin();
         renderPlayer2D();
+        renderEndGoal2D(staticBear);
         game.batch.end();
 //        renderBackground(blur);
     }
