@@ -75,7 +75,7 @@ public abstract class CharacterAbstraction extends Sprite {
     }
 
     public void setHunger(int hunger) {
-        if (hunger <= maxLevels && hunger >= 0) {
+        if (hunger < maxLevels && hunger >= 0) {
             this.hunger = hunger;
         }
     }
@@ -85,7 +85,7 @@ public abstract class CharacterAbstraction extends Sprite {
     }
 
     public void setToxicity(int toxicity) {
-        if (toxicity <= maxLevels && toxicity >= 0) {
+        if (toxicity < maxLevels && toxicity >= 0) {
             this.toxicity = toxicity;
         }
     }
@@ -227,10 +227,10 @@ public abstract class CharacterAbstraction extends Sprite {
     }
 
     public void incrementToxicity(){
-        this.toxicity++;
+        if (toxicity < maxLevels) this.toxicity++;
     }
 
     public void incrementHunger(){
-        this.hunger++;
+        if (hunger < maxLevels )this.hunger++;
     }
 }

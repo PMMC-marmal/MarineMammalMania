@@ -36,6 +36,8 @@ public class BlueWhaleLevel extends Level{
         obstacles1 = generateObstacles(1);
         obstacles2 = generateObstacles(2);
         obstacles3 = generateObstacles(3);
+        preySpawnHeight = -200;
+        preyDespawnable = false;
     }
 
     @Override
