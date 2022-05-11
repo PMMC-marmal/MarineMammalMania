@@ -38,9 +38,9 @@ public abstract class CharacterAbstraction extends Sprite {
         timeInWater = 0;
         timeOutWater = 0;
         speed = 3.0f;
-        health = 1;
+        health = 5;
         air = 5;
-        hunger = 0;
+        hunger = 5;
         toxicity = 0;
         maxLevels = 5;
         x_position = 0;
