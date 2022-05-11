@@ -95,7 +95,6 @@ public class AssetHandler {
         assetManager.load(toxicBar, Texture.class);
         assetManager.load(toxicBarEmpty, Texture.class);
 
-        assetManager.load(testbear, Texture.class);
 
         assetManager.load(waterWithSand,Texture.class);
         assetManager.load(blur,Texture.class);

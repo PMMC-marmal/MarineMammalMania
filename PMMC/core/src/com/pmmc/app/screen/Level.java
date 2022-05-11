@@ -179,7 +179,8 @@ public abstract class Level extends AbstractScreen {
 
     private void getPlayerParams(){
         if( player.getHealth() == 0) {
-            player.updateFrame(false, false, true);
+            player.setDead(true);
+            player.updateFrame(false, false);
         }
 
         //System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
@@ -259,7 +260,7 @@ public abstract class Level extends AbstractScreen {
 
         for (Body p : prey){
 
-            if (isSwimming){
+            if (player.getSwimming()){
                 p.setLinearVelocity(0.8f,0);
 
             }
@@ -286,68 +287,69 @@ public abstract class Level extends AbstractScreen {
         }
         int horizontalForce = 0;
         float speed = player.getSpeed() ;
-
-//        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
-        // keyboard input
-        if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A) )&& player2d.getPosition().x > 0) {
-            player.updateFrame(true,true, false);
-            horizontalForce -= 1;
+        if(player.getDead()){
+            speed = 0;
         }
-        if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D) ) && player2d.getPosition().x * PPM < 20000) {
-            player.updateFrame(true,false, false);
-            horizontalForce += 1;
-        }
-        if ((Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S) ) && (player2d.getPosition().y * PPM > -700)) {
-            player.updateFrame(false,false, false);
-            verticalForce -= 1;
-        }
-
-        if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W) ) && player.getSwimming()){
-            if(isTouchingIceBerg && (player2d.getPosition().y * PPM > 190))
-            {
-                player.updateFrame(false,false, false); // REPLACE WITH JUMP ANIMATION
-                this.jumpforce = 7;
-
-            }
-            else {
-                player.updateFrame(false, false, false);
-
-                verticalForce += 1;
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
-            speed = speed * 3;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            game.setScreen(new LevelMenuScreen(game));
-        }
-
-
-        // touch input
-        /*if(Gdx.input.isTouched()){
-            float xTouchPixels = Gdx.input.getX();
-            float yTouchPixels = Gdx.input.getY();
-            //move left
-            if(xTouchPixels < Gdx.graphics.getWidth()/2 && player2d.getPosition().x > 0) {
+        else {
+            //System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
+            // keyboard input
+            if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) && player2d.getPosition().x > 0) {
                 player.updateFrame(true, true);
                 horizontalForce -= 1;
             }
-            // move right
-            if(xTouchPixels > Gdx.graphics.getWidth()/2 && player2d.getPosition().x * PPM< 15000) {
+            if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) && player2d.getPosition().x * PPM < 20000) {
                 player.updateFrame(true, false);
                 horizontalForce += 1;
             }
-            // move down
-            if(yTouchPixels > Gdx.graphics.getHeight()/3 && (player2d.getPosition().y * PPM > -700)) {
-                player.updateFrame(false, true);
+            if ((Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) && (player2d.getPosition().y * PPM > -700)) {
+                player.updateFrame(false, false);
                 verticalForce -= 1;
             }
-            // move up
-            if(yTouchPixels < 2*Gdx.graphics.getHeight()/3 && (player2d.getPosition().y * PPM < 200)) {
-                player.updateFrame(false, false);
-                verticalForce += 1;
+
+            if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) && player.getSwimming()) {
+                if (isTouchingIceBerg && (player2d.getPosition().y * PPM > 190)) {
+                    player.updateFrame(false, false); // REPLACE WITH JUMP ANIMATION
+                    this.jumpforce = 7;
+
+                } else {
+                    player.updateFrame(false, false);
+                    verticalForce += 1;
+                }
             }
-        }*/
+            if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                speed = speed * 3;
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                game.setScreen(new LevelMenuScreen(game));
+            }
+
+
+            // touch input
+            /*if(Gdx.input.isTouched()){
+                float xTouchPixels = Gdx.input.getX();
+                float yTouchPixels = Gdx.input.getY();
+                //move left
+                if(xTouchPixels < Gdx.graphics.getWidth()/2 && player2d.getPosition().x > 0) {
+                    player.updateFrame(true, true);
+                    horizontalForce -= 1;
+                }
+                // move right
+                if(xTouchPixels > Gdx.graphics.getWidth()/2 && player2d.getPosition().x * PPM< 15000) {
+                    player.updateFrame(true, false);
+                    horizontalForce += 1;
+                }
+                // move down
+                if(yTouchPixels > Gdx.graphics.getHeight()/3 && (player2d.getPosition().y * PPM > -700)) {
+                    player.updateFrame(false, true);
+                    verticalForce -= 1;
+                }
+                // move up
+                if(yTouchPixels < 2*Gdx.graphics.getHeight()/3 && (player2d.getPosition().y * PPM < 200)) {
+                    player.updateFrame(false, false);
+                    verticalForce += 1;
+                }
+            }*/
+        }
         player2d.setLinearVelocity(horizontalForce * speed, verticalForce * speed);
     }
 

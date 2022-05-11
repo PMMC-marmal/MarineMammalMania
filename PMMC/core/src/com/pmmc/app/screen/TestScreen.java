@@ -41,16 +41,16 @@ public class TestScreen extends Menu{
 
         // get user key inputs
         if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-            bear.updateFrame(false,false,false);
+            bear.updateFrame(false,false);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            bear.updateFrame(false,true,false);
+            bear.updateFrame(false,true);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            bear.updateFrame(true,false,false);
+            bear.updateFrame(true,false);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            bear.updateFrame(true, true,false);
+            bear.updateFrame(true, true);
         }
 
         // get user touch/mouse inputs
@@ -59,16 +59,16 @@ public class TestScreen extends Menu{
             float yTouchPixels = Gdx.input.getY();
             // move up
             if(yTouchPixels < 2*Gdx.graphics.getHeight()/3)
-                bear.updateFrame(false,false,false);
+                bear.updateFrame(false,false);
             // move down
             if(yTouchPixels > Gdx.graphics.getHeight()/3)
-                bear.updateFrame(false,true,false);
+                bear.updateFrame(false,true);
             // move right
             if(xTouchPixels > Gdx.graphics.getWidth()/2)
-                bear.updateFrame(true,false,false);
+                bear.updateFrame(true,false);
             //move left
             if(xTouchPixels < Gdx.graphics.getWidth()/2)
-                bear.updateFrame(true,true,false);
+                bear.updateFrame(true,true);
         }
 
         bear.setPosition(bear.getX_position(), bear.getY_position());

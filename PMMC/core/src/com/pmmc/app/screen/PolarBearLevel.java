@@ -48,7 +48,7 @@ public class PolarBearLevel extends Level {
         setPlayer(bear);
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
-        this.staticBear = new Sprite(AssetHandler.assetManager.get(AssetHandler.testbear, Texture.class));
+        this.staticBear = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarBearSprite, Texture.class));
         staticBear.flip(true,false);
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
 
