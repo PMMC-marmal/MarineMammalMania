@@ -9,9 +9,9 @@ public class PolarBear extends CharacterAbstraction {
     public PolarBear() {
         super(AssetHandler.assetManager.get(AssetHandler.polarBearWalking, TextureAtlas.class),
                 AssetHandler.assetManager.get(AssetHandler.polarBearSwimming, TextureAtlas.class));
-        setSpeed(10);
+        setSpeed(15);
         setAirLossRate(200);
-        setFoodLossRate(300);
+        setFoodLossRate(400);
         setDamageRate(100);
     }
 

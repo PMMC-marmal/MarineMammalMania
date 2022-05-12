@@ -48,9 +48,11 @@ public class PolarBearLevel extends Level {
         setPlayer(bear);
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
-        this.staticBear = new Sprite(AssetHandler.assetManager.get(AssetHandler.testbear, Texture.class));
+
+        this.staticBear = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarBearSprite, Texture.class));
         staticBear.flip(true,false);
-        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
+
+        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seal, Texture.class));
 
         this.iceberg1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg1, Texture.class));
         this.iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2, Texture.class));
@@ -61,9 +63,9 @@ public class PolarBearLevel extends Level {
         placeBox2DObstacles(1, obstacles1 );
         placeBox2DObstacles(2, obstacles2 );
         placeBox2DObstacles(3, obstacles3 );
-        addPrey(1, generateObstacles(1) ,1000, 300, 150);
-        addPrey(2, generateObstacles(2),1000, 300, 150);
-        addPrey(3, generateObstacles(2),1000, 300, 150);
+        addPrey(1, generateObstacles(1), 300, 150);
+        addPrey(2, generateObstacles(2), 300, 150);
+        addPrey(3, generateObstacles(2), 300, 150);
 
 
         choices1.add(this.iceberg1);
