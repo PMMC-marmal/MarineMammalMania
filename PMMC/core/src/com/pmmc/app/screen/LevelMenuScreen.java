@@ -85,7 +85,9 @@ public class LevelMenuScreen extends Menu {
             transitionScreen(new MainMenuScreen(game));        }
 
 
-        displayButton(seaLionButton, seaLionButtonActive, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT);
+        if(displayButton(seaLionButton, seaLionButtonActive, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+            transitionScreen(new SeaLionLevel(game));
+        }
         displayButton(dolphinButton, dolphinButtonActive, x, y_sea_lion - BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT);
         displayButton(killerWhaleButton, killerWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING*2, BUTTON_WIDTH, BUTTON_HEIGHT);
         if (displayButton(blueWhaleButton, blueWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING*3, BUTTON_WIDTH, BUTTON_HEIGHT)){
