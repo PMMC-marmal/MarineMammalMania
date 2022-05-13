@@ -27,11 +27,8 @@ public class B2dContactListener implements ContactListener {
         parent.contacting = fb;
 
 
-        if(fa.getBody().getType() == BodyType.StaticBody){
+        if((fa.getBody().getUserData().equals("Player") && fb.getBody().getUserData().equals("IceBerg")) || (fb.getBody().getUserData().equals("IceBerg") && fa.getBody().getUserData().equals("Player"))){
             parent.isTouchingIceBerg = true;
-        }else if(fb.getBody().getType() == BodyType.StaticBody){
-            parent.isTouchingIceBerg = true;
-        }else{
         }
     }
 

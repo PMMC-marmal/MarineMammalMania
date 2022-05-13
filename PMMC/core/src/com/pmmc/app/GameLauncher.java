@@ -1,6 +1,7 @@
 package com.pmmc.app;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pmmc.app.screen.LevelMenuScreen;
 import com.pmmc.app.screen.MainMenuScreen;
@@ -14,8 +15,7 @@ public class GameLauncher extends Game {
 
 	private MainMenuScreen mainMenuScreen;
 	private LevelMenuScreen levelMenuScreen;
-	private TestLevel testLevel;
-	private TestScreen testScreen;
+
 	private PolarBearLevel polarBearLevel;
 
 	public SpriteBatch batch;
@@ -23,10 +23,9 @@ public class GameLauncher extends Game {
 
 	@Override
 	public void create () {
+
 		this.mainMenuScreen = new MainMenuScreen(this);
 		this.levelMenuScreen = new LevelMenuScreen(this);
-		this.testLevel = new TestLevel(this);
-		this.testScreen = new TestScreen(this);
 		this.polarBearLevel = new PolarBearLevel(this);
 		this.batch = new SpriteBatch();
 

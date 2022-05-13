@@ -64,7 +64,7 @@ public class BlueWhaleLevel extends Level{
         // Add background
         renderBackground(background);
 
-        renderPrey2D(food); // NEEEDS HIEGHT WIDTH
+//        renderPrey2D(food); // NEEEDS HIEGHT WIDTH
         // Add Obstacles
 
 

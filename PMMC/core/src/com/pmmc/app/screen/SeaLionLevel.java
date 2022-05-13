@@ -24,32 +24,31 @@ public class SeaLionLevel extends Level{
     boolean[] obstacles1, obstacles2, obstacles3;
     ArrayList<Sprite> choices1, choices2, choices3 ;
     private SeaLion seaLion;
-    private Sprite background, blur, food;
+    private Sprite background, food, toxicFood;
 
     public SeaLionLevel(final GameLauncher game){
         super(game);
-        choices1 = new ArrayList<>();
-        choices2 = new ArrayList<>();
-        choices3 = new ArrayList<>();
-        obstacles1 = generateObstacles(1);
-        obstacles2 = generateObstacles(2);
-        obstacles3 = generateObstacles(3);
-        preySpawnHeight = -200;
+        preySpawnHeight = -500;
         preyDespawnable = false;
+
+        waterWorld = true;
     }
 
     @Override
     public void show() {
         seaLion = new SeaLion();
+        setWorldSize(24000);
+        setSpacing(600);
         setPlayer(seaLion);
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
-        this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
-        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
+        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.herring, Texture.class));
+        this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicHerring, Texture.class));
 
 
-//        addPrey(createBox(4200,150, 300,300, true, true,"toxic food"));
-
+//        addPrey(1, generateObstacles(1), 300, 150);
+        addPrey(2, generateObstacles(2), 300, 150);
+        addPrey(3, generateObstacles(2), 300, 150);
     }
 
     @Override
@@ -59,14 +58,16 @@ public class SeaLionLevel extends Level{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Add background
-        renderBackground(background);
 
-        renderPrey2D(food); // NEEEDS HIEGHT WIDTH
         // Add Obstacles
 
 
         game.batch.begin();
+        renderBackground(background);
+
+        renderPrey2D(food, toxicFood); // NEEEDS HIEGHT WIDTH
         renderPlayer2D();
+        renderHealthBars();
         game.batch.end();
 //        renderBackground(blur);
     }
