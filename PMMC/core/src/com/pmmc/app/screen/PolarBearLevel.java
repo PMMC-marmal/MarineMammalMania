@@ -23,7 +23,7 @@ public class PolarBearLevel extends Level {
 
     ArrayList<Sprite> choices1, choices2, choices3 ;
     private PolarBear bear;
-    private Sprite background, staticBear, food,
+    private Sprite background, staticBear, food,toxicFood,
             iceberg1,
             iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
@@ -35,7 +35,7 @@ public class PolarBearLevel extends Level {
         obstacles1 = generateObstacles(1);
         obstacles2 = generateObstacles(2);
         obstacles3 = generateObstacles(3);
-        preySpawnHeight = 300;
+        preySpawnHeight = 100;
         preyDespawnable = true;
 
 
@@ -46,6 +46,9 @@ public class PolarBearLevel extends Level {
         bear = new PolarBear();
 
         setPlayer(bear);
+        setWorldSize(24000);
+        setSpacing(600);
+
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
 
@@ -53,6 +56,7 @@ public class PolarBearLevel extends Level {
         staticBear.flip(true,false);
 
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seal, Texture.class));
+        this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSeal, Texture.class));
 
         this.iceberg1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg1, Texture.class));
         this.iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2, Texture.class));
@@ -85,16 +89,17 @@ public class PolarBearLevel extends Level {
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+
+        game.batch.begin();
         // Add background
         renderBackground(background);
 
-        renderPrey2D(food); // NEEDS HEIGHT WIDTH
+        renderPrey2D(food, toxicFood); // NEEDS HEIGHT WIDTH
         // Add Obstacles
-        renderObstacles(1, choices1, obstacles1, 100);
-        renderObstacles(2, choices2, obstacles2, 100);
-        renderObstacles(3, choices3, obstacles3, 100);
-
-        game.batch.begin();
+        renderObstacles(1, choices1, obstacles1, 0);
+        renderObstacles(2, choices2, obstacles2, 0);
+        renderObstacles(3, choices3, obstacles3, 0);
         renderPlayer2D();
         renderHealthBars();
         renderEndGoal2D(staticBear);

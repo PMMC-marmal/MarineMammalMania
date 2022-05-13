@@ -61,12 +61,18 @@ public class AssetHandler {
             seaLionWalking = "sprite_sheets/SeaLionWalkingSpriteSheet.atlas",
             seaLionSwimming = "sprite_sheets/SeaLionSwimmingSpriteSheet.atlas",
 
-            salmon = "prey/chinook_salmon.png",
-            herring = "prey/herring.png",
-            krill = "prey/krill.png",
-            seal = "prey/ringed_seal.png",
-            sardine = "prey/sardine.png",
-            squid = "prey/squid.png";
+            salmon = "food/chinook_salmon.png",
+            herring = "food/herring.png",
+            krill = "food/krill.png",
+            seal = "food/ringed_seal.png",
+            sardine = "food/sardine.png",
+            squid = "food/squid.png",
+            toxicSalmon = "food/toxic_chinook_salmon.png",
+            toxicHerring = "food/toxic_herring.png",
+            toxicKrill = "food/toxic_krill.png",
+            toxicSeal = "food/toxic_ringed_seal.png",
+            toxicSardine = "food/toxic_sardine.png",
+            toxicSquid = "food/toxic_squid.png";
 
 
 
@@ -128,6 +134,12 @@ public class AssetHandler {
         assetManager.load(seal, Texture.class);
         assetManager.load(sardine, Texture.class);
         assetManager.load(squid, Texture.class);
+        assetManager.load(toxicSalmon, Texture.class);
+        assetManager.load(toxicHerring, Texture.class);
+        assetManager.load(toxicKrill, Texture.class);
+        assetManager.load(toxicSeal, Texture.class);
+        assetManager.load(toxicSardine, Texture.class);
+        assetManager.load(toxicSquid, Texture.class);
     }
 
     public static void dispose(){
