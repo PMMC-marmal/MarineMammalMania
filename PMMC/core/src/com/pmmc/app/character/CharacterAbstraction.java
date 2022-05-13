@@ -133,7 +133,7 @@ public abstract class CharacterAbstraction extends Sprite {
         if (currentFrame >= textureAtlas.getRegions().size * 16) {
             currentFrame = 1;
         }
-        System.out.println(currentFrame / 16 + 1);
+//        System.out.println(currentFrame / 16 + 1);
             setRegion(textureAtlas.findRegion(Integer.toString(currentFrame / 16 + 1)));
 
         if (death){

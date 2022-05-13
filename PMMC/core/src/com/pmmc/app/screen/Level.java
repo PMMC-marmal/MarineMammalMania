@@ -59,7 +59,7 @@ public abstract class Level extends AbstractScreen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth() / SCALE, Gdx.graphics.getHeight() / SCALE);
 
-        world = new World(new Vector2(0, 0f), false);
+        world = new World(new Vector2(0, -10f*PPM), false);
         world.setContactListener(new B2dContactListener(this));
         b2dr = new Box2DDebugRenderer();
 
@@ -120,12 +120,14 @@ public abstract class Level extends AbstractScreen {
     private void update(float deltaTime) {
         world.step(deltaTime, 6, 2);
         if (player2d.getPosition().y * PPM > 200) {
-            world.setGravity(new Vector2(0, -10f*PPM));
+            player2d.setGravityScale(1);
+//            world.setGravity(new Vector2(0, -10f*PPM));
             player.setSwimming(false);
             player.setTimeInWater(0);
             player.incrementTimeOutWater();
         } else {
-            world.setGravity(new Vector2(0, 0f));
+//            world.setGravity(new Vector2(0, 0f));
+            player2d.setGravityScale(0);
             player.setSwimming(true);
             player.incrementTimeInWater();
             player.setTimeOutWater(0);
@@ -253,18 +255,18 @@ public abstract class Level extends AbstractScreen {
             }
         }
         if (prey.isEmpty()){
-//            addPrey(2, generateObstacles(2),preySpawnHeight, 300, 150);
-//            addPrey(3, generateObstacles(2),preySpawnHeight, 300, 150);
+            addPrey(2, generateObstacles(2), 300, 150);
+            addPrey(3, generateObstacles(2), 300, 150);
         }
 
         for (Body p : prey){
 
-            if (isSwimming){
-                p.setLinearVelocity(0.8f,0);
+            if (player.getSwimming()){
+                p.setLinearVelocity(1,0);
 
             }
             else {
-                p.setLinearVelocity(3, 0);
+                p.setLinearVelocity(4, 0);
             }
             if (p.getPosition().y * PPM < 0 && preyDespawnable) {
                 toRemove.add(p);
@@ -380,7 +382,6 @@ public abstract class Level extends AbstractScreen {
     public void renderEndGoal2D(Sprite bear) {
         stage.act();
         stage.getBatch().begin();
-
         stage.getBatch().draw(bear, endGoal.getPosition().x * PPM - (bear.getWidth() / 2), endGoal.getPosition().y * PPM);
         stage.getBatch().end();
         stage.draw();
@@ -390,8 +391,8 @@ public abstract class Level extends AbstractScreen {
         stage.act();
         stage.getBatch().begin();
         for (Body p: prey){
-            food.setRotation(p.getAngle());
-            stage.getBatch().draw(food, p.getPosition().x * PPM - 150, p.getPosition().y * PPM, 300,300);
+            food.setRotation(p.getAngularDamping());
+            stage.getBatch().draw(food, p.getPosition().x * PPM - 150, p.getPosition().y * PPM, 300,150);
         }
         stage.getBatch().end();
         stage.draw();
@@ -516,7 +517,7 @@ public abstract class Level extends AbstractScreen {
         stage.draw();
     }
 
-    public void addPrey(int section, boolean[] obstacles, int y, int width, int height){
+    public void addPrey(int section, boolean[] obstacles, int width, int height){
         int i;
         if (section == 2) {
             i = 10;
@@ -537,8 +538,7 @@ public abstract class Level extends AbstractScreen {
             }
         }
         if (toggle) {
-            System.out.println("GEttinf called");
-            prey.add(createBox(4200,150, 300,300, true, false,toxicOptions[rnd]));
+            prey.add(createBox(4200,preySpawnHeight-50, 300,300, true, false,toxicOptions[rnd]));
             toggle = false;
         }
     }

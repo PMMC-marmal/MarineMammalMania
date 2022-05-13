@@ -15,23 +15,23 @@ public class AssetHandler {
             newGameButtonActive = "main_menu/new_game_button_active.png",
             mainMenuBackground = "main_menu/mainmenu_background.png",
     // Level Select
-            seaLionButton = "sea_lion_button.png",
-            seaLionButtonActive = "sea_lion_button_active.png",
-            dolphinButton = "dolphin_button.png",
-            dolphinButtonActive = "dolphin_button_active.png",
-            killerWhaleButton = "killer_whale_button.png",
-            killerWhaleButtonActive = "killer_whale_button_active.png",
-            blueWhaleButton = "blue_whale_button.png",
-            blueWhaleButtonActive = "blue_whale_button_active.png",
-            polarBearButton = "polar_bear_button.png",
-            polarBearButtonActive = "polar_bear_button_active.png",
-            levelMenuBackground = "level_select_background.png",
-            backArrow = "back_arrow.png",
+            seaLionButton = "buttons/sea_lion_button.png",
+            seaLionButtonActive = "buttons/sea_lion_button_active.png",
+            dolphinButton = "buttons/dolphin_button.png",
+            dolphinButtonActive = "buttons/dolphin_button_active.png",
+            killerWhaleButton = "buttons/killer_whale_button.png",
+            killerWhaleButtonActive = "buttons/killer_whale_button_active.png",
+            blueWhaleButton = "buttons/blue_whale_button.png",
+            blueWhaleButtonActive = "buttons/blue_whale_button_active.png",
+            polarBearButton = "buttons/polar_bear_button.png",
+            polarBearButtonActive = "buttons/polar_bear_button_active.png",
+            levelMenuBackground = "backgrounds/level_select_background.png",
+            backArrow = "buttons/back_arrow.png",
             seaLionSprite = "sea_lion.png",
             dolphinSprite = "dolphin.png",
             killerWhaleSprite = "killer_whale.png",
             blueWhaleSprite = "blue_whale.png",
-            polarBearSprite = "polar_bear.png",
+            polarBearSprite = "bear1.png",
 
     //polarbear
             healthBarEmpty = "player-bars/health/healthbar_0.png",
@@ -44,22 +44,32 @@ public class AssetHandler {
             toxicBar = "player-bars/toxic/toxic_bar.png",
 
 //            waterWithSand = "water-with-sand.png",
-            waterWithSand = "ocean-2.png",
-            blur = "water-blur.png",
+            waterWithSand = "backgrounds/ocean-2.png",
+            blur = "backgrounds/water-blur.png",
 
 
-            icebergAddon = "icebergs/iceberg-background.png",
-            iceberg1 = "icebergs/starting_ice_berg.png",
-            iceberg2 = "icebergs/iceberg_medium.png",
-            iceberg3 = "icebergs/iceberg_medium2.png",
-            iceberg4 = "icebergs/iceberg_medium2.png",
-            iceberg5 = "icebergs/iceberg_small.png",
-            iceberg6 = "icebergs/iceberg_small2.png",
+            icebergAddon = "obstacles/iceberg-background.png",
+            iceberg1 = "obstacles/starting_ice_berg.png",
+            iceberg2 = "obstacles/iceberg_medium.png",
+            iceberg3 = "obstacles/iceberg_medium2.png",
+            iceberg4 = "obstacles/iceberg_medium2.png",
+            iceberg5 = "obstacles/iceberg_small.png",
+            iceberg6 = "obstacles/iceberg_small2.png",
 
             polarBearWalking = "sprite_sheets/PolarBearWalkingSpriteSheet.atlas",
             polarBearSwimming = "sprite_sheets/PolarBearSwimmingSpriteSheet.atlas",
             seaLionWalking = "sprite_sheets/SeaLionWalkingSpriteSheet.atlas",
-            seaLionSwimming = "sprite_sheets/SeaLionSwimmingSpriteSheet.atlas";
+            seaLionSwimming = "sprite_sheets/SeaLionSwimmingSpriteSheet.atlas",
+
+            salmon = "prey/chinook_salmon.png",
+            herring = "prey/herring.png",
+            krill = "prey/krill.png",
+            seal = "prey/ringed_seal.png",
+            sardine = "prey/sardine.png",
+            squid = "prey/squid.png";
+
+
+
 
     public static void load(){
         assetManager.load(continueButton, Texture.class);
@@ -95,7 +105,6 @@ public class AssetHandler {
         assetManager.load(toxicBar, Texture.class);
         assetManager.load(toxicBarEmpty, Texture.class);
 
-        assetManager.load(testbear, Texture.class);
 
         assetManager.load(waterWithSand,Texture.class);
         assetManager.load(blur,Texture.class);
@@ -112,6 +121,13 @@ public class AssetHandler {
         assetManager.load(polarBearSwimming, TextureAtlas.class);
         assetManager.load(seaLionWalking, TextureAtlas.class);
         assetManager.load(seaLionSwimming, TextureAtlas.class);
+
+        assetManager.load(salmon, Texture.class);
+        assetManager.load(herring, Texture.class);
+        assetManager.load(krill, Texture.class);
+        assetManager.load(seal, Texture.class);
+        assetManager.load(sardine, Texture.class);
+        assetManager.load(squid, Texture.class);
     }
 
     public static void dispose(){
