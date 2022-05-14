@@ -4,11 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
-import com.pmmc.app.character.BlueWhale;
 import com.pmmc.app.character.SeaLion;
 
 import java.util.ArrayList;
@@ -26,12 +23,15 @@ public class SeaLionLevel extends Level{
     private SeaLion seaLion;
     private Sprite background, food, toxicFood;
 
-    public SeaLionLevel(final GameLauncher game){
+    public SeaLionLevel(GameLauncher game){
         super(game);
         preySpawnHeight = -500;
         preyDespawnable = false;
 
         waterWorld = true;
+
+        obstacles2 = generateObstacles(2);
+        obstacles3 = generateObstacles(3);
     }
 
     @Override
@@ -45,7 +45,8 @@ public class SeaLionLevel extends Level{
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.herring, Texture.class));
         this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicHerring, Texture.class));
 
-
+        placeBox2DObstacles(2, obstacles2 );
+        placeBox2DObstacles(3, obstacles3 );
 //        addPrey(1, generateObstacles(1), 300, 150);
         addPrey(2, generateObstacles(2), 300, 150);
         addPrey(3, generateObstacles(2), 300, 150);

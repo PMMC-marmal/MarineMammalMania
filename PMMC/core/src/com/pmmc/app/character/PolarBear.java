@@ -11,7 +11,7 @@ public class PolarBear extends CharacterAbstraction {
                 AssetHandler.assetManager.get(AssetHandler.polarBearSwimming, TextureAtlas.class));
         setSpeed(15);
         setAirLossRate(200);
-        setFoodLossRate(400);
+        setFoodLossRate(380);
         setDamageRate(100);
     }
 

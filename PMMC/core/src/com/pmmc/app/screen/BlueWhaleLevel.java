@@ -9,10 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.BlueWhale;
-import com.pmmc.app.character.PolarBear;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class BlueWhaleLevel extends Level{
 
@@ -28,7 +26,7 @@ public class BlueWhaleLevel extends Level{
     private BlueWhale whale;
     private Sprite background, blur, food;
 
-    public BlueWhaleLevel(final GameLauncher game){
+    public BlueWhaleLevel(GameLauncher game){
         super(game);
         choices1 = new ArrayList<>();
         choices2 = new ArrayList<>();
