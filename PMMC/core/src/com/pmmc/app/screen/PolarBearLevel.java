@@ -23,7 +23,7 @@ public class PolarBearLevel extends Level {
 
     ArrayList<Sprite> choices1, choices2, choices3 ;
     private PolarBear bear;
-    private Sprite background, staticBear, food,toxicFood,
+    private Sprite background, staticBear, food, toxicFood,
             iceberg1,
             iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
