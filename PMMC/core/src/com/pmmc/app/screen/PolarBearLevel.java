@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.PolarBear;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -20,12 +22,14 @@ import java.util.Random;
 
 public class PolarBearLevel extends Level {
     boolean[] obstacles1, obstacles2, obstacles3;
-
-    ArrayList<Sprite> choices1, choices2, choices3 ;
+    boolean[][] seenPopUps;
+    private Vector2[] popUpLocations;
+    ArrayList<Sprite> choices1, choices2, choices3, popUps ;
     private PolarBear bear;
-    private Sprite background, staticBear, food, toxicFood,
-            iceberg1,
-            iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
+    private Sprite background, pop1,pop2,pop3,pop4,pop5,
+            staticBear,
+            food, toxicFood,
+            iceberg1, iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
     public PolarBearLevel(final GameLauncher game){
         super(game);
@@ -64,6 +68,16 @@ public class PolarBearLevel extends Level {
         this.iceberg4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg4, Texture.class));
         this.iceberg5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg5, Texture.class));
         this.iceberg6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg6, Texture.class));
+
+        this.pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarFoodPop, Texture.class));
+        this.pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarHabitatPop, Texture.class));
+        this.pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarLifePop, Texture.class));
+        this.pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarSocialPop, Texture.class));
+        this.pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarThreatsPop, Texture.class));
+        seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
+
+        popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
+        popUpLocations = new Vector2[]{new Vector2(1000,200),new Vector2(3000,200),new Vector2(5000,200),new Vector2(7000,200),new Vector2(9000,200)};//slect location
         placeBox2DObstacles(1, obstacles1 );
         placeBox2DObstacles(2, obstacles2 );
         placeBox2DObstacles(3, obstacles3 );
@@ -81,6 +95,7 @@ public class PolarBearLevel extends Level {
         for (int i = 0 ; i < 2; i++) {
             choices3.add(options3[new Random().nextInt(options3.length-1)]);
         }
+
     }
 
     @Override
@@ -100,9 +115,11 @@ public class PolarBearLevel extends Level {
         renderObstacles(1, choices1, obstacles1, 0);
         renderObstacles(2, choices2, obstacles2, 0);
         renderObstacles(3, choices3, obstacles3, 0);
+        seenPopUps = renderPopUps(seenPopUps,popUpLocations,popUps);
+        renderEndGoal2D(staticBear);
         renderPlayer2D();
         renderHealthBars();
-        renderEndGoal2D(staticBear);
+
         game.batch.end();
 //        renderBackground(blur);
     }
