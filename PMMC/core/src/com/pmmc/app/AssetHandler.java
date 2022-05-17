@@ -58,6 +58,9 @@ public class AssetHandler {
             polarBearSwimming = "sprite_sheets/PolarBearSwimmingSpriteSheet.atlas",
             seaLionWalking = "sprite_sheets/SeaLionWalkingSpriteSheet.atlas",
             seaLionSwimming = "sprite_sheets/SeaLionSwimmingSpriteSheet.atlas",
+            orcaSwimming = "sprite_sheets/OrcaSwimmingSpriteSheet.atlas",
+            dolphinSwimming = "sprite_sheets/DolphinSwimmingSpriteSheet.atlas",
+            whaleSwimming = "sprite_sheets/WhaleSwimmingSpriteSheet.atlas",
 
             polarFoodPop = "popups/polar_bear/food_popup.png",
             polarHabitatPop = "popups/polar_bear/habitat_popup.png",
@@ -137,6 +140,11 @@ public class AssetHandler {
         assetManager.load(polarBearSwimming, TextureAtlas.class);
         assetManager.load(seaLionWalking, TextureAtlas.class);
         assetManager.load(seaLionSwimming, TextureAtlas.class);
+        assetManager.load(orcaSwimming, TextureAtlas.class);
+        assetManager.load(whaleSwimming, TextureAtlas.class);
+        assetManager.load(dolphinSwimming, TextureAtlas.class);
+
+
 
         assetManager.load(salmon, Texture.class);
         assetManager.load(herring, Texture.class);

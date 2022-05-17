@@ -1,0 +1,40 @@
+
+OrcaSwimmingSpriteSheet.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+3
+  rotate: false
+  xy: 1, 627
+  size: 501, 311
+  orig: 501, 311
+  offset: 0, 0
+  index: -1
+1
+  rotate: false
+  xy: 1, 314
+  size: 493, 311
+  orig: 493, 311
+  offset: 0, 0
+  index: -1
+4
+  rotate: false
+  xy: 504, 627
+  size: 493, 311
+  orig: 493, 311
+  offset: 0, 0
+  index: -1
+5
+  rotate: false
+  xy: 1, 1
+  size: 480, 311
+  orig: 480, 311
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 496, 365
+  size: 496, 260
+  orig: 496, 260
+  offset: 0, 0
+  index: -1
