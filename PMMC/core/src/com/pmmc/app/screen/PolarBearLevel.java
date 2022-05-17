@@ -140,7 +140,7 @@ public class PolarBearLevel extends Level {
         questionBank.put(2, new Question(
                 "Where do polar bears live?",
                 "The Arctic",
-                new ArrayList<>(Arrays.asList("The Arctic", "Antarctica", "Asia", "All of the above"))
+                new ArrayList<>(Arrays.asList("The Arctic", "Antarctica", "Asia", "All answers are correct"))
         ));
         questionBank.put(3, new Question(
                 "Which of these is NOT a threat to polar bears?",

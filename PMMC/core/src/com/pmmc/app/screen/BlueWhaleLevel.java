@@ -9,8 +9,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.BlueWhale;
+import com.pmmc.app.screen.quiz.Question;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class BlueWhaleLevel extends Level{
 
@@ -70,6 +73,37 @@ public class BlueWhaleLevel extends Level{
         renderPlayer2D();
         game.batch.end();
 //        renderBackground(blur);
+    }
+
+    public HashMap<Integer, Question> generateQuestionBank(){
+        HashMap<Integer, Question> questionBank = new HashMap<>();
+        questionBank.put(1, new Question(
+                "Blue whales live in the oceans of the ...",
+                "All answers are correct",
+                new ArrayList<>(Arrays.asList("All answers are correct", "North Atlantic", "North Pacific", "Southern Hemisphere"))
+        ));
+        questionBank.put(2, new Question(
+                "Blue whales eat almost exclusively this kind of food.",
+                "Krill",
+                new ArrayList<>(Arrays.asList("Krill", "Shrimp", "Crabs", "All of these are correct"))
+        ));
+        questionBank.put(3, new Question(
+                "How long do blue whales typically live?",
+                "80-90+ years",
+                new ArrayList<>(Arrays.asList("80-90+ years", "50-60 years", "60-70 years", "70-80 years"))
+        ));
+        questionBank.put(4, new Question(
+                "Nowadays, blue whales are threatened by...",
+                "All answers are correct",
+                new ArrayList<>(Arrays.asList("All answers are correct", "Ship strikes", "Entanglement from fishing gear", "Ocean pollution"))
+        ));
+        questionBank.put(5, new Question(
+                "In order to keep our world’s blue whale population, what can you do to help?",
+                "TBA (Correct)",
+                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+        ));
+
+        return questionBank;
     }
 
 }
