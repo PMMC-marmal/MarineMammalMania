@@ -32,7 +32,6 @@ public class AssetHandler {
             killerWhaleSprite = "killer_whale.png",
             blueWhaleSprite = "blue_whale.png",
             polarBearSprite = "bear1.png",
-
     //polarbear
             healthBarEmpty = "player-bars/health/healthbar_0.png",
             healthBar = "player-bars/health/health_bar.png",
@@ -47,7 +46,6 @@ public class AssetHandler {
             waterWithSand = "backgrounds/ocean-2.png",
             blur = "backgrounds/water-blur.png",
 
-
             icebergAddon = "obstacles/iceberg-background.png",
             iceberg1 = "obstacles/starting_ice_berg.png",
             iceberg2 = "obstacles/iceberg_medium.png",
@@ -60,6 +58,12 @@ public class AssetHandler {
             polarBearSwimming = "sprite_sheets/PolarBearSwimmingSpriteSheet.atlas",
             seaLionWalking = "sprite_sheets/SeaLionWalkingSpriteSheet.atlas",
             seaLionSwimming = "sprite_sheets/SeaLionSwimmingSpriteSheet.atlas",
+
+            polarFoodPop = "popups/polar_bear/food_popup.png",
+            polarHabitatPop = "popups/polar_bear/habitat_popup.png",
+            polarLifePop = "popups/polar_bear/life_popup.png",
+            polarSocialPop = "popups/polar_bear/social_popup.png",
+            polarThreatsPop = "popups/polar_bear/threats_popup.png",
 
             salmon = "food/chinook_salmon.png",
             herring = "food/herring.png",
@@ -114,6 +118,12 @@ public class AssetHandler {
 
         assetManager.load(waterWithSand,Texture.class);
         assetManager.load(blur,Texture.class);
+
+        assetManager.load(polarFoodPop,Texture.class);
+        assetManager.load(polarHabitatPop,Texture.class);
+        assetManager.load(polarLifePop,Texture.class);
+        assetManager.load(polarSocialPop,Texture.class);
+        assetManager.load(polarThreatsPop,Texture.class);
 
         assetManager.load(iceberg1,Texture.class);
         assetManager.load(iceberg2,Texture.class);
