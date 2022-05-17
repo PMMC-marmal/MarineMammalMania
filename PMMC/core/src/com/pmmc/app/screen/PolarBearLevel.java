@@ -49,6 +49,7 @@ public class PolarBearLevel extends Level {
 
         setPlayer(bear);
         setWorldSize(24000);
+        setOceanDepth(2000);
         setSpacing(600);
 
         player.setSwimming(false);
@@ -107,7 +108,7 @@ public class PolarBearLevel extends Level {
         // Add background
         renderBackground(background);
 
-        renderPrey2D(food, toxicFood); // NEEDS HEIGHT WIDTH
+        renderPrey2D(food, toxicFood, (int)food.getWidth(), (int)food.getHeight()); // NEEDS HEIGHT WIDTH
         // Add Obstacles
         renderObstacles(1, choices1, obstacles1, 0);
         renderObstacles(2, choices2, obstacles2, 0);

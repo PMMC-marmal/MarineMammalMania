@@ -54,6 +54,9 @@ public class AssetHandler {
             iceberg5 = "obstacles/iceberg_small.png",
             iceberg6 = "obstacles/iceberg_small2.png",
 
+            sandArea = "obstacles/sealionsand.png",
+            bouy = "obstacles/bouy.png",
+
             polarBearWalking = "sprite_sheets/PolarBearWalkingSpriteSheet.atlas",
             polarBearSwimming = "sprite_sheets/PolarBearSwimmingSpriteSheet.atlas",
             seaLionWalking = "sprite_sheets/SeaLionWalkingSpriteSheet.atlas",
@@ -67,6 +70,10 @@ public class AssetHandler {
             polarLifePop = "popups/polar_bear/life_popup.png",
             polarSocialPop = "popups/polar_bear/social_popup.png",
             polarThreatsPop = "popups/polar_bear/threats_popup.png",
+
+            oilSpill = "threats/oil_spill.png",
+            smallBoat = "threats/boat_small.png",
+            trashBag = "threats/trashbag.png",
 
             salmon = "food/chinook_salmon.png",
             herring = "food/herring.png",
@@ -135,6 +142,8 @@ public class AssetHandler {
         assetManager.load(iceberg5,Texture.class);
         assetManager.load(iceberg6,Texture.class);
         assetManager.load(icebergAddon, Texture.class);
+        assetManager.load(bouy, Texture.class);
+        assetManager.load(sandArea, Texture.class);
 
         assetManager.load(polarBearWalking, TextureAtlas.class);
         assetManager.load(polarBearSwimming, TextureAtlas.class);
@@ -145,6 +154,10 @@ public class AssetHandler {
         assetManager.load(dolphinSwimming, TextureAtlas.class);
 
 
+
+//        assetManager.load(smallBoat, TextureAtlas.class);
+//        assetManager.load(oilSpill, TextureAtlas.class);
+//        assetManager.load(trashBag, TextureAtlas.class);
 
         assetManager.load(salmon, Texture.class);
         assetManager.load(herring, Texture.class);

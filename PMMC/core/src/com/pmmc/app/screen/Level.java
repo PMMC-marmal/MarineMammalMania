@@ -60,6 +60,11 @@ public abstract class Level extends AbstractScreen {
     private ArrayList<Body> prey;
     private boolean atSurface;
 
+    private boolean boatStrike;
+    private Sprite boatModel;
+    private Body boat2D;
+    private int oceanDepth;
+
     public Level(GameLauncher game) {
         super(game);
 
@@ -113,13 +118,13 @@ public abstract class Level extends AbstractScreen {
         return pBody;
     }
 
-    public Body makePolygonShapeBody(Vector2[] vertices, float x, float y) {
+    public Body makePolygonShapeBody(Vector2[] vertices, float x, float y, String type) {
         BodyDef boxBodyDef = new BodyDef();
         boxBodyDef.type = BodyDef.BodyType.StaticBody;
         boxBodyDef.position.set(x / PPM, y / PPM);
         boxBodyDef.fixedRotation = true;
         Body boxBody = world.createBody(boxBodyDef);
-        boxBody.setUserData("IceBerg");
+        boxBody.setUserData(type);
         PolygonShape polygon = new PolygonShape();
         polygon.set(vertices);
         boxBody.createFixture(polygon, 1.0f);
@@ -163,9 +168,37 @@ public abstract class Level extends AbstractScreen {
         inputUpdate(deltaTime);
         playerUpdate(deltaTime);
         preyUpdate(deltaTime);
+        hazardsUpdate(deltaTime);
         cameraUpdate(deltaTime);
         stage.getBatch().setProjectionMatrix(camera.combined);
     }
+
+    private void hazardsUpdate(float deltaTime) {
+        if (boatStrike){
+            if (boat2D == null){
+                if (atSurface){
+                    if (player2d.getPosition().x * PPM < worldSize/2){
+                        createBox(worldSize,0,500,100,false,true,"boat");
+                    }
+                }
+            }else {
+                renderBoat();
+                if (boat2D.getPosition().x<0 || boat2D.getPosition().x > worldSize){
+                    world.destroyBody(boat2D);
+                    boat2D = null;
+                }
+                else{
+                    if (boat2D.getLinearVelocity().x < 0){
+                        boat2D.setLinearVelocity(20,0);
+                    }else {
+                        boat2D.setLinearVelocity(-20,0);
+                    }
+                }
+            }
+        }
+    }
+
+
 
     private void playerUpdate(float deltaTime) {
         setPlayerParams(deltaTime);
@@ -283,12 +316,11 @@ public abstract class Level extends AbstractScreen {
             }
             for (Body p : prey) {
                 if (inPlayerView(p.getPosition())) {
-                    System.out.println("I SEE YOU");
                     int xforce = new Random().nextInt(20) - 10;
                     int yforce = new Random().nextInt(10) - 5;
                     if ((p.getPosition().x * PPM > worldSize && xforce > 0) || (p.getPosition().x * PPM < 0 && xforce < 0))
                         xforce = xforce * -1;
-                    if ((p.getPosition().y * PPM > 0 && yforce > 0) || (p.getPosition().y * PPM < -2000 && yforce < 0))
+                    if ((p.getPosition().y * PPM > 0 && yforce > 0) || (p.getPosition().y * PPM < - oceanDepth && yforce < 0))
                         yforce = yforce * -1;
                     p.setLinearVelocity(p.getLinearVelocity().x + xforce, p.getLinearVelocity().y + yforce);
                 } else p.setLinearVelocity(5, 1);
@@ -338,7 +370,7 @@ public abstract class Level extends AbstractScreen {
         int horizontalForce = 0;
         float speed = player.getSpeed();
 
-//        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
+        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
         // keyboard input
         if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) && player2d.getPosition().x > 0) {
 
@@ -352,7 +384,7 @@ public abstract class Level extends AbstractScreen {
                 horizontalForce += 1;
 
         }
-        if ((Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) && (player2d.getPosition().y * PPM > -2000)) {
+        if ((Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) && (player2d.getPosition().y * PPM > -oceanDepth)) {
             player.updateFrame(false, false, false);
             verticalForce -= 1;
         }
@@ -388,7 +420,7 @@ public abstract class Level extends AbstractScreen {
                 player.updateFrame(true, false, false);
                 horizontalForce += 1;
             }
-            if (yTouchPixels > 3 * Gdx.graphics.getHeight() / 4 && (player2d.getPosition().y * PPM > -2000)) {
+            if (yTouchPixels > 3 * Gdx.graphics.getHeight() / 4 && (player2d.getPosition().y * PPM > -oceanDepth)) {
                 player.updateFrame(false, false, false);
                 verticalForce -= 1;
             }
@@ -417,8 +449,8 @@ public abstract class Level extends AbstractScreen {
         } else {
         position.x = player2d.getPosition().x * PPM;
         }
-        if (player2d.getPosition().y * PPM < -2000+(idealGameHeight/2)) {
-            position.y = -2000+(idealGameHeight/2);
+        if (player2d.getPosition().y * PPM < -oceanDepth+(idealGameHeight/2)) {
+            position.y = -oceanDepth+(idealGameHeight/2);
         } else {
             position.y = player2d.getPosition().y * PPM;;
         }
@@ -443,39 +475,44 @@ public abstract class Level extends AbstractScreen {
         stage.draw();
     }
 
-    public void renderPrey2D(Sprite food, Sprite toxicFood) {
+    public void renderPrey2D(Sprite food, Sprite toxicFood, int width,int height) {
         stage.act();
         stage.getBatch().begin();
         for (Body p : prey) {
             if (p.getUserData().equals("toxic food")) {
-                stage.getBatch().draw(toxicFood, p.getPosition().x * PPM - 150, p.getPosition().y * PPM, 300, 150);
+                stage.getBatch().draw(toxicFood, p.getPosition().x * PPM - 150, p.getPosition().y * PPM, width, height);
             } else {
-                stage.getBatch().draw(food, p.getPosition().x * PPM - 150, p.getPosition().y * PPM, 300, 150);
+                stage.getBatch().draw(food, p.getPosition().x * PPM - 150, p.getPosition().y * PPM, width, height);
             }
         }
         stage.getBatch().end();
         stage.draw();
     }
+    private void renderBoat() {
+        stage.act();
+        stage.getBatch().begin();
+        stage.getBatch().draw(boatModel, boat2D.getPosition().x * PPM, boat2D.getPosition().y * PPM);
+        stage.getBatch().end();
+        stage.draw();
+    }
 
-    public void setPlayer(CharacterAbstraction player) {
-        this.player = player;
+    public void renderCustom(Sprite img, int x, float y, float width, float height) {
+        stage.act();
+        stage.getBatch().begin();
+        stage.getBatch().draw(img, x , y,width,height);
+        stage.getBatch().end();
+        stage.draw();
     }
 
     public void renderBackground(Sprite background) {
         stage.act();
         stage.getBatch().begin();
-        generateBackground(background);
+        for (int i = -2; i < worldSize / spacing + spacing * 2; i++) {
+            stage.getBatch().draw(background, spacing * i, -1 * oceanDepth-50 , spacing, oceanDepth+150);
+            background.flip(true, false);
+        }
         stage.getBatch().end();
         stage.draw();
-    }
-
-    public void generateBackground(Sprite background) {
-
-        for (int i = -2; i < worldSize / spacing + spacing * 2; i++) {
-            stage.getBatch().draw(background, spacing * i, -2 * background.getHeight() + 100, spacing, background.getHeight() * 2);
-            background.flip(true, false);
-
-        }
     }
 
     public boolean[][] renderPopUps(boolean[][] seen, Vector2[] locations, ArrayList<Sprite> popups){
@@ -484,7 +521,6 @@ public abstract class Level extends AbstractScreen {
         for (int i = 0; i< seen[0].length;i++){
             if (!seen[0][i]) {
                 if (inPlayerView(new Vector2(locations[i].x/PPM,locations[i].y/PPM))) {
-                    System.out.println("IN my view");
                     stage.getBatch().draw(popups.get(i), locations[i].x, locations[i].y);
                     seen[0][i] = true;
                     seen[1][i] = true;
@@ -549,7 +585,7 @@ public abstract class Level extends AbstractScreen {
             for (boolean o : obstacles) {
                 if (o) {
 //                    createBox(spacing* i + (Gdx.graphics.getWidth() / 6), 100, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4, true, true);
-                    makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, spacing * i, 0);
+                    makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, spacing * i, 0, "IceBerg");
                 }
                 i++;
                 i++;
@@ -558,7 +594,7 @@ public abstract class Level extends AbstractScreen {
             for (boolean o : obstacles) {
                 if (o) {
 //                    createBox(spacing* i + (Gdx.graphics.getWidth() / 6), 100, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 4, true, true);
-                    makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -200 / PPM)}, spacing * i, 0);
+                    makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -200 / PPM)}, spacing * i, 0,"IceBerg");
                 }
                 i++;
             }
@@ -637,8 +673,11 @@ public abstract class Level extends AbstractScreen {
         float tbound = playerposy + idealGameHeight / 2;
         float lbound = playerposx - idealGameWidth / 2;
         float bbound = playerposy - idealGameHeight / 2;
-        System.out.println(lbound + " : "+ pos.x * PPM+" : "+rbound);
         return (lbound < pos.x * PPM && pos.x * PPM < rbound) || (bbound < pos.x * PPM && pos.x * PPM < tbound);
+    }
+
+    public void setPlayer(CharacterAbstraction player) {
+        this.player = player;
     }
 
     public int getWorldSize() {
@@ -649,12 +688,36 @@ public abstract class Level extends AbstractScreen {
         this.worldSize = worldSize;
     }
 
+    public int getOceanDepth() {
+        return oceanDepth;
+    }
+
+    public void setOceanDepth(int oceanDepth) {
+        this.oceanDepth = oceanDepth;
+    }
+
     public int getSpacing() {
         return spacing;
     }
 
     public void setSpacing(int spacing) {
         this.spacing = spacing;
+    }
+
+    public boolean isBoatStrike() {
+        return boatStrike;
+    }
+
+    public void setBoatStrike(boolean boatStrike) {
+        this.boatStrike = boatStrike;
+    }
+
+    public Sprite getBoatModel() {
+        return boatModel;
+    }
+
+    public void setBoatModel(Sprite boatModel) {
+        this.boatModel = boatModel;
     }
 
     @Override
