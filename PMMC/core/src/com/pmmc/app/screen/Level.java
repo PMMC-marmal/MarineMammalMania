@@ -478,6 +478,34 @@ public abstract class Level extends AbstractScreen {
         }
     }
 
+    public boolean[][] renderPopUps(boolean[][] seen, Vector2[] locations, ArrayList<Sprite> popups){
+        stage.act();
+        stage.getBatch().begin();
+        for (int i = 0; i< seen[0].length;i++){
+            if (!seen[0][i]) {
+                if (inPlayerView(new Vector2(locations[i].x/PPM,locations[i].y/PPM))) {
+                    System.out.println("IN my view");
+                    stage.getBatch().draw(popups.get(i), locations[i].x, locations[i].y);
+                    seen[0][i] = true;
+                    seen[1][i] = true;
+                }
+            } else if (seen[1][i]){
+                if (inPlayerView(new Vector2(locations[i].x/PPM,locations[i].y/PPM))) {
+                    stage.getBatch().draw(popups.get(i), locations[i].x, locations[i].y);
+                    seen[0][i] = true;
+                    seen[1][i] = true;
+                }
+                else{
+                    seen[0][i] = true;
+                    seen[1][i] = false;
+                }
+            }
+        }
+        stage.getBatch().end();
+        stage.draw();
+        return seen;
+    }
+
     public boolean[] generateObstacles(int Section) {
         if (Section == 2) {
             boolean[] obstacles1 = {true, false, true, true, false, false, false, true, true, false};
@@ -584,7 +612,7 @@ public abstract class Level extends AbstractScreen {
         } else {
             i = 0;
         }
-        String[] toxicOptions = {"toxic food", "food"};
+        String[] toxicOptions = {"toxic food", "food","food","food"};
         int rnd = new Random().nextInt(toxicOptions.length);
         if (obstacles.length == 10) {
             for (boolean o : obstacles) {
@@ -609,6 +637,7 @@ public abstract class Level extends AbstractScreen {
         float tbound = playerposy + idealGameHeight / 2;
         float lbound = playerposx - idealGameWidth / 2;
         float bbound = playerposy - idealGameHeight / 2;
+        System.out.println(lbound + " : "+ pos.x * PPM+" : "+rbound);
         return (lbound < pos.x * PPM && pos.x * PPM < rbound) || (bbound < pos.x * PPM && pos.x * PPM < tbound);
     }
 
