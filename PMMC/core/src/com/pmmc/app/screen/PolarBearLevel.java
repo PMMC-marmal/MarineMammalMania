@@ -9,7 +9,6 @@ import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.PolarBear;
 import com.pmmc.app.screen.quiz.Question;
-import com.pmmc.app.screen.quiz.Quiz;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +26,7 @@ public class PolarBearLevel extends Level {
     private Vector2[] popUpLocations;
     ArrayList<Sprite> choices1, choices2, choices3, popUps ;
     private PolarBear bear;
-    private Sprite background, pop1,pop2,pop3,pop4,pop5,
+    private Sprite background, backdrop, blur, pop1,pop2,pop3,pop4,pop5,
             staticBear,
             food, toxicFood,
             iceberg1, iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
@@ -54,12 +53,17 @@ public class PolarBearLevel extends Level {
         setPlayer(bear);
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
+        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarBackdrop, Texture.class));
+        this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
 
         this.staticBear = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarBearSprite, Texture.class));
         staticBear.flip(true,false);
 
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seal, Texture.class));
         this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSeal, Texture.class));
+
+        preywidth = (int)food.getWidth()/2;
+        preyHeight = (int)food.getHeight()/2;
 
         this.iceberg1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg1, Texture.class));
         this.iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2, Texture.class));
@@ -82,9 +86,9 @@ public class PolarBearLevel extends Level {
         placeBox2DObstacles(2,new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, obstacles2 , 0,true ,"IceBerg");
         placeBox2DObstacles(3,new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -200 / PPM)}, obstacles3 , 0,false,"IceBerg");
 
-        addPrey(1, generateObstacles(1), (int)food.getWidth(), (int)food.getHeight(), true);
-        addPrey(2, generateObstacles(2), (int)food.getWidth(), (int)food.getHeight(), true);
-        addPrey(3, generateObstacles(2), (int)food.getWidth(), (int)food.getHeight(), true);
+        addPrey(1, generateObstacles(1), preywidth, preyHeight, true);
+        addPrey(2, generateObstacles(2), preywidth, preyHeight, true);
+        addPrey(3, generateObstacles(2), preywidth, preyHeight, true);
 
 
         choices1.add(this.iceberg1);
@@ -104,23 +108,22 @@ public class PolarBearLevel extends Level {
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-
         game.batch.begin();
         // Add background
-        renderBackground(background);
+        renderBackground(backdrop, -500);
+        renderBackground(background, -1 * getOceanDepth()-50);
 
-        renderPrey2D(food, toxicFood, (int)food.getWidth(), (int)food.getHeight()); // NEEDS HEIGHT WIDTH
-        // Add Obstacles
-        renderObstacles(1, choices1, obstacles1, 0,0);
-        renderObstacles(2, choices2, obstacles2, 0,400);
-        renderObstacles(3, choices3, obstacles3, 0, 400);
+        renderPrey2D(food, toxicFood, preywidth, preyHeight); // NEEDS HEIGHT WIDTH
+        renderObstacles(1, choices1, obstacles1, 540,0, false);
+        renderObstacles(2, choices2, obstacles2, 0,300, true);
+        renderObstacles(3, choices3, obstacles3, 0, 300, false);
         seenPopUps = renderPopUps(seenPopUps,popUpLocations,popUps);
         renderEndGoal2D(staticBear);
         renderPlayer2D();
         renderHealthBars();
+        renderBackground(blur, -1 * getOceanDepth()-50);
         game.batch.end();
-//        renderBackground(blur);
+//
     }
 
     /**

@@ -5,8 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pmmc.app.screen.LevelMenuScreen;
 import com.pmmc.app.screen.MainMenuScreen;
-import com.pmmc.app.screen.TestLevel;
-import com.pmmc.app.screen.TestScreen;
 
 import com.pmmc.app.screen.PolarBearLevel;
 

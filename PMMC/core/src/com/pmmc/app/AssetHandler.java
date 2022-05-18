@@ -27,12 +27,13 @@ public class AssetHandler {
             polarBearButtonActive = "buttons/polar_bear_button_active.png",
             levelMenuBackground = "backgrounds/level_select_background.png",
             backArrow = "buttons/back_arrow.png",
+
             seaLionSprite = "sea_lion.png",
             dolphinSprite = "dolphin1.png",
             killerWhaleSprite = "orca1.png",
             blueWhaleSprite = "bluewhale1.png",
             polarBearSprite = "bear1.png",
-    //polarbear
+
             healthBarEmpty = "player-bars/health/healthbar_0.png",
             healthBar = "player-bars/health/health_bar.png",
             airBarEmpty = "player-bars/air/air_0.png",
@@ -42,9 +43,9 @@ public class AssetHandler {
             toxicBarEmpty = "player-bars/toxic/toxic_0.png",
             toxicBar = "player-bars/toxic/toxic_bar.png",
 
-//            waterWithSand = "water-with-sand.png",
-            waterWithSand = "backgrounds/ocean-2.png",
-            blur = "backgrounds/water-blur.png",
+            polarBackdrop = "backgrounds/polar_background_blur.png",
+            waterWithSand = "backgrounds/polar-bear-ocean.png",
+            blur = "backgrounds/water_overlay.png",
 
             icebergAddon = "obstacles/iceberg-background.png",
             iceberg1 = "obstacles/starting_ice_berg.png",
@@ -70,6 +71,26 @@ public class AssetHandler {
             polarLifePop = "popups/polar_bear/life_popup.png",
             polarSocialPop = "popups/polar_bear/social_popup.png",
             polarThreatsPop = "popups/polar_bear/threats_popup.png",
+            whaleFoodPop = "popups/blue_whale/food_popup.png",
+            whaleHabitatPop = "popups/blue_whale/habitat_popup.png",
+            whaleLifePop = "popups/blue_whale/life_popup.png",
+            whaleSocialPop = "popups/blue_whale/social_popup.png",
+            whaleThreatsPop = "popups/blue_whale/threats_popup.png",
+            dolphinFoodPop = "popups/dolphin/food_popup.png",
+            dolphinHabitatPop = "popups/dolphin/habitat_popup.png",
+            dolphinLifePop = "popups/dolphin/life_popup.png",
+            dolphinSocialPop = "popups/dolphin/social_popup.png",
+            dolphinThreatsPop = "popups/dolphin/threats_popup.png",
+            orcaFoodPop = "popups/orca/food_popup.png",
+            orcaHabitatPop = "popups/orca/habitat_popup.png",
+            orcaLifePop = "popups/orca/life_popup.png",
+            orcaSocialPop = "popups/orca/social_popup.png",
+            orcaThreatsPop = "popups/orca/threats_popup.png",
+            lionFoodPop = "popups/sea_lion/food_popup.png",
+            lionHabitatPop = "popups/sea_lion/habitat_popup.png",
+            lionLifePop = "popups/sea_lion/life_popup.png",
+            lionSocialPop = "popups/sea_lion/social_popup.png",
+            lionThreatsPop = "popups/sea_lion/threats_popup.png",
 
             oilSpill = "threats/oil_spill.png",
             smallBoat = "threats/boat_small.png",
@@ -133,6 +154,7 @@ public class AssetHandler {
 
 
         assetManager.load(waterWithSand,Texture.class);
+        assetManager.load(polarBackdrop,Texture.class);
         assetManager.load(blur,Texture.class);
 
         assetManager.load(polarFoodPop,Texture.class);
@@ -140,6 +162,26 @@ public class AssetHandler {
         assetManager.load(polarLifePop,Texture.class);
         assetManager.load(polarSocialPop,Texture.class);
         assetManager.load(polarThreatsPop,Texture.class);
+        assetManager.load(whaleFoodPop,Texture.class);
+        assetManager.load(whaleHabitatPop,Texture.class);
+        assetManager.load(whaleLifePop,Texture.class);
+        assetManager.load(whaleSocialPop,Texture.class);
+        assetManager.load(whaleThreatsPop,Texture.class);
+        assetManager.load(dolphinFoodPop,Texture.class);
+        assetManager.load(dolphinHabitatPop,Texture.class);
+        assetManager.load(dolphinLifePop,Texture.class);
+        assetManager.load(dolphinSocialPop,Texture.class);
+        assetManager.load(dolphinThreatsPop,Texture.class);
+        assetManager.load(orcaFoodPop,Texture.class);
+        assetManager.load(orcaHabitatPop,Texture.class);
+        assetManager.load(orcaLifePop,Texture.class);
+        assetManager.load(orcaSocialPop,Texture.class);
+        assetManager.load(orcaThreatsPop,Texture.class);
+        assetManager.load(lionFoodPop,Texture.class);
+        assetManager.load(lionHabitatPop,Texture.class);
+        assetManager.load(lionLifePop,Texture.class);
+        assetManager.load(lionSocialPop,Texture.class);
+        assetManager.load(lionThreatsPop,Texture.class);
 
         assetManager.load(iceberg1,Texture.class);
         assetManager.load(iceberg2,Texture.class);
