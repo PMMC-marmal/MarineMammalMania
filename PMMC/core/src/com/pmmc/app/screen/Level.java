@@ -310,19 +310,19 @@ public abstract class Level extends AbstractScreen {
 
         switch (barValue) {
             case 1:
-                stage.getBatch().draw(bar, barPosition.x+50, barPosition.y, bar.getWidth() * 0.10f-50, bar.getHeight() / 2);
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.20f, bar.getHeight() / 2);
                 break;
             case 2:
-                stage.getBatch().draw(bar, barPosition.x+50, barPosition.y, bar.getWidth() * 0.20f-50, bar.getHeight() / 2);
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.28f, bar.getHeight() / 2);
                 break;
             case 3:
-                stage.getBatch().draw(bar, barPosition.x+50, barPosition.y, bar.getWidth() * 0.30f-50, bar.getHeight() / 2);
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.36f, bar.getHeight() / 2);
                 break;
             case 4:
-                stage.getBatch().draw(bar, barPosition.x+50, barPosition.y, bar.getWidth() * 0.40f-50, bar.getHeight() / 2);
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.42f, bar.getHeight() / 2);
                 break;
             case 5:
-                stage.getBatch().draw(bar, barPosition.x+50, barPosition.y, bar.getWidth() * 0.50f-50, bar.getHeight() / 2);
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.50f, bar.getHeight() / 2);
                 break;
             default:
                 break;
