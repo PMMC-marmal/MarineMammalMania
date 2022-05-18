@@ -49,7 +49,7 @@ public abstract class Menu extends AbstractScreen {
             game.batch.draw(buttonActive, x, y, buttonWidth, buttonHeight);
 
             // Return true if button is clicked
-            return Gdx.input.isTouched();
+            return Gdx.input.justTouched();
         }
         else{
             game.batch.draw(button, x, y, buttonWidth, buttonHeight);
@@ -66,7 +66,7 @@ public abstract class Menu extends AbstractScreen {
         // Return true if button is clicked
         return (Gdx.input.getX() > x) && (Gdx.input.getX() < (x + buttonWidth)) &&
                 (Gdx.input.getY() > yConverted) && (Gdx.input.getY() < (yConverted + buttonHeight)
-                && Gdx.input.isTouched());
+                && Gdx.input.justTouched());
     }
 
     @Override

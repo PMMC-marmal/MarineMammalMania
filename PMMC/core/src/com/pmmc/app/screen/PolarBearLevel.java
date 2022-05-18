@@ -8,9 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.PolarBear;
+import com.pmmc.app.screen.quiz.Question;
+import com.pmmc.app.screen.quiz.Quiz;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 
@@ -118,6 +121,44 @@ public class PolarBearLevel extends Level {
         renderHealthBars();
         game.batch.end();
 //        renderBackground(blur);
+    }
+
+    /**
+     * Note to whoever implements the quiz. All you really need to do is:
+     * 1. Create a generateQuestionBank method
+     * 2. Wherever you want to trigger the Quiz screen, do so like this:
+     *          game.setScreen(new Quiz(game, generateQuestionBank()));
+     * **/
+
+    public HashMap<Integer, Question> generateQuestionBank(){
+        HashMap<Integer, Question> questionBank = new HashMap<>();
+        questionBank.put(1, new Question(
+                "What is the polar bear’s main source of food?",
+                "Ringed Seals",
+                new ArrayList<>(Arrays.asList("Ringed Seals", "Sea Lions", "Salmon", "Walruses"))
+        ));
+        questionBank.put(2, new Question(
+                "Where do polar bears live?",
+                "The Arctic",
+                new ArrayList<>(Arrays.asList("The Arctic", "Antarctica", "Asia", "All answers are correct"))
+        ));
+        questionBank.put(3, new Question(
+                "Which of these is NOT a threat to polar bears?",
+                "Heavy boat traffic",
+                new ArrayList<>(Arrays.asList("Heavy boat traffic", "Oil spills", "Melting ice", "Pollution"))
+        ));
+        questionBank.put(4, new Question(
+                "The Arctic is heating up by...?",
+                "14% each decade!",
+                new ArrayList<>(Arrays.asList("14% each decade!", "1% each decade!", "4% each decade!", "10% each decade!"))
+        ));
+        questionBank.put(5, new Question(
+                "What can you do to stop the Arctic from melting?",
+                "TBA (Correct)",
+                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+        ));
+
+        return questionBank;
     }
 
 }

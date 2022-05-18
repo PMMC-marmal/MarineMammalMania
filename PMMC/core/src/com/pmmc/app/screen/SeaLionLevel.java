@@ -9,8 +9,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.SeaLion;
+import com.pmmc.app.screen.quiz.Question;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class SeaLionLevel extends Level{
 
@@ -97,6 +100,37 @@ public class SeaLionLevel extends Level{
         renderHealthBars();
         game.batch.end();
 //        renderBackground(blur);
+    }
+
+    public HashMap<Integer, Question> generateQuestionBank(){
+        HashMap<Integer, Question> questionBank = new HashMap<>();
+        questionBank.put(1, new Question(
+                "Where can California Sea Lions NOT be found living?",
+                "Tropical lakes",
+                new ArrayList<>(Arrays.asList("Tropical lakes", "Sandy beaches", "Temperate beaches", "Rock platforms"))
+        ));
+        questionBank.put(2, new Question(
+                "California Sea Lions typically live from ...?",
+                "20-30 years old",
+                new ArrayList<>(Arrays.asList("20-30 years old", "15-20 years old", "15-25 years old", "20-25 years old"))
+        ));
+        questionBank.put(3, new Question(
+                "California Sea Lions commonly suffer from what, due to human impacts?",
+                "Malnourishment",
+                new ArrayList<>(Arrays.asList("Malnourishment", "Loss of hearing", "Blindness", "Reproductive failure"))
+        ));
+        questionBank.put(4, new Question(
+                "What do California Sea Lions use to recognize other individuals?",
+                "Sight, sound, and scent",
+                new ArrayList<>(Arrays.asList("Sight, sound, and scent", "Sight, scent, and recognizable movements", "Scent, touch, and sound", "None of these"))
+        ));
+        questionBank.put(5, new Question(
+                "What can you do to help the California Sea Lions?",
+                "TBA (Correct)",
+                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+        ));
+
+        return questionBank;
     }
 
 }

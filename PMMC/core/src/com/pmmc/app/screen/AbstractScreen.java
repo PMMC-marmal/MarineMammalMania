@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * AbstractScreen is a template for game states
  */
 public abstract class AbstractScreen implements Screen {
-    GameLauncher game;
-    OrthographicCamera camera;
+    public GameLauncher game;
+    public OrthographicCamera camera;
 
     public AbstractScreen(GameLauncher game){
         this.game = game;

@@ -86,7 +86,13 @@ public class AssetHandler {
             toxicKrill = "food/toxic_krill.png",
             toxicSeal = "food/toxic_ringed_seal.png",
             toxicSardine = "food/toxic_sardine.png",
-            toxicSquid = "food/toxic_squid.png";
+            toxicSquid = "food/toxic_squid.png",
+    // Quiz
+            choiceButton = "quiz/choiceButton.png",
+            choiceButtonActivated = "quiz/choiceButtonActivated.png",
+            check = "quiz/check.png",
+            x_mark = "quiz/x_mark.png"
+    ;
 
 
 
@@ -171,6 +177,11 @@ public class AssetHandler {
         assetManager.load(toxicSeal, Texture.class);
         assetManager.load(toxicSardine, Texture.class);
         assetManager.load(toxicSquid, Texture.class);
+
+        assetManager.load(choiceButton, Texture.class);
+        assetManager.load(choiceButtonActivated, Texture.class);
+        assetManager.load(check, Texture.class);
+        assetManager.load(x_mark, Texture.class);
     }
 
     public static void dispose(){
