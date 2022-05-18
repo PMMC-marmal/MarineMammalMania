@@ -7,12 +7,13 @@ import com.pmmc.app.AssetHandler;
 public class BlueWhale extends CharacterAbstraction {
 
     public BlueWhale() {
-        super(AssetHandler.assetManager.get(AssetHandler.polarBearWalking, TextureAtlas.class),
-                AssetHandler.assetManager.get(AssetHandler.polarBearSwimming, TextureAtlas.class));
+        super(AssetHandler.assetManager.get(AssetHandler.whaleSwimming, TextureAtlas.class),
+                AssetHandler.assetManager.get(AssetHandler.whaleSwimming, TextureAtlas.class));
         setSpeed(6);
         setAirLossRate(1000);
         setFoodLossRate(500);
         setDamageRate(100);
+        setJumpForce(8);
     }
 
     // Power related to polar bear (method here)

@@ -28,9 +28,9 @@ public class AssetHandler {
             levelMenuBackground = "backgrounds/level_select_background.png",
             backArrow = "buttons/back_arrow.png",
             seaLionSprite = "sea_lion.png",
-            dolphinSprite = "dolphin.png",
-            killerWhaleSprite = "killer_whale.png",
-            blueWhaleSprite = "blue_whale.png",
+            dolphinSprite = "dolphin1.png",
+            killerWhaleSprite = "orca1.png",
+            blueWhaleSprite = "bluewhale1.png",
             polarBearSprite = "bear1.png",
     //polarbear
             healthBarEmpty = "player-bars/health/healthbar_0.png",
@@ -155,9 +155,9 @@ public class AssetHandler {
 
 
 
-//        assetManager.load(smallBoat, TextureAtlas.class);
-//        assetManager.load(oilSpill, TextureAtlas.class);
-//        assetManager.load(trashBag, TextureAtlas.class);
+        assetManager.load(smallBoat, Texture.class);
+        assetManager.load(oilSpill, Texture.class);
+        assetManager.load(trashBag, Texture.class);
 
         assetManager.load(salmon, Texture.class);
         assetManager.load(herring, Texture.class);

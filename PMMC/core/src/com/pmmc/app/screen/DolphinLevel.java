@@ -4,16 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
-import com.pmmc.app.character.BlueWhale;
-import com.pmmc.app.character.SeaLion;
+import com.pmmc.app.character.Dolphin;
 
 import java.util.ArrayList;
 
-public class BlueWhaleLevel extends Level{
+public class DolphinLevel extends Level{
 
 
 /**
@@ -22,10 +19,10 @@ public class BlueWhaleLevel extends Level{
 
  boolean[] obstacles1, obstacles2, obstacles3;
     ArrayList<Sprite> choices1, choices2, choices3 ;
-    private BlueWhale whale;
+    private Dolphin dolphin;
     private Sprite background, blur, food, toxicFood;
 
-    public BlueWhaleLevel(GameLauncher game){
+    public DolphinLevel(GameLauncher game){
         super(game);
         preySpawnHeight = -1000;
         preyDespawnable = false;
@@ -34,17 +31,19 @@ public class BlueWhaleLevel extends Level{
 
         obstacles2 = generateObstacles(2);
         obstacles3 = generateObstacles(3);
+        setWorldSize(24000);
+        setOceanDepth(3000);
+        setSpacing(1200);
+        setBoatStrike(true);
+        setWaterWorld(true);
     }
 
     @Override
     public void show() {
-        whale = new BlueWhale();
-        setWorldSize(24000);
-        setOceanDepth(3000);
-        setSpacing(1200);
-        setPlayer(whale);
-        setBoatStrike(true);
-        setWaterWorld(true);
+        dolphin = new Dolphin();
+        
+        setPlayer(dolphin);
+        
 //        setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoat, Texture.class)));
         player.setSwimming(true);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));

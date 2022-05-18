@@ -1,49 +1,42 @@
 package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
-import com.pmmc.app.transitions.FadeIn;
-import com.pmmc.app.transitions.FadeOut;
-import com.pmmc.app.transitions.TransitionEffect;
-
-import java.util.ArrayList;
 
 /**
  * Screen for level selection after the MainMenuScreen
  */
 public class LevelMenuScreen extends Menu {
 
-    private Sprite seaLionButton,
-                    seaLionButtonActive,
-                    dolphinButton,
-                    dolphinButtonActive,
-                    killerWhaleButton,
-                    killerWhaleButtonActive,
-                    blueWhaleButton,
-                    blueWhaleButtonActive, polarBearButton,
-                    polarBearButtonActive,
-                    background,
-                    backArrow,
-                    seaLionSprite,
-                    dolphinSprite,
-                    killerWhaleSprite,
-                    blueWhaleSprite,
-                    polarBearSprite;
-
     private final float BUTTON_WIDTH = Gdx.graphics.getWidth() * 0.8f;
     private final float BUTTON_HEIGHT = Gdx.graphics.getHeight() * 0.15f;
     private final float BUTTON_SPACING = BUTTON_HEIGHT * 1.10f;
+    private Sprite seaLionButton,
+            seaLionButtonActive,
+            dolphinButton,
+            dolphinButtonActive,
+            killerWhaleButton,
+            killerWhaleButtonActive,
+            blueWhaleButton,
+            blueWhaleButtonActive, polarBearButton,
+            polarBearButtonActive,
+            background,
+            backArrow,
+            seaLionSprite,
+            dolphinSprite,
+            killerWhaleSprite,
+            blueWhaleSprite,
+            polarBearSprite;
 
-    public LevelMenuScreen(GameLauncher game){
+    public LevelMenuScreen(GameLauncher game) {
         super(game);
     }
 
     @Override
-    public void show(){
+    public void show() {
         // Buttons
         this.seaLionButton = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionButton, Texture.class));
         this.seaLionButtonActive = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionButtonActive, Texture.class));
@@ -67,70 +60,75 @@ public class LevelMenuScreen extends Menu {
     }
 
     @Override
-    public void render(float delta){
+    public void render(float delta) {
         renderBackground(background);
 
         // Positional data for the button's coordinates
-        float x = (Gdx.graphics.getWidth()/2f) - (BUTTON_WIDTH / 2f);
-        float y_sea_lion = Gdx.graphics.getHeight() - BUTTON_SPACING*1.5f;
+        float x = (Gdx.graphics.getWidth() / 2f) - (BUTTON_WIDTH / 2f);
+        float y_sea_lion = Gdx.graphics.getHeight() - BUTTON_SPACING * 1.5f;
 
         // Back arrow width + height
-        float backArrowWidth = Gdx.graphics.getWidth()/12f;
-        float backArrowHeight = Gdx.graphics.getWidth()/14f;
+        float backArrowWidth = Gdx.graphics.getWidth() / 12f;
+        float backArrowHeight = Gdx.graphics.getWidth() / 14f;
 
         game.batch.begin();
 
         // Display back arrow. If clicked, return to main menu
-        if(displayButton(backArrow, 0, Gdx.graphics.getHeight() - BUTTON_SPACING / 1.25f, backArrowWidth, backArrowHeight)){
-            transitionScreen(new MainMenuScreen(game));        }
+        if (displayButton(backArrow, 0, Gdx.graphics.getHeight() - BUTTON_SPACING / 1.25f, backArrowWidth, backArrowHeight)) {
+            transitionScreen(new MainMenuScreen(game));
+        }
 
 
-        if(displayButton(seaLionButton, seaLionButtonActive, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+        if (displayButton(seaLionButton, seaLionButtonActive, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT)) {
             transitionScreen(new SeaLionLevel(game));
         }
-        displayButton(dolphinButton, dolphinButtonActive, x, y_sea_lion - BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT);
-        displayButton(killerWhaleButton, killerWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING*2, BUTTON_WIDTH, BUTTON_HEIGHT);
-        if (displayButton(blueWhaleButton, blueWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING*3, BUTTON_WIDTH, BUTTON_HEIGHT)){
-        game.setScreen(new BlueWhaleLevel(game));
-    }
-        if(displayButton(polarBearButton, polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING*4, BUTTON_WIDTH, BUTTON_HEIGHT)){
+        if (displayButton(dolphinButton, dolphinButtonActive, x, y_sea_lion - BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+            transitionScreen(new DolphinLevel(game));
+        }
+        if (displayButton(killerWhaleButton, killerWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING * 2, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+            transitionScreen(new OrcaLevel(game));
+        }
+        if (displayButton(blueWhaleButton, blueWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING * 3, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+            transitionScreen(new BlueWhaleLevel(game));
+        }
+        if (displayButton(polarBearButton, polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING * 4, BUTTON_WIDTH, BUTTON_HEIGHT)) {
             transitionScreen(new PolarBearLevel(game));
         }
 
         // Draw characters on screen
         game.batch.draw(seaLionSprite,
-                Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/5f,
-                Gdx.graphics.getHeight() - BUTTON_SPACING*1.5f,
-                Gdx.graphics.getWidth()/5f,
-                Gdx.graphics.getHeight()/6f
+                Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 5f,
+                Gdx.graphics.getHeight() - BUTTON_SPACING * 1.5f,
+                Gdx.graphics.getWidth() / 5f,
+                Gdx.graphics.getHeight() / 6f
         );
 
         game.batch.draw(dolphinSprite,
                 0,
-                Gdx.graphics.getHeight() - (BUTTON_HEIGHT*2) - BUTTON_SPACING,
-                Gdx.graphics.getWidth()/6f,
-                Gdx.graphics.getHeight()/4f
+                Gdx.graphics.getHeight() - (BUTTON_HEIGHT * 2) - BUTTON_SPACING,
+                Gdx.graphics.getWidth() / 6f,
+                Gdx.graphics.getHeight() / 4f
         );
 
         game.batch.draw(killerWhaleSprite,
-                Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/6f,
-                Gdx.graphics.getHeight() - (BUTTON_HEIGHT*3) - (BUTTON_SPACING*2),
-                Gdx.graphics.getWidth()/5f,
-                Gdx.graphics.getHeight()/3f
+                Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 6f,
+                Gdx.graphics.getHeight() - (BUTTON_HEIGHT * 3) - (BUTTON_SPACING * 2),
+                Gdx.graphics.getWidth() / 5f,
+                Gdx.graphics.getHeight() / 3f
         );
 
         game.batch.draw(blueWhaleSprite,
-                0 - Gdx.graphics.getWidth()/4f,
-                BUTTON_HEIGHT*1.25f,
-                Gdx.graphics.getWidth()/2f,
-                Gdx.graphics.getHeight()/2f
+                0 - Gdx.graphics.getWidth() / 4f,
+                BUTTON_HEIGHT * 1.25f,
+                Gdx.graphics.getWidth() / 2f,
+                Gdx.graphics.getHeight() / 2f
         );
 
         game.batch.draw(polarBearSprite,
-                Gdx.graphics.getWidth() - Gdx.graphics.getWidth()/4f,
-                Gdx.graphics.getHeight()/20f,
-                Gdx.graphics.getWidth()/6f,
-                Gdx.graphics.getHeight()/5f
+                Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 4f,
+                Gdx.graphics.getHeight() / 20f,
+                Gdx.graphics.getWidth() / 6f,
+                Gdx.graphics.getHeight() / 5f
         );
 
         game.batch.end();
