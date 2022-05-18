@@ -28,15 +28,23 @@ public class B2dContactListener implements ContactListener {
 
 
         if((fa.getBody().getUserData().equals("Player") && fb.getBody().getUserData().equals("IceBerg")) || (fb.getBody().getUserData().equals("IceBerg") && fa.getBody().getUserData().equals("Player"))){
-            parent.isTouchingIceBerg = true;
+            parent.isTouchingObstacle = true;
         }
+        if((fa.getBody().getUserData().equals("Player") && fb.getBody().getUserData().equals("Sand")) || (fb.getBody().getUserData().equals("Sand") && fa.getBody().getUserData().equals("Player"))){
+            parent.isTouchingObstacle = true;
+        }
+        if((fa.getBody().getUserData().equals("Player") && fb.getBody().getUserData().equals("Bouy")) || (fb.getBody().getUserData().equals("Bouy") && fa.getBody().getUserData().equals("Player"))){
+            parent.isTouchingObstacle = true;
+        }
+
+
     }
 
 
     @Override
     public void endContact(Contact contact) {
         System.out.println("End Contact");
-        parent.isTouchingIceBerg = false;
+        parent.isTouchingObstacle = false;
 //        Fixture fa = contact.getFixtureA();
 //        Fixture fb = contact.getFixtureB();
         parent.contacting = null;

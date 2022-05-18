@@ -1,23 +1,21 @@
 package com.pmmc.app.character;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.pmmc.app.AssetHandler;
 
 public abstract class CharacterAbstraction extends Sprite {
 
+    private final int maxLevels;
     private int timeInWater;
     private int timeOutWater;
     private int timeSinceFood;
     private int timeSinceDamage;
     private int damageRate;
     private boolean flipped = true;
-    private final int maxLevels;
     private float speed;
     private int health;
     private int air;
+    private int jumpForce;
     private int airLossRate;
     private int foodLossRate;
     private int hunger;
@@ -116,10 +114,12 @@ public abstract class CharacterAbstraction extends Sprite {
         this.y_position = y_position;
     }
 
-    public boolean getSwimming(){return isSwimming;}
+    public boolean getSwimming() {
+        return isSwimming;
+    }
 
-    public void setSwimming(boolean swimming){
-        if(swimming) {
+    public void setSwimming(boolean swimming) {
+        if (swimming) {
             this.textureAtlas = swimmingAtlas;
         } else {
             this.textureAtlas = walkingAtlas;
@@ -134,16 +134,16 @@ public abstract class CharacterAbstraction extends Sprite {
             currentFrame = 1;
         }
 //        System.out.println(currentFrame / 16 + 1);
-            setRegion(textureAtlas.findRegion(Integer.toString(currentFrame / 16 + 1)));
+        setRegion(textureAtlas.findRegion(Integer.toString(currentFrame / 16 + 1)));
 
-        if (death){
+        if (death) {
             flip(false, true);
         }
         if (flipped) {
             flip(true, false);
 
         }
-        if (horizontal){
+        if (horizontal) {
             flipped = flip;
         }
     }
@@ -172,37 +172,38 @@ public abstract class CharacterAbstraction extends Sprite {
         return timeInWater;
     }
 
-    public int getTimeOutWater() {
-        return timeOutWater;
-    }
-
-    public void incrementTimeInWater(){
-        this.timeInWater ++;
-    }
-    public void incrementTimeOutWater(){
-        this.timeOutWater ++;
-
-    }
-
     public void setTimeInWater(int timeInWater) {
         this.timeInWater = timeInWater;
+    }
+
+    public int getTimeOutWater() {
+        return timeOutWater;
     }
 
     public void setTimeOutWater(int timeOutWater) {
         this.timeOutWater = timeOutWater;
     }
 
+    public void incrementTimeInWater() {
+        this.timeInWater++;
+    }
+
+    public void incrementTimeOutWater() {
+        this.timeOutWater++;
+
+    }
+
     public int getTimeSinceFood() {
         return timeSinceFood;
     }
 
-    public void incrementTimeSinceFood(){
-        this.timeSinceFood ++;
-
-    }
-
     public void setTimeSinceFood(int timeSinceFood) {
         this.timeSinceFood = timeSinceFood;
+    }
+
+    public void incrementTimeSinceFood() {
+        this.timeSinceFood++;
+
     }
 
     public int getDamageRate() {
@@ -217,20 +218,28 @@ public abstract class CharacterAbstraction extends Sprite {
         return timeSinceDamage;
     }
 
-    public void incrementTimeSinceDamage(){
-        this.timeSinceDamage ++;
-
-    }
-
     public void setTimeSinceDamage(int timeSinceDamage) {
         this.timeSinceDamage = timeSinceDamage;
     }
 
-    public void incrementToxicity(){
+    public void incrementTimeSinceDamage() {
+        this.timeSinceDamage++;
+
+    }
+
+    public void incrementToxicity() {
         if (toxicity < maxLevels) this.toxicity++;
     }
 
-    public void incrementHunger(){
-        if (hunger < maxLevels )this.hunger++;
+    public void incrementHunger() {
+        if (hunger < maxLevels) this.hunger++;
+    }
+
+    public int getJumpForce() {
+        return jumpForce;
+    }
+
+    public void setJumpForce(int jumpForce) {
+        this.jumpForce = jumpForce;
     }
 }

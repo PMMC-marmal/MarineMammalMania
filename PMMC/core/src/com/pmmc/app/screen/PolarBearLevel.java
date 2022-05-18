@@ -42,18 +42,16 @@ public class PolarBearLevel extends Level {
         obstacles3 = generateObstacles(3);
         preySpawnHeight = 100;
         preyDespawnable = true;
-
-
+        setWorldSize(24000);
+        setOceanDepth(2000);
+        setSpacing(600);
+        setWaterWorld(false);
     }
 
     @Override
     public void show() {
         bear = new PolarBear();
-
         setPlayer(bear);
-        setWorldSize(24000);
-        setSpacing(600);
-
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
 
@@ -79,12 +77,14 @@ public class PolarBearLevel extends Level {
 
         popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
         popUpLocations = new Vector2[]{new Vector2(1000,200),new Vector2(3000,200),new Vector2(5000,200),new Vector2(7000,200),new Vector2(9000,200)};//slect location
-        placeBox2DObstacles(1, obstacles1 );
-        placeBox2DObstacles(2, obstacles2 );
-        placeBox2DObstacles(3, obstacles3 );
-        addPrey(1, generateObstacles(1), 300, 150);
-        addPrey(2, generateObstacles(2), 300, 150);
-        addPrey(3, generateObstacles(2), 300, 150);
+
+        placeBox2DObstacles(1,new Vector2[]{}, obstacles1 , 0,false,"IceBerg");
+        placeBox2DObstacles(2,new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, obstacles2 , 0,true ,"IceBerg");
+        placeBox2DObstacles(3,new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -200 / PPM)}, obstacles3 , 0,false,"IceBerg");
+
+        addPrey(1, generateObstacles(1), (int)food.getWidth(), (int)food.getHeight(), true);
+        addPrey(2, generateObstacles(2), (int)food.getWidth(), (int)food.getHeight(), true);
+        addPrey(3, generateObstacles(2), (int)food.getWidth(), (int)food.getHeight(), true);
 
 
         choices1.add(this.iceberg1);
@@ -110,11 +110,11 @@ public class PolarBearLevel extends Level {
         // Add background
         renderBackground(background);
 
-        renderPrey2D(food, toxicFood); // NEEDS HEIGHT WIDTH
+        renderPrey2D(food, toxicFood, (int)food.getWidth(), (int)food.getHeight()); // NEEDS HEIGHT WIDTH
         // Add Obstacles
-        renderObstacles(1, choices1, obstacles1, 0);
-        renderObstacles(2, choices2, obstacles2, 0);
-        renderObstacles(3, choices3, obstacles3, 0);
+        renderObstacles(1, choices1, obstacles1, 0,0);
+        renderObstacles(2, choices2, obstacles2, 0,400);
+        renderObstacles(3, choices3, obstacles3, 0, 400);
         seenPopUps = renderPopUps(seenPopUps,popUpLocations,popUps);
         renderEndGoal2D(staticBear);
         renderPlayer2D();

@@ -13,6 +13,7 @@ public class PolarBear extends CharacterAbstraction {
         setAirLossRate(200);
         setFoodLossRate(380);
         setDamageRate(100);
+        setJumpForce(5);
     }
 
     // Power related to polar bear (method here)

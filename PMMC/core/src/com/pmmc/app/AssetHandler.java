@@ -28,9 +28,9 @@ public class AssetHandler {
             levelMenuBackground = "backgrounds/level_select_background.png",
             backArrow = "buttons/back_arrow.png",
             seaLionSprite = "sea_lion.png",
-            dolphinSprite = "dolphin.png",
-            killerWhaleSprite = "killer_whale.png",
-            blueWhaleSprite = "blue_whale.png",
+            dolphinSprite = "dolphin1.png",
+            killerWhaleSprite = "orca1.png",
+            blueWhaleSprite = "bluewhale1.png",
             polarBearSprite = "bear1.png",
     //polarbear
             healthBarEmpty = "player-bars/health/healthbar_0.png",
@@ -54,16 +54,26 @@ public class AssetHandler {
             iceberg5 = "obstacles/iceberg_small.png",
             iceberg6 = "obstacles/iceberg_small2.png",
 
+            sandArea = "obstacles/sealionsand.png",
+            bouy = "obstacles/bouy.png",
+
             polarBearWalking = "sprite_sheets/PolarBearWalkingSpriteSheet.atlas",
             polarBearSwimming = "sprite_sheets/PolarBearSwimmingSpriteSheet.atlas",
             seaLionWalking = "sprite_sheets/SeaLionWalkingSpriteSheet.atlas",
             seaLionSwimming = "sprite_sheets/SeaLionSwimmingSpriteSheet.atlas",
+            orcaSwimming = "sprite_sheets/OrcaSwimmingSpriteSheet.atlas",
+            dolphinSwimming = "sprite_sheets/DolphinSwimmingSpriteSheet.atlas",
+            whaleSwimming = "sprite_sheets/WhaleSwimmingSpriteSheet.atlas",
 
             polarFoodPop = "popups/polar_bear/food_popup.png",
             polarHabitatPop = "popups/polar_bear/habitat_popup.png",
             polarLifePop = "popups/polar_bear/life_popup.png",
             polarSocialPop = "popups/polar_bear/social_popup.png",
             polarThreatsPop = "popups/polar_bear/threats_popup.png",
+
+            oilSpill = "threats/oil_spill.png",
+            smallBoat = "threats/boat_small.png",
+            trashBag = "threats/trashbag.png",
 
             salmon = "food/chinook_salmon.png",
             herring = "food/herring.png",
@@ -138,11 +148,22 @@ public class AssetHandler {
         assetManager.load(iceberg5,Texture.class);
         assetManager.load(iceberg6,Texture.class);
         assetManager.load(icebergAddon, Texture.class);
+        assetManager.load(bouy, Texture.class);
+        assetManager.load(sandArea, Texture.class);
 
         assetManager.load(polarBearWalking, TextureAtlas.class);
         assetManager.load(polarBearSwimming, TextureAtlas.class);
         assetManager.load(seaLionWalking, TextureAtlas.class);
         assetManager.load(seaLionSwimming, TextureAtlas.class);
+        assetManager.load(orcaSwimming, TextureAtlas.class);
+        assetManager.load(whaleSwimming, TextureAtlas.class);
+        assetManager.load(dolphinSwimming, TextureAtlas.class);
+
+
+
+        assetManager.load(smallBoat, Texture.class);
+        assetManager.load(oilSpill, Texture.class);
+        assetManager.load(trashBag, Texture.class);
 
         assetManager.load(salmon, Texture.class);
         assetManager.load(herring, Texture.class);
