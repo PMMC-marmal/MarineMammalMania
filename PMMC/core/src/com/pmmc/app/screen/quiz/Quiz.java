@@ -46,7 +46,7 @@ public class Quiz extends Menu {
         this.stage = new Stage();
         this.choice = new Sprite(AssetHandler.assetManager.get(AssetHandler.choiceButton, Texture.class));
         this.choiceActivated = new Sprite(AssetHandler.assetManager.get(AssetHandler.choiceButtonActivated, Texture.class));
-        this.font = generateFont(80, Color.WHITE);
+        this.font = generateFont(40, Color.WHITE);
         this.answerY = -1;
         this.answerCorrect = -1;
         this.timerRunning = false;
@@ -63,7 +63,8 @@ public class Quiz extends Menu {
 
         parameters.genMipMaps = true;
         parameters.color = color;
-        parameters.size = (int)Math.ceil(size);
+        //parameters.size = (int)Math.ceil(size);
+        parameters.size = size * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
         parameters.magFilter = Texture.TextureFilter.MipMapLinearNearest;
         parameters.minFilter = Texture.TextureFilter.Nearest;
         generator.scaleForPixelHeight((int)Math.ceil(size));

@@ -85,27 +85,27 @@ public class OrcaLevel extends Level{
     public HashMap<Integer, Question> generateQuestionBank(){
         HashMap<Integer, Question> questionBank = new HashMap<>();
         questionBank.put(1, new Question(
-                "What is the polar bear’s main source of food?",
-                "Ringed Seals",
-                new ArrayList<>(Arrays.asList("Ringed Seals", "Sea Lions", "Salmon", "Walruses"))
+                "What do the southern resident killer whales mainly eat?",
+                "Chinook salmon",
+                new ArrayList<>(Arrays.asList("Chinook salmon", "Sardines", "Squid", "Herring"))
         ));
         questionBank.put(2, new Question(
-                "Where do polar bears live?",
-                "The Arctic",
-                new ArrayList<>(Arrays.asList("The Arctic", "Antarctica", "Asia", "All answers are correct"))
+                "Female southern resident killer whales can live up to ...?",
+                "80-100 years old",
+                new ArrayList<>(Arrays.asList("80-100 years old", "40-60 years old", "60-80 years old", "100-120 years old"))
         ));
         questionBank.put(3, new Question(
-                "Which of these is NOT a threat to polar bears?",
-                "Heavy boat traffic",
-                new ArrayList<>(Arrays.asList("Heavy boat traffic", "Oil spills", "Melting ice", "Pollution"))
+                "How many pods do the southern resident killer whales have?",
+                "3 pods",
+                new ArrayList<>(Arrays.asList("3 pods", "2 pods", "5 pods", "8 pods"))
         ));
         questionBank.put(4, new Question(
-                "The Arctic is heating up by...?",
-                "14% each decade!",
-                new ArrayList<>(Arrays.asList("14% each decade!", "1% each decade!", "4% each decade!", "10% each decade!"))
+                "Which of the following is a threat to the southern resident killer whales?",
+                "All answers are correct",
+                new ArrayList<>(Arrays.asList("All answers are correct", "Decreased quality of prey", "Disturbance from ship presence", "None of these"))
         ));
         questionBank.put(5, new Question(
-                "What can you do to stop the Arctic from melting?",
+                "What can you do to help preserve our southern resident killer whales?",
                 "TBA (Correct)",
                 new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
         ));

@@ -74,27 +74,27 @@ public class DolphinLevel extends Level{
     public HashMap<Integer, Question> generateQuestionBank(){
         HashMap<Integer, Question> questionBank = new HashMap<>();
         questionBank.put(1, new Question(
-                "What is the polar bear’s main source of food?",
-                "Ringed Seals",
-                new ArrayList<>(Arrays.asList("Ringed Seals", "Sea Lions", "Salmon", "Walruses"))
+                "Bottlenose dolphins can be found in ...?",
+                "All answers are correct",
+                new ArrayList<>(Arrays.asList("All answers are correct", "Southern California", "Temperate waters", "Tropical waters"))
         ));
         questionBank.put(2, new Question(
-                "Where do polar bears live?",
-                "The Arctic",
-                new ArrayList<>(Arrays.asList("The Arctic", "Antarctica", "Asia", "All answers are correct"))
+                "All of these are part of the bottlenose dolphin diet except for which?",
+                "Seaweed",
+                new ArrayList<>(Arrays.asList("Seaweed", "Herring", "Shrimp", "Squid"))
         ));
         questionBank.put(3, new Question(
-                "Which of these is NOT a threat to polar bears?",
-                "Heavy boat traffic",
-                new ArrayList<>(Arrays.asList("Heavy boat traffic", "Oil spills", "Melting ice", "Pollution"))
+                "Dolphins mainly suffer from what due to coastal development and pollution?",
+                "Habitat loss",
+                new ArrayList<>(Arrays.asList("Habitat loss", "Overfeeding", "Disease", "Reproductive failure"))
         ));
         questionBank.put(4, new Question(
-                "The Arctic is heating up by...?",
-                "14% each decade!",
-                new ArrayList<>(Arrays.asList("14% each decade!", "1% each decade!", "4% each decade!", "10% each decade!"))
+                "Dolphins travel in groups composed of juveniles, nursery groups, and ...?",
+                "Strongly bonded adult males",
+                new ArrayList<>(Arrays.asList("Strongly bonded adult males", "Elderly dolphins", "Small fish", "Protective sharks"))
         ));
         questionBank.put(5, new Question(
-                "What can you do to stop the Arctic from melting?",
+                "What can you do to help the bottlenose dolphins keep their habitats?",
                 "TBA (Correct)",
                 new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
         ));
