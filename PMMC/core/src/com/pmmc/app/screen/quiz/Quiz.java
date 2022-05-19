@@ -3,6 +3,7 @@ package com.pmmc.app.screen.quiz;
 import static com.badlogic.gdx.graphics.GL20.GL_BLEND;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -32,13 +33,14 @@ public class Quiz extends Menu {
     private float answerY;
     private int answerCorrect;
     private boolean timerRunning;
+    private String levelName;
 
     public final float BUTTON_WIDTH = Gdx.graphics.getWidth() * 0.8f;
     public final float BUTTON_HEIGHT = Gdx.graphics.getHeight() * 0.15f;
     public final float x = (Gdx.graphics.getWidth()/2f) - (BUTTON_WIDTH / 2f);
     public final float firstY = Gdx.graphics.getHeight()/12f;
 
-    public Quiz(GameLauncher game, HashMap<Integer, Question> questionBank) {
+    public Quiz(GameLauncher game, HashMap<Integer, Question> questionBank, String levelName) {
         super(game);
         this.score = 0;
         this.currentQuizQuestion = 1;
@@ -50,6 +52,7 @@ public class Quiz extends Menu {
         this.answerY = -1;
         this.answerCorrect = -1;
         this.timerRunning = false;
+        this.levelName = levelName;
 
         // Randomize quiz options
         for (int i=1; i<=questionBank.size(); i++) {
@@ -160,7 +163,10 @@ public class Quiz extends Menu {
     public void renderFinalScoreScreen(){
         float scorePercent = ((float)score/5)*100;
         String finishLine = "Oh no! That's only " + (int)scorePercent + "%\nMake sure to try again!";
-        if (score >= 4){finishLine = "Nice Job! That's " + (int)scorePercent + "%";}
+        if (score >= 4){
+            finishLine = "Nice Job! That's " + (int)scorePercent + "%";
+            saveQuizResults(true);
+        }
 
         game.batch.begin();
         font.draw(game.batch, "You scored: " + score + "/5", x * 2/3, Gdx.graphics.getHeight() - firstY);
@@ -168,7 +174,6 @@ public class Quiz extends Menu {
         font.draw(game.batch, "Tap anywhere to continue...", x * 2/3, firstY);
         game.batch.end();
 
-        // TODO: Save game state here for the level
     }
 
     private final Timer.Task renderAnswer = new Timer.Task() {
@@ -180,4 +185,10 @@ public class Quiz extends Menu {
             timerRunning = false;
         }
     };
+
+    public void saveQuizResults(Boolean passed){
+        Preferences pref = Gdx.app.getPreferences("Quiz Results");
+        pref.putBoolean(levelName, passed);
+        pref.flush();
+    }
 }

@@ -1,6 +1,7 @@
 package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.pmmc.app.AssetHandler;
@@ -31,6 +32,7 @@ public class LevelMenuScreen extends Menu {
             blueWhaleSprite,
             polarBearSprite;
 
+    private Preferences pref;
     public LevelMenuScreen(GameLauncher game) {
         super(game);
     }
@@ -60,6 +62,8 @@ public class LevelMenuScreen extends Menu {
 
         killerWhaleSprite.flip(true,false);
         polarBearSprite.flip(true,false);
+        this.pref = Gdx.app.getPreferences("Quiz Results");
+
     }
 
     @Override
@@ -99,15 +103,23 @@ public class LevelMenuScreen extends Menu {
         }
 
         // Draw characters on screen
-        game.batch.draw(seaLionSprite, Gdx.graphics.getWidth() *.80f, Gdx.graphics.getHeight()*.70f);
 
-        game.batch.draw(dolphinSprite, Gdx.graphics.getWidth()*-.08f, Gdx.graphics.getHeight() *.60f);
+        if(pref.getBoolean("SeaLionLevel", false)) {
+            game.batch.draw(seaLionSprite, Gdx.graphics.getWidth() * .80f, Gdx.graphics.getHeight() * .70f);
+        }
+        if(pref.getBoolean("DolphinLevel", false)) {
+            game.batch.draw(dolphinSprite, Gdx.graphics.getWidth() * -.08f, Gdx.graphics.getHeight() * .60f);
+        }
+        if(pref.getBoolean("OrcaLevel", false)) {
+            game.batch.draw(killerWhaleSprite, Gdx.graphics.getWidth() * .75f, Gdx.graphics.getHeight() * .37f);
+        }
+        if(pref.getBoolean("BlueWhaleLevel", false)) {
+            game.batch.draw(blueWhaleSprite, 0 - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .12f);
+        }
+        if(pref.getBoolean("PolarBearLevel", false)) {
+            game.batch.draw(polarBearSprite, Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .08f);
+        }
 
-        game.batch.draw(killerWhaleSprite, Gdx.graphics.getWidth()*.75f, Gdx.graphics.getHeight()*.37f);
-
-        game.batch.draw(blueWhaleSprite, 0 - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight()*.12f);
-
-        game.batch.draw(polarBearSprite, Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight()*.08f);
 
         game.batch.end();
     }

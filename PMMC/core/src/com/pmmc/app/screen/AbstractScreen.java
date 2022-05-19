@@ -61,8 +61,8 @@ public abstract class AbstractScreen implements Screen {
         // not sure why but if next screen is not set beforehand, exception happens
         game.setScreen(next);
         ArrayList<TransitionEffect> effects = new ArrayList<TransitionEffect>();
-        effects.add(new FadeOut(1));
-        effects.add(new FadeIn(1));
+        effects.add(new FadeOut(0.5f));
+        effects.add(new FadeIn(0.5f));
 
         game.setScreen(new TransitionScreen(game, current, next, effects));
     }
