@@ -4,67 +4,77 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.BlueWhale;
 import com.pmmc.app.screen.quiz.Question;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class BlueWhaleLevel extends Level{
+public class BlueWhaleLevel extends Level {
 
 
-/**
- * PolarBearLevel: The first level presented to the user
- */
+    /**
+     * PolarBearLevel: The first level presented to the user
+     */
 
- boolean[] obstacles1, obstacles2, obstacles3;
-    ArrayList<Sprite> choices1, choices2, choices3 ;
+    boolean[][] seenPopUps;
+    ArrayList<Sprite> popUps;
+    private Vector2[] popUpLocations;
     private BlueWhale whale;
-    private Sprite background, blur, food, toxicFood;
+    private Sprite background, blur, staticWhale, food, toxicFood, pop1, pop2, pop3, pop4, pop5;
 
-    public BlueWhaleLevel(GameLauncher game){
+    public BlueWhaleLevel(GameLauncher game) {
         super(game);
         preySpawnHeight = -1000;
         preyDespawnable = false;
-
+        preySpeed = 20;
         waterPrey = true;
+        setWaterWorld(true);
+        setWorldSize(24000);
+        setOceanDepth(3000);
+        setSpacing(1200);
+        setBoatStrike(true);
+        setOilSpill(true);
+        setBoatYAxis(-250);
 
-        obstacles2 = generateObstacles(2);
-        obstacles3 = generateObstacles(3);
     }
 
     @Override
     public void show() {
         whale = new BlueWhale();
-        setWorldSize(24000);
-        setOceanDepth(3000);
-        setSpacing(1200);
         setPlayer(whale);
-        setBoatStrike(true);
-        setWaterWorld(true);
-//        setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoat, Texture.class)));
+
         player.setSwimming(true);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
+        this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
+        this.staticWhale = new Sprite(AssetHandler.assetManager.get(AssetHandler.blueWhaleSprite, Texture.class));
+        staticWhale.flip(true, false);
+        setEndGoal(staticWhale, preySpawnHeight);
+
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.krill, Texture.class));
         this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicKrill, Texture.class));
 
+        preywidth = (int) food.getWidth() ;
+        preyHeight = (int) food.getHeight() ;
 
-//        placeBox2DObstacles(2, obstacles2 );
-//        placeBox2DObstacles(3, obstacles3 );
-//        addPrey(1, generateObstacles(1), 300, 150);
-        addPrey(2, generateObstacles(2), 100, 50, false);
-        addPrey(3, generateObstacles(2), 100, 50, false);
+        setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoatFishingLine, Texture.class)));
+        setOilSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.oilSpill, Texture.class)));
 
+        this.pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleFoodPop, Texture.class));
+        this.pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleHabitatPop, Texture.class));
+        this.pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleLifePop, Texture.class));
+        this.pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleSocialPop, Texture.class));
+        this.pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleThreatsPop, Texture.class));
+        seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
+        popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
+        popUpLocations = new Vector2[]{new Vector2(1000, 200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(7000, 200), new Vector2(9000, 200)};//slect location
 
-
-//        addPrey(createBox(4200,150, 300,300, true, true,"toxic food"));
-
+        addPrey(2, generateObstacles(2), preywidth, preyHeight, false);
+        addPrey(3, generateObstacles(2), preywidth, preyHeight, false);
     }
 
     @Override
@@ -74,16 +84,19 @@ public class BlueWhaleLevel extends Level{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        renderBackground(background,-1 * getOceanDepth()-50);
-
-        renderPrey2D(food, toxicFood, 100,50);
+        renderBackground(background, -1 * getOceanDepth() - 50);
+        seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
+        renderPrey2D(food, toxicFood);
+        renderBoat();
+        renderOil();
+        renderEndGoal2D(staticWhale);
         renderPlayer2D();
+        renderBackground(blur, -1 * getOceanDepth() - 50);
         renderHealthBars();
         game.batch.end();
-//        renderBackground(blur);
     }
 
-    public HashMap<Integer, Question> generateQuestionBank(){
+    public HashMap<Integer, Question> generateQuestionBank() {
         HashMap<Integer, Question> questionBank = new HashMap<>();
         questionBank.put(1, new Question(
                 "Blue whales live in the oceans of the ...",
