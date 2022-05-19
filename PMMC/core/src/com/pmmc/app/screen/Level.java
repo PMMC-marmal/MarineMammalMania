@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -35,18 +34,17 @@ public abstract class Level extends AbstractScreen {
     private static final float SCALE = 2;
     private static World world;
     final Stage stage;
-    private final Box2DDebugRenderer b2dr;
     public Body player2d;
-    public Fixture contactor;
-    public Fixture contacting;
+    public Fixture contactor = null;
+    public Fixture contacting = null;
     public float idealGameWidth = 1600;
     public float idealGameHeight = 1000;
     public CharacterAbstraction player;
     public boolean isTouchingObstacle;
     public int preySpawnHeight;
     public boolean preyDespawnable;
-    public boolean toggle;
-    public boolean gameOverLost;
+    public boolean toggle = true;
+    public boolean gameOverLost = false;
     public boolean waterPrey;
     public int spacing;
     public int preywidth;
@@ -82,17 +80,10 @@ public abstract class Level extends AbstractScreen {
 
         world = new World(new Vector2(0, -10f * PPM), false);
         world.setContactListener(new B2dContactListener(this));
-        b2dr = new Box2DDebugRenderer();
 
-        contactor = null;
-        contacting = null;
         prey = new ArrayList<>();
         oil = new ArrayList<>();
         trashes = new ArrayList<>();
-
-        toggle = true;
-        gameOverLost = false;
-        gameOverWon = false;
 
         extendViewport = new ExtendViewport(idealGameWidth, idealGameHeight, camera);
         stage = new Stage();
@@ -102,17 +93,11 @@ public abstract class Level extends AbstractScreen {
     public static Body createBox(float x, float y, int width, int height, boolean isStatic, boolean fixedRotation, String b2dType) {
         Body pBody;
         BodyDef def = new BodyDef();
-
-        if (isStatic)
-            def.type = BodyDef.BodyType.StaticBody;
-        else
-            def.type = BodyDef.BodyType.DynamicBody;
-
+        def.type = (isStatic) ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
         def.position.set(x / PPM, y / PPM);
         def.fixedRotation = fixedRotation;
         pBody = world.createBody(def);
         pBody.setUserData(b2dType);
-
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2 / PPM, height / 2 / PPM);
 
@@ -123,12 +108,8 @@ public abstract class Level extends AbstractScreen {
 
     public Body makePolygonShapeBody(Vector2[] vertices, float x, float y, boolean isStatic, String type) {
         BodyDef boxBodyDef = new BodyDef();
-        boxBodyDef.type = BodyDef.BodyType.StaticBody;
+        boxBodyDef.type = (isStatic) ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
         boxBodyDef.position.set(x / PPM, y / PPM);
-        if (isStatic)
-            boxBodyDef.type = BodyDef.BodyType.StaticBody;
-        else
-            boxBodyDef.type = BodyDef.BodyType.DynamicBody;
         boxBodyDef.fixedRotation = true;
         Body boxBody = world.createBody(boxBodyDef);
         boxBody.setUserData(type);
@@ -176,274 +157,6 @@ public abstract class Level extends AbstractScreen {
         hazardsUpdate(deltaTime);
         cameraUpdate(deltaTime);
         stage.getBatch().setProjectionMatrix(camera.combined);
-    }
-
-    protected abstract HashMap<Integer, Question> generateQuestionBank();
-
-    private void hazardsUpdate(float deltaTime) {
-        if (boatStrike && boatModel != null) {
-            if (boat2D == null) {
-                if (atSurface) {
-                    if (player2d.getPosition().x * PPM < worldSize / 2) {
-                        if (!boatFlipped) {
-                            System.out.println("GOING LEFT");
-                            boatModel.flip(true, false);
-                            boatFlipped = true;
-                        }
-                        if (boatYAxis != 0) {
-                            boat2D = makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(500 / PPM, 0), new Vector2(350 / PPM, -250 / PPM)}, worldSize - 1000, 0, false, "Boat");
-                        } else {
-                            boat2D = createBox(worldSize - 1000, 0, 500, 5, false, true, "Boat");
-                        }
-                        directionLeft = true;
-                    } else {
-                        if (boatFlipped) {
-                            boatModel.flip(true, false);
-                            boatFlipped = false;
-                        }
-                        if (boatYAxis != 0) {
-                            boat2D = createBox(1000, 0, 500, (int) boatModel.getHeight(), false, true, "Boat");
-                        } else {
-                            boat2D = createBox(1000, 0, 500, 5, false, true, "Boat");
-                        }
-                        directionLeft = false;
-                    }
-                    boat2D.setGravityScale(0);
-                }
-            } else if (boat2D.getUserData().equals("Boat")) {
-
-                if (boat2D.getPosition().x < 0 || boat2D.getPosition().x * PPM > worldSize) {
-                    world.destroyBody(boat2D);
-                    boat2D = null;
-                } else {
-                    if (!directionLeft) {
-                        boat2D.setLinearVelocity(200, 0);
-                    } else {
-                        boat2D.setLinearVelocity(-200, 0);
-
-                    }
-                }
-            }
-        }
-        if (oilSpill && oilSprite != null) {
-            if (oil.size() < 3) {
-                Body p = createBox(new Random().nextInt(worldSize - 2000) + 1000, 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
-                oil.add(p);
-            }
-        }
-        if (trash && trashSprite != null) {
-            if (trashes.size() < 5) {
-                Body p = createBox(new Random().nextInt(worldSize - 2000) + 1000, -new Random().nextInt(oceanDepth), (int) trashSprite.getWidth(), (int) trashSprite.getHeight(), false, true, "Trash");
-                p.setGravityScale(0);
-                trashes.add(p);
-            } else {
-                for (Body t : trashes) {
-                    int xforce = new Random().nextInt(4) - (2);
-                    int yforce = new Random().nextInt(2) - (1);
-                    if ((t.getPosition().x * PPM > worldSize && xforce > 0) || (t.getPosition().x * PPM < 0 && xforce < 0))
-                        xforce = xforce * -1;
-                    if ((t.getPosition().y * PPM > 0 && yforce > 0) || (t.getPosition().y * PPM < -oceanDepth && yforce < 0))
-                        yforce = yforce * -1;
-                    t.setLinearVelocity( xforce,  yforce);
-                }
-            }
-        }
-    }
-
-
-    private void playerUpdate(float deltaTime) {
-        setPlayerParams(deltaTime);
-        getPlayerParams();
-    }
-
-    private void setPlayerParams(float deltaTime) {
-        if (boatStrike) {
-            if (contacting != null && contactor != null) {
-                if ((contacting.getBody().getUserData().equals("Boat") && contactor.getBody().getUserData().equals("Player")) || (contactor.getBody().getUserData().equals("Boat") && contacting.getBody().getUserData().equals("Player"))) {
-                    player.setHealth(player.getHealth() - 1);
-                    player2d.applyForceToCenter(0, -500000 * PPM, true);
-                    world.destroyBody(boat2D);
-                    boat2D = null;
-                }
-            }
-        }
-        if (oilSpill) {
-            if (contacting != null && contactor != null) {
-                if ((contacting.getBody().getUserData().equals("Oil") && contactor.getBody().getUserData().equals("Player")) || (contactor.getBody().getUserData().equals("Oil") && contacting.getBody().getUserData().equals("Player"))) {
-                    player.setHealth(player.getHealth() - 1);
-                    player2d.setLinearVelocity(0, -500000 * PPM);
-                }
-            }
-        }
-        if (trash) {
-            if (contacting != null && contactor != null) {
-                if ((contacting.getBody().getUserData().equals("Trash") && contactor.getBody().getUserData().equals("Player")) || (contactor.getBody().getUserData().equals("Trash") && contacting.getBody().getUserData().equals("Player"))) {
-                    player.setHealth(player.getHealth() - 1);
-                    trashes.remove(contacting.getBody());
-                    world.destroyBody(contacting.getBody());
-                }
-            }
-        }
-
-        if (contacting != null && contactor != null) {
-            if ((contacting.getBody().getUserData().equals("End Goal") && contactor.getBody().getUserData().equals("Player")) || (contactor.getBody().getUserData().equals("End Goal") && contacting.getBody().getUserData().equals("Player"))) {
-                gameOverWon = true;
-            }
-        }
-
-        if (player.getAir() == 0 || player.getHunger() == 0) {
-            player.incrementTimeSinceDamage();
-            if (player.getTimeSinceDamage() % player.getDamageRate() == 0) {
-                player.setHealth(player.getHealth() - 1);
-            }
-        }
-        if (player.getSwimming() && !atSurface) {
-            if (player.getTimeInWater() % player.getAirLossRate() == 0) {
-                player.setAir(player.getAir() - 1);
-            }
-        } else {
-            if (player.getTimeOutWater() % (player.getAirLossRate() / 5) == 0) {
-                player.setAir(player.getAir() + 1);
-            }
-        }
-        if (player.getTimeSinceFood() % player.getFoodLossRate() == 0) {
-            player.setHunger(player.getHunger() - 1);
-        }
-        if (contacting != null && contactor != null) {
-            if (prey.contains(contacting.getBody()) && contactor.getBody().getUserData().equals("Player")) {
-                if (contacting.getBody().getUserData().equals("toxic food")) {
-                    player.incrementToxicity();
-                    if (player.getToxicity() > 4) player.setHealth(player.getHealth() - 1);
-                    player.setTimeSinceFood(1);
-                }
-                player.incrementHunger();
-                prey.remove(contacting.getBody());
-                world.destroyBody(contacting.getBody());
-                //delete food
-            }
-        }
-    }
-
-    private void getPlayerParams() {
-        if (player.getHealth() == 0) {
-            gameOverLost = true;
-            player.updateFrame(false, false, true);
-        }
-
-        //System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
-    }
-
-    public void renderHealthBars() {
-        drawHealthBar(player.getHealth(),
-                new Sprite(AssetHandler.assetManager.get(AssetHandler.healthBar, Texture.class)),
-                new Sprite(AssetHandler.assetManager.get(AssetHandler.healthBarEmpty, Texture.class)),
-                -camera.viewportWidth * 0.49f,
-                camera.viewportHeight * 0.36f
-        );
-        drawHealthBar(player.getAir(),
-                new Sprite(AssetHandler.assetManager.get(AssetHandler.airBar, Texture.class)),
-                new Sprite(AssetHandler.assetManager.get(AssetHandler.airBarEmpty, Texture.class)),
-                -camera.viewportWidth * 0.49f,
-                camera.viewportHeight * 0.23f
-        );
-        drawHealthBar(player.getHunger(),
-                new Sprite(AssetHandler.assetManager.get(AssetHandler.hungerBar, Texture.class)),
-                new Sprite(AssetHandler.assetManager.get(AssetHandler.hungerBarEmpty, Texture.class)),
-                camera.viewportWidth * 0.18f,
-                camera.viewportHeight * 0.36f
-        );
-        drawHealthBar(player.getToxicity(),
-                new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicBar, Texture.class)),
-                new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicBarEmpty, Texture.class)),
-                camera.viewportWidth * 0.18f,
-                camera.viewportHeight * 0.23f
-        );
-
-    }
-
-    private void drawHealthBar(int barValue, Sprite bar, Sprite emptyBar, float x_offset, float y_offset) {
-        stage.act();
-        stage.getBatch().begin();
-        // Positioning
-        Vector3 barPosition = camera.position;
-        barPosition.set(barPosition.x + x_offset, barPosition.y + y_offset, 0);
-
-        switch (barValue) {
-            case 1:
-                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.20f, bar.getHeight() / 2);
-                break;
-            case 2:
-                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.28f, bar.getHeight() / 2);
-                break;
-            case 3:
-                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.36f, bar.getHeight() / 2);
-                break;
-            case 4:
-                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.42f, bar.getHeight() / 2);
-                break;
-            case 5:
-                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.50f, bar.getHeight() / 2);
-                break;
-            default:
-                break;
-        }
-        stage.getBatch().draw(emptyBar, barPosition.x, barPosition.y, bar.getWidth() * 0.5f, bar.getHeight() / 2);
-        stage.getBatch().end();
-        stage.draw();
-    }
-
-    private void preyUpdate(float deltaTime) {
-        ArrayList<Body> toRemove = new ArrayList<>();
-        if (waterPrey) {
-            if (prey.size() < 5) {
-                addPrey(2, generateObstacles(2), preywidth, preyHeight, !waterPrey);
-                addPrey(3, generateObstacles(3), preywidth, preyHeight, !waterPrey);
-            }
-            for (Body p : prey) {
-                if (p.getPosition().x * PPM > worldSize) {
-                    toRemove.add(p);
-                    world.destroyBody(p);
-                } else if (inPlayerView(p.getPosition())) {
-                    int xforce = new Random().nextInt(preySpeed) - (preySpeed / 2);
-                    int yforce = new Random().nextInt(preySpeed / 2) - (preySpeed / 4);
-                    if ((p.getPosition().x * PPM > worldSize && xforce > 0) || (p.getPosition().x * PPM < 0 && xforce < 0))
-                        xforce = xforce * -1;
-                    if ((p.getPosition().y * PPM > 0 && yforce > 0) || (p.getPosition().y * PPM < -oceanDepth && yforce < 0))
-                        yforce = yforce * -1;
-                    p.setLinearVelocity(p.getLinearVelocity().x + xforce, p.getLinearVelocity().y + yforce);
-                } else p.setLinearVelocity(5, 0);
-            }
-        } else {
-            if (contactor != null && contacting != null) {
-                if (prey.contains(contactor.getBody()) && prey.contains(contacting.getBody())) {
-                    toRemove.add(prey.get(prey.indexOf(contactor.getBody())));
-                    world.destroyBody(prey.get(prey.indexOf(contactor.getBody())));
-                }
-            }
-            if (prey.isEmpty()) {
-                addPrey(2, generateObstacles(2), preywidth, preyHeight, !waterPrey);
-                addPrey(3, generateObstacles(3), preywidth, preyHeight, !waterPrey);
-            }
-
-            for (Body p : prey) {
-
-                if (player.getSwimming()) {
-                    p.setLinearVelocity(1, 0);
-
-                } else {
-                    p.setLinearVelocity(6, 0);
-                }
-                if (p.getPosition().y * PPM < preySpawnHeight - 200 && preyDespawnable) {
-                    toRemove.add(p);
-                    world.destroyBody(p);
-                }
-
-            }
-
-        }
-        for (Body p : toRemove) {
-            prey.remove(p);
-        }
     }
 
     private void inputUpdate(float deltaTime) {
@@ -527,6 +240,206 @@ public abstract class Level extends AbstractScreen {
         player2d.setLinearVelocity(horizontalForce * speed, verticalForce * speed);
     }
 
+    private void playerUpdate(float deltaTime) {
+        setPlayerParams(deltaTime);
+        getPlayerParams();
+    }
+
+    private void setPlayerParams(float deltaTime) {
+        if (boatStrike) {
+            if (contacting != null && contactor != null) {
+                if ((contacting.getBody().getUserData().equals("Boat") && contactor.getBody().getUserData().equals("Player")) || (contactor.getBody().getUserData().equals("Boat") && contacting.getBody().getUserData().equals("Player"))) {
+                    player.setHealth(player.getHealth() - 1);
+                    player2d.applyForceToCenter(0, -500000 * PPM, true);
+                    world.destroyBody(boat2D);
+                    boat2D = null;
+                }
+            }
+        }
+        if (oilSpill) {
+            if (contacting != null && contactor != null) {
+                if ((contacting.getBody().getUserData().equals("Oil") && contactor.getBody().getUserData().equals("Player")) || (contactor.getBody().getUserData().equals("Oil") && contacting.getBody().getUserData().equals("Player"))) {
+                    player.setHealth(player.getHealth() - 1);
+                    player2d.setLinearVelocity(0, -500000 * PPM);
+                }
+            }
+        }
+        if (trash) {
+            if (contacting != null && contactor != null) {
+                if ((contacting.getBody().getUserData().equals("Trash") && contactor.getBody().getUserData().equals("Player")) || (contactor.getBody().getUserData().equals("Trash") && contacting.getBody().getUserData().equals("Player"))) {
+                    player.setHealth(player.getHealth() - 1);
+                    trashes.remove(contacting.getBody());
+                    world.destroyBody(contacting.getBody());
+                }
+            }
+        }
+        if (contacting != null && contactor != null) {
+            if ((contacting.getBody().getUserData().equals("End Goal") && contactor.getBody().getUserData().equals("Player")) || (contactor.getBody().getUserData().equals("End Goal") && contacting.getBody().getUserData().equals("Player"))) {
+                gameOverWon = true;
+            }
+        }
+        if (player.getAir() == 0 || player.getHunger() == 0) {
+            player.incrementTimeSinceDamage();
+            if (player.getTimeSinceDamage() % player.getDamageRate() == 0) {
+                player.setHealth(player.getHealth() - 1);
+            }
+        }
+        if (player.getSwimming() && !atSurface) {
+            if (player.getTimeInWater() % player.getAirLossRate() == 0) {
+                player.setAir(player.getAir() - 1);
+            }
+        } else {
+            if (player.getTimeOutWater() % (player.getAirLossRate() / 5) == 0) {
+                player.setAir(player.getAir() + 1);
+            }
+        }
+        if (player.getTimeSinceFood() % player.getFoodLossRate() == 0) {
+            player.setHunger(player.getHunger() - 1);
+        }
+        if (contacting != null && contactor != null) {
+            if (prey.contains(contacting.getBody()) && contactor.getBody().getUserData().equals("Player")) {
+                if (contacting.getBody().getUserData().equals("toxic food")) {
+                    player.incrementToxicity();
+                    if (player.getToxicity() > 4) player.setHealth(player.getHealth() - 1);
+                    player.setTimeSinceFood(1);
+                }
+                player.incrementHunger();
+                prey.remove(contacting.getBody());
+                world.destroyBody(contacting.getBody());
+                //delete food
+            }
+        }
+    }
+
+    private void getPlayerParams() {
+        if (player.getHealth() == 0) {
+            gameOverLost = true;
+            player.updateFrame(false, false, true);
+        }
+
+        //System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
+    }
+
+    private void preyUpdate(float deltaTime) {
+        ArrayList<Body> toRemove = new ArrayList<>();
+        if (waterPrey) {
+            if (prey.size() < 5) {
+                addPrey(2, generateObstacles(2), preywidth, preyHeight, !waterPrey);
+                addPrey(3, generateObstacles(3), preywidth, preyHeight, !waterPrey);
+            }
+            for (Body p : prey) {
+                if (p.getPosition().x * PPM > worldSize) {
+                    toRemove.add(p);
+                    world.destroyBody(p);
+                } else if (inPlayerView(p.getPosition())) {
+                    int xforce = new Random().nextInt(preySpeed) - (preySpeed / 2);
+                    int yforce = new Random().nextInt(preySpeed / 2) - (preySpeed / 4);
+                    if ((p.getPosition().x * PPM > worldSize && xforce > 0) || (p.getPosition().x * PPM < 0 && xforce < 0))
+                        xforce = xforce * -1;
+                    if ((p.getPosition().y * PPM > 0 && yforce > 0) || (p.getPosition().y * PPM < -oceanDepth && yforce < 0))
+                        yforce = yforce * -1;
+                    p.setLinearVelocity(p.getLinearVelocity().x + xforce, p.getLinearVelocity().y + yforce);
+                } else p.setLinearVelocity(5, 0);
+            }
+        } else {
+            if (contactor != null && contacting != null) {
+                if (prey.contains(contactor.getBody()) && prey.contains(contacting.getBody())) {
+                    toRemove.add(prey.get(prey.indexOf(contactor.getBody())));
+                    world.destroyBody(prey.get(prey.indexOf(contactor.getBody())));
+                }
+            }
+            if (prey.isEmpty()) {
+                addPrey(2, generateObstacles(2), preywidth, preyHeight, !waterPrey);
+                addPrey(3, generateObstacles(3), preywidth, preyHeight, !waterPrey);
+            }
+
+            for (Body p : prey) {
+
+                if (player.getSwimming()) {
+                    p.setLinearVelocity(1, 0);
+
+                } else {
+                    p.setLinearVelocity(6, 0);
+                }
+                if (p.getPosition().y * PPM < preySpawnHeight - 200 && preyDespawnable) {
+                    toRemove.add(p);
+                    world.destroyBody(p);
+                }
+
+            }
+
+        }
+        for (Body p : toRemove) {
+            prey.remove(p);
+        }
+    }
+
+    private void hazardsUpdate(float deltaTime) {
+        if (boatStrike && boatModel != null) {
+            if (boat2D == null) {
+                if (atSurface) {
+                    if (player2d.getPosition().x * PPM < worldSize / 2) {
+                        if (!boatFlipped) {
+                            System.out.println("GOING LEFT");
+                            boatModel.flip(true, false);
+                            boatFlipped = true;
+                        }
+                        boat2D = (boatYAxis != 0) ? makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(500 / PPM, 0), new Vector2(350 / PPM, -250 / PPM)}, worldSize - 1000, 0, false, "Boat") : createBox(worldSize - 1000, 0, 500, 5, false, true, "Boat");
+                        directionLeft = true;
+                    } else {
+                        if (boatFlipped) {
+                            boatModel.flip(true, false);
+                            boatFlipped = false;
+                        }
+                        boat2D = (boatYAxis != 0) ? createBox(1000, 0, 500, (int) boatModel.getHeight(), false, true, "Boat") : createBox(1000, 0, 500, 5, false, true, "Boat");
+                        directionLeft = false;
+                    }
+                    boat2D.setGravityScale(0);
+                }
+            } else if (boat2D.getUserData().equals("Boat")) {
+
+                if (boat2D.getPosition().x < 0 || boat2D.getPosition().x * PPM > worldSize) {
+                    world.destroyBody(boat2D);
+                    boat2D = null;
+                } else {
+                    int xForce = (!directionLeft) ? 200 : -200;
+                    int yForce;
+                    if (boat2D.getPosition().y * PPM > 0) {
+                        yForce = -1;
+                    } else if (boat2D.getPosition().y * PPM < 0) {
+                        yForce = 1;
+                    } else {
+                        yForce = 0;
+                    }
+                    boat2D.setLinearVelocity(xForce, yForce);
+                }
+            }
+        }
+        if (oilSpill && oilSprite != null) {
+            if (oil.size() < 3) {
+                Body p = createBox(new Random().nextInt(worldSize - 2000) + 1000, 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
+                oil.add(p);
+            }
+        }
+        if (trash && trashSprite != null) {
+            if (trashes.size() < 5) {
+                Body p = createBox(new Random().nextInt(worldSize - 2000) + 1000, -new Random().nextInt(oceanDepth), (int) trashSprite.getWidth(), (int) trashSprite.getHeight(), false, true, "Trash");
+                p.setGravityScale(0);
+                trashes.add(p);
+            } else {
+                for (Body t : trashes) {
+                    int xforce = new Random().nextInt(4) - (2);
+                    int yforce = new Random().nextInt(2) - (1);
+                    if ((t.getPosition().x * PPM > worldSize && xforce > 0) || (t.getPosition().x * PPM < 0 && xforce < 0))
+                        xforce = xforce * -1;
+                    if ((t.getPosition().y * PPM > 0 && yforce > 0) || (t.getPosition().y * PPM < -oceanDepth && yforce < 0))
+                        yforce = yforce * -1;
+                    t.setLinearVelocity(xforce, yforce);
+                }
+            }
+        }
+    }
+
     private void cameraUpdate(float deltaTime) {
         Vector3 position = camera.position;
         if (player2d.getPosition().x * PPM < idealGameWidth / 2) {
@@ -545,6 +458,67 @@ public abstract class Level extends AbstractScreen {
 
         camera.position.set(position);
         camera.update();
+    }
+
+    protected abstract HashMap<Integer, Question> generateQuestionBank();
+
+    public void renderHealthBars() {
+        drawHealthBar(player.getHealth(),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.healthBar, Texture.class)),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.healthBarEmpty, Texture.class)),
+                -camera.viewportWidth * 0.49f,
+                camera.viewportHeight * 0.36f
+        );
+        drawHealthBar(player.getAir(),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.airBar, Texture.class)),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.airBarEmpty, Texture.class)),
+                -camera.viewportWidth * 0.49f,
+                camera.viewportHeight * 0.23f
+        );
+        drawHealthBar(player.getHunger(),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.hungerBar, Texture.class)),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.hungerBarEmpty, Texture.class)),
+                camera.viewportWidth * 0.18f,
+                camera.viewportHeight * 0.36f
+        );
+        drawHealthBar(player.getToxicity(),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicBar, Texture.class)),
+                new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicBarEmpty, Texture.class)),
+                camera.viewportWidth * 0.18f,
+                camera.viewportHeight * 0.23f
+        );
+
+    }
+
+    private void drawHealthBar(int barValue, Sprite bar, Sprite emptyBar, float x_offset, float y_offset) {
+        stage.act();
+        stage.getBatch().begin();
+        // Positioning
+        Vector3 barPosition = camera.position;
+        barPosition.set(barPosition.x + x_offset, barPosition.y + y_offset, 0);
+
+        switch (barValue) {
+            case 1:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.20f, bar.getHeight() / 2);
+                break;
+            case 2:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.28f, bar.getHeight() / 2);
+                break;
+            case 3:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.36f, bar.getHeight() / 2);
+                break;
+            case 4:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.42f, bar.getHeight() / 2);
+                break;
+            case 5:
+                stage.getBatch().draw(bar, barPosition.x, barPosition.y, bar.getWidth() * 0.50f, bar.getHeight() / 2);
+                break;
+            default:
+                break;
+        }
+        stage.getBatch().draw(emptyBar, barPosition.x, barPosition.y, bar.getWidth() * 0.5f, bar.getHeight() / 2);
+        stage.getBatch().end();
+        stage.draw();
     }
 
     public void renderPlayer2D() {
@@ -582,18 +556,19 @@ public abstract class Level extends AbstractScreen {
             stage.act();
             stage.getBatch().begin();
             for (Body b : oil) {
-                stage.getBatch().draw(oilSprite, b.getPosition().x * PPM - (oilSprite.getWidth() / 2), b.getPosition().y * PPM-(oilSprite.getHeight()));
+                stage.getBatch().draw(oilSprite, b.getPosition().x * PPM - (oilSprite.getWidth() / 2), b.getPosition().y * PPM - (oilSprite.getHeight()));
             }
             stage.getBatch().end();
             stage.draw();
         }
     }
+
     public void renderTrash() {
         if (trash) {
             stage.act();
             stage.getBatch().begin();
             for (Body b : trashes) {
-                stage.getBatch().draw(trashSprite, b.getPosition().x * PPM - (trashSprite.getWidth() / 2), b.getPosition().y * PPM-(trashSprite.getHeight()/ 2));
+                stage.getBatch().draw(trashSprite, b.getPosition().x * PPM - (trashSprite.getWidth() / 2), b.getPosition().y * PPM - (trashSprite.getHeight() / 2));
             }
             stage.getBatch().end();
             stage.draw();
@@ -659,6 +634,41 @@ public abstract class Level extends AbstractScreen {
         return seen;
     }
 
+    public void renderObstacles(int section, ArrayList<Sprite> choices, boolean[] obstacles, int yAxis, int height, boolean doubleWidth) {
+        int i;
+        int j = 0;
+        int width = spacing;
+        if (section == 2) {
+            i = 10;
+        } else if (section == 3) {
+            i = 30;
+        } else {
+            i = 0;
+        }
+        stage.act();
+        stage.getBatch().begin();
+        if (section == 1) {
+            i++;
+            stage.getBatch().draw(choices.get(0), spacing * i, yAxis - choices.get(0).getHeight(), (spacing) * 8, choices.get(0).getHeight());
+        } else {
+            if (doubleWidth) {
+                width = (spacing) * 2;
+            }
+            for (boolean o : obstacles) {
+
+                if (o) {
+                    stage.getBatch().draw(choices.get(j), spacing * i, yAxis - 250, width, height);
+                }
+                if (doubleWidth) {
+                    i++;
+                }
+                i++;
+            }
+        }
+        stage.getBatch().end();
+        stage.draw();
+    }
+
     public boolean[] generateObstacles(int Section) {
         if (Section == 2) {
             boolean[] obstacles1 = {true, false, true, true, false, false, false, true, true, false};
@@ -707,43 +717,6 @@ public abstract class Level extends AbstractScreen {
                 i++;
             }
         }
-    }
-
-    public void renderObstacles(int section, ArrayList<Sprite> choices, boolean[] obstacles, int yAxis, int height, boolean doubleWidth) {
-        int i;
-        int j = 0;
-        int width = spacing;
-        if (section == 2) {
-            i = 10;
-        } else if (section == 3) {
-            i = 30;
-        } else {
-            i = 0;
-        }
-        stage.act();
-        stage.getBatch().begin();
-        if (section == 1) {
-            i++;
-            stage.getBatch().draw(choices.get(0), spacing * i, yAxis - choices.get(0).getHeight(), (spacing) * 8, choices.get(0).getHeight());
-        } else {
-            if (doubleWidth) {
-                width = (spacing) * 2;
-            }
-            for (boolean o : obstacles) {
-
-                if (o) {
-                    stage.getBatch().draw(choices.get(j), spacing * i, yAxis - 250, width, height);
-                }
-                if (doubleWidth) {
-                    i++;
-                }
-                i++;
-            }
-        }
-
-
-        stage.getBatch().end();
-        stage.draw();
     }
 
     public void addPrey(int section, boolean[] obstacles, int width, int height, boolean gravityAffected) {
@@ -861,7 +834,6 @@ public abstract class Level extends AbstractScreen {
     @Override
     public void dispose() {
         world.dispose();
-        b2dr.dispose();
     }
 
 }
