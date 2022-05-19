@@ -149,7 +149,7 @@ public abstract class Level extends AbstractScreen {
         }
         if (gameOverWon){
             System.out.println(this.getClass().toString().substring(26));
-            game.setScreen(new Quiz(game, generateQuestionBank(), this.getClass().toString().substring(26)))
+            game.setScreen(new Quiz(game, generateQuestionBank(), this.getClass().toString().substring(26)));
         }
         world.step(deltaTime, 6, 2);
         if (player2d.getPosition().y * PPM > 0) {
