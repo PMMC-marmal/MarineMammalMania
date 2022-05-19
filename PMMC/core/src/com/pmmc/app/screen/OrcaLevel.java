@@ -73,7 +73,7 @@ public class OrcaLevel extends Level{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        renderBackground(background);
+        renderBackground(background,-1 * getOceanDepth()-50);
 
         renderPrey2D(food, toxicFood, 100,50);
         renderPlayer2D();
@@ -112,5 +112,4 @@ public class OrcaLevel extends Level{
 
         return questionBank;
     }
-
 }
