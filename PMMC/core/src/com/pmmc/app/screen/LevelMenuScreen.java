@@ -63,7 +63,6 @@ public class LevelMenuScreen extends Menu {
         killerWhaleSprite.flip(true,false);
         polarBearSprite.flip(true,false);
         this.pref = Gdx.app.getPreferences("Quiz Results");
-
     }
 
     @Override
@@ -102,8 +101,7 @@ public class LevelMenuScreen extends Menu {
             transitionScreen(new PolarBearLevel(game));
         }
 
-        // Draw characters on screen
-
+        // Draw checkmarks if level passed
         if(pref.getBoolean("SeaLionLevel", false)) {
             game.batch.draw(seaLionSprite, Gdx.graphics.getWidth() * .80f, Gdx.graphics.getHeight() * .70f);
         }
@@ -120,6 +118,16 @@ public class LevelMenuScreen extends Menu {
             game.batch.draw(polarBearSprite, Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .08f);
         }
 
+        // Draw characters on screen
+        game.batch.draw(seaLionSprite, Gdx.graphics.getWidth() * .80f, Gdx.graphics.getHeight() * .70f);
+
+        game.batch.draw(dolphinSprite, Gdx.graphics.getWidth() * -.08f, Gdx.graphics.getHeight() * .60f);
+
+        game.batch.draw(killerWhaleSprite, Gdx.graphics.getWidth() * .75f, Gdx.graphics.getHeight() * .37f);
+
+        game.batch.draw(blueWhaleSprite, 0 - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .12f);
+
+        game.batch.draw(polarBearSprite, Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .08f);
 
         game.batch.end();
     }

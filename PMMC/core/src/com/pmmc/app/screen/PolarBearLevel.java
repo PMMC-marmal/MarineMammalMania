@@ -23,15 +23,15 @@ import java.util.Random;
 public class PolarBearLevel extends Level {
     boolean[] obstacles1, obstacles2, obstacles3;
     boolean[][] seenPopUps;
+    ArrayList<Sprite> choices1, choices2, choices3, popUps;
     private Vector2[] popUpLocations;
-    ArrayList<Sprite> choices1, choices2, choices3, popUps ;
     private PolarBear bear;
-    private Sprite background, backdrop, blur, pop1,pop2,pop3,pop4,pop5,
+    private Sprite background, backdrop, blur, pop1, pop2, pop3, pop4, pop5,
             staticBear,
             food, toxicFood,
             iceberg1, iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
 
-    public PolarBearLevel(final GameLauncher game){
+    public PolarBearLevel(final GameLauncher game) {
         super(game);
         choices1 = new ArrayList<>();
         choices2 = new ArrayList<>();
@@ -41,10 +41,12 @@ public class PolarBearLevel extends Level {
         obstacles3 = generateObstacles(3);
         preySpawnHeight = 100;
         preyDespawnable = true;
+        preySpeed = 20;
         setWorldSize(24000);
         setOceanDepth(2000);
         setSpacing(600);
         setWaterWorld(false);
+        setOilSpill(true);
     }
 
     @Override
@@ -57,13 +59,17 @@ public class PolarBearLevel extends Level {
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
 
         this.staticBear = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarBearSprite, Texture.class));
-        staticBear.flip(true,false);
+        staticBear.flip(true, false);
+        setEndGoal(staticBear, 100);
 
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seal, Texture.class));
         this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSeal, Texture.class));
 
-        preywidth = (int)food.getWidth()/2;
-        preyHeight = (int)food.getHeight()/2;
+        preywidth = (int) food.getWidth() / 2;
+        preyHeight = (int) food.getHeight() / 2;
+
+        setOilSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.oilSpill, Texture.class)));
+
 
         this.iceberg1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg1, Texture.class));
         this.iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2, Texture.class));
@@ -80,11 +86,11 @@ public class PolarBearLevel extends Level {
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
 
         popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2(1000,200),new Vector2(3000,200),new Vector2(5000,200),new Vector2(7000,200),new Vector2(9000,200)};//slect location
+        popUpLocations = new Vector2[]{new Vector2(1000, 200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(7000, 200), new Vector2(9000, 200)};//slect location
 
-        placeBox2DObstacles(1,new Vector2[]{}, obstacles1 , 0,false,"IceBerg");
-        placeBox2DObstacles(2,new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, obstacles2 , 0,true ,"IceBerg");
-        placeBox2DObstacles(3,new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -200 / PPM)}, obstacles3 , 0,false,"IceBerg");
+        placeBox2DObstacles(1, new Vector2[]{}, obstacles1, 0, false, "IceBerg");
+        placeBox2DObstacles(2, new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, obstacles2, 0, true, "IceBerg");
+        placeBox2DObstacles(3, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -200 / PPM)}, obstacles3, 0, false, "IceBerg");
 
         addPrey(1, generateObstacles(1), preywidth, preyHeight, true);
         addPrey(2, generateObstacles(2), preywidth, preyHeight, true);
@@ -93,12 +99,12 @@ public class PolarBearLevel extends Level {
 
         choices1.add(this.iceberg1);
         Sprite[] options2 = {this.iceberg2, this.iceberg3, this.iceberg4};
-        for (int i = 0 ; i < 5; i++) {
-            choices2.add(options2[new Random().nextInt(options2.length-1)]);
+        for (int i = 0; i < 5; i++) {
+            choices2.add(options2[new Random().nextInt(options2.length - 1)]);
         }
         Sprite[] options3 = {this.iceberg5, this.iceberg6};
-        for (int i = 0 ; i < 2; i++) {
-            choices3.add(options3[new Random().nextInt(options3.length-1)]);
+        for (int i = 0; i < 2; i++) {
+            choices3.add(options3[new Random().nextInt(options3.length - 1)]);
         }
     }
 
@@ -111,17 +117,18 @@ public class PolarBearLevel extends Level {
         game.batch.begin();
         // Add background
         renderBackground(backdrop, -500);
-        renderBackground(background, -1 * getOceanDepth()-50);
+        renderBackground(background, -1 * getOceanDepth() - 50);
 
-        renderPrey2D(food, toxicFood, preywidth, preyHeight); // NEEDS HEIGHT WIDTH
-        renderObstacles(1, choices1, obstacles1, 540,0, false);
-        renderObstacles(2, choices2, obstacles2, 0,300, true);
+        renderPrey2D(food, toxicFood);
+        renderObstacles(1, choices1, obstacles1, 540, 0, false);
+        renderObstacles(2, choices2, obstacles2, 0, 300, true);
         renderObstacles(3, choices3, obstacles3, 0, 300, false);
-        seenPopUps = renderPopUps(seenPopUps,popUpLocations,popUps);
+        seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
+        renderOil();
         renderEndGoal2D(staticBear);
         renderPlayer2D();
         renderHealthBars();
-        renderBackground(blur, -1 * getOceanDepth()-50);
+        renderBackground(blur, -1 * getOceanDepth() - 50);
         game.batch.end();
 //
     }
@@ -130,10 +137,10 @@ public class PolarBearLevel extends Level {
      * Note to whoever implements the quiz. All you really need to do is:
      * 1. Create a generateQuestionBank method
      * 2. Wherever you want to trigger the Quiz screen, do so like this:
-     *          game.setScreen(new Quiz(game, generateQuestionBank()));
-     * **/
+     * game.setScreen(new Quiz(game, generateQuestionBank()));
+     **/
 
-    public HashMap<Integer, Question> generateQuestionBank(){
+    public HashMap<Integer, Question> generateQuestionBank() {
         HashMap<Integer, Question> questionBank = new HashMap<>();
         questionBank.put(1, new Question(
                 "What is the polar bear’s main source of food?",
