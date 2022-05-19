@@ -1,6 +1,7 @@
 package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -66,10 +67,16 @@ public class MainMenuScreen extends Menu {
 
         // New Game Button: If clicked, restart progress and proceed to LevelSelectScreen
         if (displayButton(newGameButton, newGameButtonActive, x, y_new, BUTTON_WIDTH, BUTTON_HEIGHT)){
+            resetProgress();
             transitionScreen(new LevelMenuScreen(game));
         }
 
         game.batch.end();
     }
 
+    public void resetProgress(){
+        Preferences pref = Gdx.app.getPreferences("Quiz Results");
+        pref.clear();
+        pref.flush();
+    }
 }
