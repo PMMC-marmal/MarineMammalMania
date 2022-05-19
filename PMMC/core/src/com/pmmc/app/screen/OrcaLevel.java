@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.Orca;
+import com.pmmc.app.screen.quiz.Question;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class OrcaLevel extends Level{
 
@@ -77,6 +80,37 @@ public class OrcaLevel extends Level{
         renderHealthBars();
         game.batch.end();
 //        renderBackground(blur);
+    }
+
+    public HashMap<Integer, Question> generateQuestionBank(){
+        HashMap<Integer, Question> questionBank = new HashMap<>();
+        questionBank.put(1, new Question(
+                "What do the southern resident killer whales mainly eat?",
+                "Chinook salmon",
+                new ArrayList<>(Arrays.asList("Chinook salmon", "Sardines", "Squid", "Herring"))
+        ));
+        questionBank.put(2, new Question(
+                "Female southern resident killer whales can live up to ...?",
+                "80-100 years old",
+                new ArrayList<>(Arrays.asList("80-100 years old", "40-60 years old", "60-80 years old", "100-120 years old"))
+        ));
+        questionBank.put(3, new Question(
+                "How many pods do the southern resident killer whales have?",
+                "3 pods",
+                new ArrayList<>(Arrays.asList("3 pods", "2 pods", "5 pods", "8 pods"))
+        ));
+        questionBank.put(4, new Question(
+                "Which of the following is a threat to the southern resident killer whales?",
+                "All answers are correct",
+                new ArrayList<>(Arrays.asList("All answers are correct", "Decreased quality of prey", "Disturbance from ship presence", "None of these"))
+        ));
+        questionBank.put(5, new Question(
+                "What can you do to help preserve our southern resident killer whales?",
+                "TBA (Correct)",
+                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+        ));
+
+        return questionBank;
     }
 
 }

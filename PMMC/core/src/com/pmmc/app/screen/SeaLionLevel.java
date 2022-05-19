@@ -122,7 +122,7 @@ public class SeaLionLevel extends Level{
         questionBank.put(4, new Question(
                 "What do California Sea Lions use to recognize other individuals?",
                 "Sight, sound, and scent",
-                new ArrayList<>(Arrays.asList("Sight, sound, and scent", "Sight, scent, and recognizable movements", "Scent, touch, and sound", "None of these"))
+                new ArrayList<>(Arrays.asList("Sight, sound, and scent", "Only sight and scent", "Scent, touch, and sound", "None of these"))
         ));
         questionBank.put(5, new Question(
                 "What can you do to help the California Sea Lions?",
