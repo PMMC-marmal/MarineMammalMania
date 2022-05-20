@@ -26,7 +26,7 @@ public class SeaLionLevel extends Level {
     ArrayList<Sprite> choices1, popUps;
     private Vector2[] popUpLocations;
     private SeaLion seaLion;
-    private Sprite background, blur, pop1, pop2, pop3, pop4, pop5, sandArea, staticSeaLion, bouy, food, toxicFood;
+    private Sprite background, blur, backdrop, pop1, pop2, pop3, pop4, pop5, sandArea, staticSeaLion, bouy, food, toxicFood;
 
     public SeaLionLevel(GameLauncher game) {
         super(game);
@@ -37,9 +37,10 @@ public class SeaLionLevel extends Level {
         choices1 = new ArrayList<>();
         obstacles2 = generateObstacles(2);
         obstacles3 = generateObstacles(3);
-        setWorldSize(24000);
+        setWorldSize(28000);
         setOceanDepth(1000);
-        setSpacing(400);
+        setSpacing(600);
+        setMinNumPrey(5);
         setBoatStrike(true);
         setBoatYAxis(0);
         setWaterWorld(false);
@@ -52,6 +53,8 @@ public class SeaLionLevel extends Level {
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
+        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionBackground1, Texture.class));
+
         this.staticSeaLion = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
         staticSeaLion.flip(true, false);
         setEndGoal(staticSeaLion, 200);
@@ -59,8 +62,8 @@ public class SeaLionLevel extends Level {
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.squid, Texture.class));
         this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSquid, Texture.class));
 
-        preywidth = (int) food.getWidth() ;
-        preyHeight = (int) food.getHeight() ;
+        preyWidth = (int) food.getWidth() /3;
+        preyHeight = (int) food.getHeight() /3;
 
         this.sandArea = new Sprite(AssetHandler.assetManager.get(AssetHandler.sandArea, Texture.class));
         this.bouy = new Sprite(AssetHandler.assetManager.get(AssetHandler.bouy, Texture.class));
@@ -74,7 +77,7 @@ public class SeaLionLevel extends Level {
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
 
         popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2(500, 200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(7000, 200), new Vector2(9000, 200)};//slect location
+        popUpLocations = new Vector2[]{new Vector2(500, 200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 200)};//slect location
 
         for (boolean b : obstacles2) {
             choices1.add(bouy);
@@ -83,8 +86,8 @@ public class SeaLionLevel extends Level {
         placeBox2DObstacles(3, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -5 / PPM)}, obstacles3, 10, false, "Bouy");
 
 
-        addPrey(2, generateObstacles(2), preywidth, preyHeight, false);
-        addPrey(3, generateObstacles(2), preywidth, preyHeight, false);
+        addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
+        addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
 
         makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(600 / 32, -10 / 32), new Vector2(1850 / 32, -1200 / 32), new Vector2(0, -1000 / 32)}, 0, 0, true, "Sand");
         makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(0, -1000 / 32), new Vector2(-(1850 / 32), -1200 / 32), new Vector2(-600 / 32, -10 / 32)}, getWorldSize(), 0, true, "Sand");
@@ -103,6 +106,7 @@ public class SeaLionLevel extends Level {
 
 
         game.batch.begin();
+        renderBackground(backdrop, -750);
         renderBackground(background, -1 * getOceanDepth() - 50);
         renderCustom(sandArea, 0, -1 * sandArea.getHeight() - 350, sandArea.getWidth(), sandArea.getHeight() + 500);
         sandArea.flip(true, false);

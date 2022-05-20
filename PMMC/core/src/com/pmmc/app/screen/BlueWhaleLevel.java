@@ -24,28 +24,27 @@ public class BlueWhaleLevel extends Level {
     boolean[][] seenPopUps;
     ArrayList<Sprite> popUps;
     private Vector2[] popUpLocations;
-    private BlueWhale whale;
-    private Sprite background, blur, staticWhale, food, toxicFood, pop1, pop2, pop3, pop4, pop5;
+    private Sprite background, blur, staticWhale, food, toxicFood;
 
     public BlueWhaleLevel(GameLauncher game) {
         super(game);
         preySpawnHeight = -1000;
         preyDespawnable = false;
-        preySpeed = 20;
+        preySpeed = 10;
         waterPrey = true;
         setWaterWorld(true);
         setWorldSize(24000);
         setOceanDepth(3000);
-        setSpacing(1200);
+        setSpacing(400);
+        setMinNumPrey(10);
         setBoatStrike(true);
         setOilSpill(true);
         setBoatYAxis(-250);
-
     }
 
     @Override
     public void show() {
-        whale = new BlueWhale();
+        BlueWhale whale = new BlueWhale();
         setPlayer(whale);
 
         player.setSwimming(true);
@@ -58,23 +57,25 @@ public class BlueWhaleLevel extends Level {
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.krill, Texture.class));
         this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicKrill, Texture.class));
 
-        preywidth = (int) food.getWidth() ;
-        preyHeight = (int) food.getHeight() ;
+        preyWidth = (int) food.getWidth() /3;
+        preyHeight = (int) food.getHeight() /3;
 
         setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoatFishingLine, Texture.class)));
         setOilSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.oilSpill, Texture.class)));
 
-        this.pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleFoodPop, Texture.class));
-        this.pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleHabitatPop, Texture.class));
-        this.pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleLifePop, Texture.class));
-        this.pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleSocialPop, Texture.class));
-        this.pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleThreatsPop, Texture.class));
+        Sprite pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleFoodPop, Texture.class));
+        Sprite pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleHabitatPop, Texture.class));
+        Sprite pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleLifePop, Texture.class));
+        Sprite pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleSocialPop, Texture.class));
+        Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleThreatsPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
-        popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2(1000, 200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(7000, 200), new Vector2(9000, 200)};//slect location
+        popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5)); //order maters
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(spacing, 200), new Vector2(5000, 200), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000,0)};//slect location
 
-        addPrey(2, generateObstacles(2), preywidth, preyHeight, false);
-        addPrey(3, generateObstacles(2), preywidth, preyHeight, false);
+        addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
+        addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
+        addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
+        addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
     }
 
     @Override

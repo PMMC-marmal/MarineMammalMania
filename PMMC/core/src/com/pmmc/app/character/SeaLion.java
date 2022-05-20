@@ -12,7 +12,7 @@ public class SeaLion extends CharacterAbstraction {
         setAirLossRate(200);
         setFoodLossRate(300);
         setDamageRate(100);
-        setJumpForce(5);
+        setJumpForce(6);
     }
 
     // Power related to polar bear (method here)

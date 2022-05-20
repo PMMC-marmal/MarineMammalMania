@@ -46,6 +46,12 @@ public class AssetHandler {
     polarBackdrop = "backgrounds/polar_background_blur.png",
             waterWithSand = "backgrounds/polar-bear-ocean.png",
             blur = "backgrounds/water_overlay.png",
+            seaLionBackground = "backgrounds/sealion_background.png",
+            seaLionBackground1 = "backgrounds/sealion-background1.png",
+            skyBackground = "backgrounds/sky_background.png",
+            skyBackground2 = "backgrounds/sky_background.png",
+            skyBackground3 = "backgrounds/sky_background.png",
+            skyBackground4 = "backgrounds/sky_background.png",
 
     icebergAddon = "obstacles/iceberg-background.png",
             iceberg1 = "obstacles/starting_ice_berg.png",
@@ -54,6 +60,15 @@ public class AssetHandler {
             iceberg4 = "obstacles/iceberg_medium2.png",
             iceberg5 = "obstacles/iceberg_small.png",
             iceberg6 = "obstacles/iceberg_small2.png",
+
+    rock1 = "obstacles/Rocks/Rock1.png",
+            rock2 = "obstacles/Rocks/Rock2.png",
+            rock3 = "obstacles/Rocks/Rock3.png",
+            rock4 = "obstacles/Rocks/Rock4.png",
+            rock5 = "obstacles/Rocks/rock5.png",
+            rock6 = "obstacles/Rocks/Rock6.png",
+            rock7 = "obstacles/Rocks/rock7.png",
+            rock8 = "obstacles/Rocks/rock8.png",
 
     sandArea = "obstacles/sealionsand.png",
             bouy = "obstacles/bouy.png",
@@ -154,6 +169,13 @@ public class AssetHandler {
         assetManager.load(waterWithSand, Texture.class);
         assetManager.load(polarBackdrop, Texture.class);
         assetManager.load(blur, Texture.class);
+        assetManager.load(seaLionBackground, Texture.class);
+        assetManager.load(seaLionBackground1, Texture.class);
+        assetManager.load(skyBackground, Texture.class);
+        assetManager.load(skyBackground2, Texture.class);
+        assetManager.load(skyBackground3, Texture.class);
+        assetManager.load(skyBackground4, Texture.class);
+
 
         assetManager.load(polarFoodPop, Texture.class);
         assetManager.load(polarHabitatPop, Texture.class);
@@ -190,6 +212,15 @@ public class AssetHandler {
         assetManager.load(icebergAddon, Texture.class);
         assetManager.load(bouy, Texture.class);
         assetManager.load(sandArea, Texture.class);
+
+        assetManager.load(rock1, Texture.class);
+        assetManager.load(rock2, Texture.class);
+        assetManager.load(rock3, Texture.class);
+        assetManager.load(rock4, Texture.class);
+        assetManager.load(rock5, Texture.class);
+        assetManager.load(rock6, Texture.class);
+        assetManager.load(rock7, Texture.class);
+        assetManager.load(rock8, Texture.class);
 
         assetManager.load(polarBearWalking, TextureAtlas.class);
         assetManager.load(polarBearSwimming, TextureAtlas.class);

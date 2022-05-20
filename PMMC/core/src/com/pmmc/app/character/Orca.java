@@ -8,11 +8,11 @@ public class Orca extends CharacterAbstraction {
     public Orca() {
         super(AssetHandler.assetManager.get(AssetHandler.orcaSwimming, TextureAtlas.class),
                 AssetHandler.assetManager.get(AssetHandler.orcaSwimming, TextureAtlas.class));
-        setSpeed(6);
-        setAirLossRate(1000);
+        setSpeed(15);
+        setAirLossRate(500);
         setFoodLossRate(500);
         setDamageRate(100);
-        setJumpForce(10);
+        setJumpForce(7);
     }
 
     // Power related to polar bear (method here)

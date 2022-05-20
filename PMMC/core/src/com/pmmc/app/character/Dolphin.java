@@ -9,8 +9,8 @@ public class Dolphin extends CharacterAbstraction {
         super(AssetHandler.assetManager.get(AssetHandler.dolphinSwimming, TextureAtlas.class),
                 AssetHandler.assetManager.get(AssetHandler.dolphinSwimming, TextureAtlas.class));
         setSpeed(20);
-        setAirLossRate(1000);
-        setFoodLossRate(500);
+        setAirLossRate(500);
+        setFoodLossRate(250);
         setDamageRate(100);
         setJumpForce(10);
     }

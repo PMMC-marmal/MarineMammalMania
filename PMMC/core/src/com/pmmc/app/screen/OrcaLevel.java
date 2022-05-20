@@ -25,18 +25,19 @@ public class OrcaLevel extends Level {
     ArrayList<Sprite> popUps;
     private Vector2[] popUpLocations;
     private Orca orca;
-    private Sprite background, blur, staticOrca, food, toxicFood, pop1, pop2, pop3, pop4, pop5;
+    private Sprite background, backdrop, blur, staticOrca, food, toxicFood, pop1, pop2, pop3, pop4, pop5;
 
     public OrcaLevel(GameLauncher game) {
         super(game);
         preySpawnHeight = -1000;
         preyDespawnable = false;
-        preySpeed = 20;
+        preySpeed = 18;
         waterPrey = true;
         setWaterWorld(true);
         setWorldSize(24000);
-        setOceanDepth(3000);
+        setOceanDepth(2000);
         setSpacing(1200);
+        setMinNumPrey(5);
         setBoatStrike(true);
         setOilSpill(true);
         setBoatYAxis(-250);
@@ -52,14 +53,15 @@ public class OrcaLevel extends Level {
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
         this.staticOrca = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class));
+        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionBackground, Texture.class));
         staticOrca.flip(true, false);
         setEndGoal(staticOrca, preySpawnHeight);
 
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.salmon, Texture.class));
         this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSalmon, Texture.class));
 
-        preywidth = (int) food.getWidth() ;
-        preyHeight = (int) food.getHeight() ;
+        preyWidth = (int) food.getWidth() /3;
+        preyHeight = (int) food.getHeight() /3;
 
         setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoatFishingLine, Texture.class)));
         setOilSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.oilSpill, Texture.class)));
@@ -71,10 +73,10 @@ public class OrcaLevel extends Level {
         this.pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaThreatsPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
         popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2(1000, 200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(7000, 200), new Vector2(9000, 200)};//slect location
+        popUpLocations = new Vector2[]{new Vector2(1000, 0), new Vector2(3000, 0), new Vector2(5000, 0), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 0)};//slect location
 
-        addPrey(2, generateObstacles(2), preywidth, preyHeight, false);
-        addPrey(3, generateObstacles(2), preywidth, preyHeight, false);
+        addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
+        addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
     }
 
     @Override
@@ -85,6 +87,7 @@ public class OrcaLevel extends Level {
 
         game.batch.begin();
         renderBackground(background, -1 * getOceanDepth() - 50);
+        renderBackground(backdrop, 100);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
         renderBoat();

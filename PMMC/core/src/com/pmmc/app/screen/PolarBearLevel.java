@@ -25,11 +25,12 @@ public class PolarBearLevel extends Level {
     boolean[][] seenPopUps;
     ArrayList<Sprite> choices1, choices2, choices3, popUps;
     private Vector2[] popUpLocations;
-    private PolarBear bear;
-    private Sprite background, backdrop, blur, pop1, pop2, pop3, pop4, pop5,
-            staticBear,
-            food, toxicFood,
-            iceberg1, iceberg2, iceberg3, iceberg4, iceberg5, iceberg6;
+    private Sprite background;
+    private Sprite backdrop;
+    private Sprite blur;
+    private Sprite staticBear;
+    private Sprite food;
+    private Sprite toxicFood;
 
     public PolarBearLevel(final GameLauncher game) {
         super(game);
@@ -42,16 +43,16 @@ public class PolarBearLevel extends Level {
         preySpawnHeight = 100;
         preyDespawnable = true;
         preySpeed = 20;
-        setWorldSize(24000);
-        setOceanDepth(2000);
-        setSpacing(600);
+        setWorldSize(28000);
+        setOceanDepth(1000);
+        setSpacing(700);
         setWaterWorld(false);
         setOilSpill(true);
     }
 
     @Override
     public void show() {
-        bear = new PolarBear();
+        PolarBear bear = new PolarBear();
         setPlayer(bear);
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
@@ -65,44 +66,43 @@ public class PolarBearLevel extends Level {
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seal, Texture.class));
         this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSeal, Texture.class));
 
-        preywidth = (int) food.getWidth() / 2;
+        preyWidth = (int) food.getWidth() / 2;
         preyHeight = (int) food.getHeight() / 2;
 
         setOilSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.oilSpill, Texture.class)));
 
 
-        this.iceberg1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg1, Texture.class));
-        this.iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2, Texture.class));
-        this.iceberg3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg3, Texture.class));
-        this.iceberg4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg4, Texture.class));
-        this.iceberg5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg5, Texture.class));
-        this.iceberg6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg6, Texture.class));
+        Sprite iceberg1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg1, Texture.class));
+        Sprite iceberg2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg2, Texture.class));
+        Sprite iceberg3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg3, Texture.class));
+        Sprite iceberg4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg4, Texture.class));
+        Sprite iceberg5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg5, Texture.class));
+        Sprite iceberg6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.iceberg6, Texture.class));
 
-        this.pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarFoodPop, Texture.class));
-        this.pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarHabitatPop, Texture.class));
-        this.pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarLifePop, Texture.class));
-        this.pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarSocialPop, Texture.class));
-        this.pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarThreatsPop, Texture.class));
+        Sprite pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarFoodPop, Texture.class));
+        Sprite pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarHabitatPop, Texture.class));
+        Sprite pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarLifePop, Texture.class));
+        Sprite pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarSocialPop, Texture.class));
+        Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarThreatsPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
 
         popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2(1000, 200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(7000, 200), new Vector2(9000, 200)};//slect location
+        popUpLocations = new Vector2[]{new Vector2(1000, 200), new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), 200), new Vector2(3000, 200), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 200)};//slect location
 
         placeBox2DObstacles(1, new Vector2[]{}, obstacles1, 0, false, "IceBerg");
         placeBox2DObstacles(2, new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, obstacles2, 0, true, "IceBerg");
-        placeBox2DObstacles(3, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -200 / PPM)}, obstacles3, 0, false, "IceBerg");
+        placeBox2DObstacles(3, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2f) / PPM, -200 / PPM)}, obstacles3, 0, false, "IceBerg");
 
-        addPrey(1, generateObstacles(1), preywidth, preyHeight, true);
-        addPrey(2, generateObstacles(2), preywidth, preyHeight, true);
-        addPrey(3, generateObstacles(2), preywidth, preyHeight, true);
+        addPrey(2, generateObstacles(2), preyWidth, preyHeight, true);
+        addPrey(3, generateObstacles(2), preyWidth, preyHeight, true);
 
 
-        choices1.add(this.iceberg1);
-        Sprite[] options2 = {this.iceberg2, this.iceberg3, this.iceberg4};
+        choices1.add(iceberg1);
+        Sprite[] options2 = {iceberg2, iceberg3, iceberg4};
         for (int i = 0; i < 5; i++) {
             choices2.add(options2[new Random().nextInt(options2.length - 1)]);
         }
-        Sprite[] options3 = {this.iceberg5, this.iceberg6};
+        Sprite[] options3 = {iceberg5, iceberg6};
         for (int i = 0; i < 2; i++) {
             choices3.add(options3[new Random().nextInt(options3.length - 1)]);
         }
@@ -116,7 +116,7 @@ public class PolarBearLevel extends Level {
 
         game.batch.begin();
         // Add background
-        renderBackground(backdrop, -500);
+        renderBackground(backdrop, -100);
         renderBackground(background, -1 * getOceanDepth() - 50);
 
         renderPrey2D(food, toxicFood);
