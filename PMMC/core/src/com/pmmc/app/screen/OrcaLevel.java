@@ -24,8 +24,12 @@ public class OrcaLevel extends Level {
     boolean[][] seenPopUps;
     ArrayList<Sprite> popUps;
     private Vector2[] popUpLocations;
-    private Orca orca;
-    private Sprite background, backdrop, blur, staticOrca, food, toxicFood, pop1, pop2, pop3, pop4, pop5;
+    private Sprite background;
+    private Sprite backdrop;
+    private Sprite blur;
+    private Sprite staticOrca;
+    private Sprite food;
+    private Sprite toxicFood;
 
     public OrcaLevel(GameLauncher game) {
         super(game);
@@ -45,15 +49,16 @@ public class OrcaLevel extends Level {
 
     @Override
     public void show() {
-        orca = new Orca();
+        Orca orca = new Orca();
         setPlayer(orca);
         setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoat, Texture.class)));
         player.setSwimming(true);
 
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
+        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.skyBackground, Texture.class));
+
         this.staticOrca = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class));
-        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionBackground, Texture.class));
         staticOrca.flip(true, false);
         setEndGoal(staticOrca, preySpawnHeight);
 
@@ -66,14 +71,14 @@ public class OrcaLevel extends Level {
         setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoatFishingLine, Texture.class)));
         setOilSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.oilSpill, Texture.class)));
 
-        this.pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaFoodPop, Texture.class));
-        this.pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaHabitatPop, Texture.class));
-        this.pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaLifePop, Texture.class));
-        this.pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaSocialPop, Texture.class));
-        this.pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaThreatsPop, Texture.class));
+        Sprite pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaFoodPop, Texture.class));
+        Sprite pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaHabitatPop, Texture.class));
+        Sprite pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaLifePop, Texture.class));
+        Sprite pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaSocialPop, Texture.class));
+        Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaThreatsPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
-        popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2(1000, 0), new Vector2(3000, 0), new Vector2(5000, 0), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 0)};//slect location
+        popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5)); //order maters
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(3000, 0), new Vector2(5000, 0), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 0)};//slect location
 
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
         addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
@@ -86,15 +91,15 @@ public class OrcaLevel extends Level {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        renderBackground(background, -1 * getOceanDepth() - 50);
-        renderBackground(backdrop, 100);
+        renderBackground(backdrop, 100, true);
+        renderBackground(background, -1 * getOceanDepth() - 50, false);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
         renderBoat();
         renderOil();
         renderEndGoal2D(staticOrca);
         renderPlayer2D();
-        renderBackground(blur, -1 * getOceanDepth() - 50);
+        renderBackground(blur, -1 * getOceanDepth() - 50,false);
         renderHealthBars();
         game.batch.end();
     }

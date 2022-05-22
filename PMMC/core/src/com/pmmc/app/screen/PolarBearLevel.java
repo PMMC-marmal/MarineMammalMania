@@ -40,14 +40,16 @@ public class PolarBearLevel extends Level {
         obstacles1 = generateObstacles(1);
         obstacles2 = generateObstacles(2);
         obstacles3 = generateObstacles(3);
-        preySpawnHeight = 100;
+        preySpawnHeight = 200;
         preyDespawnable = true;
-        preySpeed = 20;
+        preySpeed = 15;
+        waterPrey = false;
         setWorldSize(28000);
         setOceanDepth(1000);
         setSpacing(700);
         setWaterWorld(false);
-        setOilSpill(true);
+//        setOilSpill(true);
+
     }
 
     @Override
@@ -86,8 +88,8 @@ public class PolarBearLevel extends Level {
         Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarThreatsPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
 
-        popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2(1000, 200), new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), 200), new Vector2(3000, 200), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 200)};//slect location
+        popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5)); //order maters
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+100), new Vector2(1000, 200), new Vector2(3000, 200), new Vector2(getWorldSize()-(spacing/2f)-(pop5.getWidth()/2), (getEndGoal().getPosition().y * PPM)+100), new Vector2(9000, 200)};//slect location
 
         placeBox2DObstacles(1, new Vector2[]{}, obstacles1, 0, false, "IceBerg");
         placeBox2DObstacles(2, new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, obstacles2, 0, true, "IceBerg");
@@ -116,8 +118,8 @@ public class PolarBearLevel extends Level {
 
         game.batch.begin();
         // Add background
-        renderBackground(backdrop, -100);
-        renderBackground(background, -1 * getOceanDepth() - 50);
+        renderBackground(backdrop, -100, true);
+        renderBackground(background, -1 * getOceanDepth() - 50,false);
 
         renderPrey2D(food, toxicFood);
         renderObstacles(1, choices1, obstacles1, 540, 0, false);
@@ -128,7 +130,7 @@ public class PolarBearLevel extends Level {
         renderEndGoal2D(staticBear);
         renderPlayer2D();
         renderHealthBars();
-        renderBackground(blur, -1 * getOceanDepth() - 50);
+        renderBackground(blur, -1 * getOceanDepth() - 50, false);
         game.batch.end();
 //
     }

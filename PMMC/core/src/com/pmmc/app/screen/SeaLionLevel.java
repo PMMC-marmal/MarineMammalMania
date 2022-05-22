@@ -25,8 +25,13 @@ public class SeaLionLevel extends Level {
     boolean[] obstacles2, obstacles3;
     ArrayList<Sprite> choices1, popUps;
     private Vector2[] popUpLocations;
-    private SeaLion seaLion;
-    private Sprite background, blur, backdrop, pop1, pop2, pop3, pop4, pop5, sandArea, staticSeaLion, bouy, food, toxicFood;
+    private Sprite background;
+    private Sprite blur;
+    private Sprite backdrop;
+    private Sprite sandArea;
+    private Sprite staticSeaLion;
+    private Sprite food;
+    private Sprite toxicFood;
 
     public SeaLionLevel(GameLauncher game) {
         super(game);
@@ -39,21 +44,23 @@ public class SeaLionLevel extends Level {
         obstacles3 = generateObstacles(3);
         setWorldSize(28000);
         setOceanDepth(1000);
-        setSpacing(600);
+        setSpacing(400);
         setMinNumPrey(5);
         setBoatStrike(true);
         setBoatYAxis(0);
         setWaterWorld(false);
+        setPredator(true);
+
     }
 
     @Override
     public void show() {
-        seaLion = new SeaLion();
+        SeaLion seaLion = new SeaLion();
         setPlayer(seaLion);
         player.setSwimming(false);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
-        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionBackground1, Texture.class));
+        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionBackground, Texture.class));
 
         this.staticSeaLion = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
         staticSeaLion.flip(true, false);
@@ -66,31 +73,33 @@ public class SeaLionLevel extends Level {
         preyHeight = (int) food.getHeight() /3;
 
         this.sandArea = new Sprite(AssetHandler.assetManager.get(AssetHandler.sandArea, Texture.class));
-        this.bouy = new Sprite(AssetHandler.assetManager.get(AssetHandler.bouy, Texture.class));
+        Sprite bouy = new Sprite(AssetHandler.assetManager.get(AssetHandler.bouy, Texture.class));
         setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoat, Texture.class)));
 
-        this.pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionFoodPop, Texture.class));
-        this.pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionHabitatPop, Texture.class));
-        this.pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionLifePop, Texture.class));
-        this.pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionSocialPop, Texture.class));
-        this.pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionThreatsPop, Texture.class));
+        setPredatorSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class)));
+
+        Sprite pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionFoodPop, Texture.class));
+        Sprite pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionHabitatPop, Texture.class));
+        Sprite pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionLifePop, Texture.class));
+        Sprite pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionSocialPop, Texture.class));
+        Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionThreatsPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
 
-        popUps = new ArrayList<>(Arrays.asList(pop2, pop1, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2(500, 200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 200)};//slect location
+        popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5)); //order maters
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(500, 200), new Vector2(5000, 200), new Vector2(getWorldSize()-(spacing/2f)-(pop5.getWidth()/2), (getEndGoal().getPosition().y* PPM)+100), new Vector2(9000, 200)};//slect location
 
-        for (boolean b : obstacles2) {
+        for (boolean ignored : obstacles2) {
             choices1.add(bouy);
         }
-        placeBox2DObstacles(2, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -5 / PPM)}, obstacles3, 10, false, "Bouy");
-        placeBox2DObstacles(3, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2) / PPM, -5 / PPM)}, obstacles3, 10, false, "Bouy");
+        placeBox2DObstacles(2, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2f) / PPM, -5 / PPM)}, obstacles3, 10, false, "Bouy");
+        placeBox2DObstacles(3, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2f) / PPM, -5 / PPM)}, obstacles3, 10, false, "Bouy");
 
 
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
         addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
 
-        makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(600 / 32, -10 / 32), new Vector2(1850 / 32, -1200 / 32), new Vector2(0, -1000 / 32)}, 0, 0, true, "Sand");
-        makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(0, -1000 / 32), new Vector2(-(1850 / 32), -1200 / 32), new Vector2(-600 / 32, -10 / 32)}, getWorldSize(), 0, true, "Sand");
+        makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(600 / PPM, -10 / PPM), new Vector2(1850 / PPM, -1200 / PPM), new Vector2(0, -1000 / PPM)}, 0, 0, true, "Sand");
+        makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(0, -1000 / PPM), new Vector2(-(1850 / PPM), -1200 / PPM), new Vector2(-600 / PPM, -10 / PPM)}, getWorldSize(), 0, true, "Sand");
 
     }
 
@@ -106,8 +115,8 @@ public class SeaLionLevel extends Level {
 
 
         game.batch.begin();
-        renderBackground(backdrop, -750);
-        renderBackground(background, -1 * getOceanDepth() - 50);
+        renderBackground(backdrop, 0, true);
+        renderBackground(background, -1 * getOceanDepth() - 50,false);
         renderCustom(sandArea, 0, -1 * sandArea.getHeight() - 350, sandArea.getWidth(), sandArea.getHeight() + 500);
         sandArea.flip(true, false);
         renderCustom(sandArea, (int) (getWorldSize() - sandArea.getWidth()), -1 * sandArea.getHeight() - 350, sandArea.getWidth(), sandArea.getHeight() + 500);
@@ -116,12 +125,13 @@ public class SeaLionLevel extends Level {
         renderObstacles(3, choices1, obstacles3, 10, 700, false);
         renderPrey2D(food, toxicFood);
         renderBoat();
+        renderPredator();
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
 
         renderEndGoal2D(staticSeaLion);
         renderPlayer2D();
         renderHealthBars();
-        renderBackground(blur, -1 * getOceanDepth() - 50);
+        renderBackground(blur, -1 * getOceanDepth() - 50,false);
         game.batch.end();
 //
     }

@@ -36,7 +36,7 @@ public class BlueWhaleLevel extends Level {
         setWorldSize(24000);
         setOceanDepth(3000);
         setSpacing(400);
-        setMinNumPrey(10);
+        setMinNumPrey(80);
         setBoatStrike(true);
         setOilSpill(true);
         setBoatYAxis(-250);
@@ -72,8 +72,7 @@ public class BlueWhaleLevel extends Level {
         popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5)); //order maters
         popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(spacing, 200), new Vector2(5000, 200), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000,0)};//slect location
 
-        addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
-        addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
+
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
         addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
     }
@@ -85,14 +84,14 @@ public class BlueWhaleLevel extends Level {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        renderBackground(background, -1 * getOceanDepth() - 50);
+        renderBackground(background, -1 * getOceanDepth() - 50,false);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
         renderBoat();
         renderOil();
         renderEndGoal2D(staticWhale);
         renderPlayer2D();
-        renderBackground(blur, -1 * getOceanDepth() - 50);
+        renderBackground(blur, -1 * getOceanDepth() - 50,false);
         renderHealthBars();
         game.batch.end();
     }

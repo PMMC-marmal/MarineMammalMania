@@ -22,6 +22,7 @@ import com.pmmc.app.screen.quiz.Question;
 import com.pmmc.app.screen.quiz.Quiz;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -67,6 +68,10 @@ public abstract class Level extends AbstractScreen {
     private Sprite trashSprite;
     private Sprite boatModel;
     private Body boat2D;
+    private boolean predator;
+    private Sprite predatorSprite;
+    private Body predator2D;
+    private boolean predatorSpriteFlipped;
     private int oceanDepth = 1200;
     private boolean directionLeft = false;
     private boolean boatFlipped = false;
@@ -167,7 +172,7 @@ public abstract class Level extends AbstractScreen {
         int horizontalForce = 0;
         float speed = player.getSpeed();
 
-        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
+//        System.out.println("x:" +player2d.getPosition().x * PPM+ " y:" + player2d.getPosition().y * PPM);
         // keyboard input
         if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) && player2d.getPosition().x > 0) {
 
@@ -312,22 +317,27 @@ public abstract class Level extends AbstractScreen {
             gameOverLost = true;
             player.updateFrame(false, false, true);
         }
-
         //System.out.println("Player health: "+ player.getHealth() +" PLayer air: " + player.getAir() + " Player hunger: " + player.getHunger() + " Player toxicity: " + player.getToxicity());
     }
 
     private void preyUpdate() {
         ArrayList<Body> toRemove = new ArrayList<>();
+        if (contactor != null && contacting != null) {
+            if (contactor.getBody().getUserData().equals("Oil") && prey.contains(contacting.getBody())) {
+                toRemove.add(prey.get(prey.indexOf(contacting.getBody())));
+                world.destroyBody(prey.get(prey.indexOf(contacting.getBody())));
+            } else if (contacting.getBody().getUserData().equals("Oil") && prey.contains(contactor.getBody())){
+                toRemove.add(prey.get(prey.indexOf(contactor.getBody())));
+                world.destroyBody(prey.get(prey.indexOf(contactor.getBody())));
+            }
+        }
         if (waterPrey) {
             if (prey.size() < minNumPrey) {
                 addPrey(2, generateObstacles(2), preyWidth, preyHeight, !waterPrey);
                 addPrey(3, generateObstacles(3), preyWidth, preyHeight, !waterPrey);
             }
             for (Body p : prey) {
-                if (p.getPosition().x * PPM > worldSize) {
-                    toRemove.add(p);
-                    world.destroyBody(p);
-                } else if (inPlayerView(p.getPosition())) {
+                 if (inPlayerView(p.getPosition())) {
                     int xforce = new Random().nextInt(preySpeed) - (preySpeed / 2);
                     int yforce = new Random().nextInt(preySpeed / 2) - (preySpeed / 4);
                     if ((p.getPosition().x * PPM > worldSize && xforce > 0) || (p.getPosition().x * PPM < 0 && xforce < 0))
@@ -335,7 +345,11 @@ public abstract class Level extends AbstractScreen {
                     if ((p.getPosition().y * PPM > 0 && yforce > 0) || (p.getPosition().y * PPM < -oceanDepth && yforce < 0))
                         yforce = yforce * -1;
                     p.setLinearVelocity(p.getLinearVelocity().x + xforce, p.getLinearVelocity().y + yforce);
-                } else p.setLinearVelocity(5, 0);
+                }
+                  else {
+                     p.setLinearVelocity(0, 0);
+
+                 }
             }
         } else {
             if (contactor != null && contacting != null) {
@@ -344,26 +358,20 @@ public abstract class Level extends AbstractScreen {
                     world.destroyBody(prey.get(prey.indexOf(contactor.getBody())));
                 }
             }
+            for (Body p : prey) {
+                if (p.getPosition().x * PPM > worldSize || p.getPosition().x * PPM < 0 || p.getPosition().y * PPM < -oceanDepth ) {
+                    toRemove.add(p);
+                    world.destroyBody(p);
+                }
+                p.setGravityScale(p.getPosition().y * PPM < 0 ? 0 : 1);
+                if (inPlayerView(p.getPosition())){
+                    p.setLinearVelocity(p.getPosition().y * PPM < 0 ? preySpeed : 8, p.getPosition().y * PPM < 0 ? -2 : 0);
+                }
+            }
             if (prey.size() < minNumPrey) {
                 addPrey(2, generateObstacles(2), preyWidth, preyHeight, !waterPrey);
                 addPrey(3, generateObstacles(3), preyWidth, preyHeight, !waterPrey);
             }
-
-            for (Body p : prey) {
-
-                if (player.getSwimming()) {
-                    p.setLinearVelocity(1, 0);
-
-                } else {
-                    p.setLinearVelocity(6, 0);
-                }
-                if (p.getPosition().y * PPM < preySpawnHeight - 200 && preyDespawnable) {
-                    toRemove.add(p);
-                    world.destroyBody(p);
-                }
-
-            }
-
         }
         for (Body p : toRemove) {
             prey.remove(p);
@@ -431,6 +439,29 @@ public abstract class Level extends AbstractScreen {
                         yforce = yforce * -1;
                     t.setLinearVelocity(xforce, yforce);
                 }
+            }
+        }
+        if (predator && predatorSprite != null){
+            if (predator2D == null) {
+                Body p = createBox(new Random().nextInt(worldSize - (4*spacing)) + (2*spacing), -new Random().nextInt(oceanDepth), (int) predatorSprite.getWidth(), (int) predatorSprite.getHeight(), false, true, "Predator");
+                p.setGravityScale(0);
+                predator2D = p;
+            } else {
+
+                int xforce = (int) (new Random().nextInt((int) (player.getSpeed())) - (player.getSpeed()/2));
+                int yforce = (int) (new Random().nextInt((int) (player.getSpeed())) - (player.getSpeed()/2));
+                if ((player2d.getPosition().x < predator2D.getPosition().x && xforce > 0 )|| (player2d.getPosition().x > predator2D.getPosition().x && xforce < 0 )){
+                    xforce = xforce * -1;
+                }
+                if ((player2d.getPosition().y < predator2D.getPosition().y && yforce > 0) || (player2d.getPosition().y > predator2D.getPosition().y && yforce < 0)){
+                    yforce = yforce * -1;
+                }
+                predatorSpriteFlipped = player2d.getPosition().x < predator2D.getPosition().x;
+                if (yforce > 0 && predator2D.getPosition().y * PPM > -(predatorSprite.getHeight()/2)){
+                    yforce = 0;
+                }
+                predator2D.setLinearVelocity(xforce, yforce);
+
             }
         }
     }
@@ -580,11 +611,21 @@ public abstract class Level extends AbstractScreen {
         stage.draw();
     }
 
-    public void renderBackground(Sprite background, int yAxis) {
+    public void renderBackground(Sprite background, int yAxis, boolean doubleWidth) {
         stage.act();
         stage.getBatch().begin();
         for (int i = -2; i < worldSize / (oceanDepth / 2) + 2; i++) {
-            stage.getBatch().draw(background, (oceanDepth / 2f) * i, yAxis, oceanDepth / 2f, oceanDepth + 50);
+            if (doubleWidth){
+                stage.getBatch().draw(background, (oceanDepth / 2f) * i, yAxis, oceanDepth * 2 + oceanDepth, (oceanDepth * 2 + oceanDepth) * (background.getHeight()/background.getWidth()));
+                i++;
+                i++;
+                i++;
+                i++;
+                i++;
+            }
+            else {
+                stage.getBatch().draw(background, (oceanDepth / 2f) * i, yAxis, oceanDepth / 2f, oceanDepth + 50);
+            }
             background.flip(true, false);
         }
         stage.getBatch().end();
@@ -652,6 +693,20 @@ public abstract class Level extends AbstractScreen {
         stage.draw();
     }
 
+    public void renderPredator() {
+        if (predatorSpriteFlipped){
+            predatorSprite.flip(true,false);
+        }
+        stage.act();
+        stage.getBatch().begin();
+        stage.getBatch().draw(predatorSprite, predator2D.getPosition().x * PPM - (predatorSprite.getWidth() / 2), predator2D.getPosition().y * PPM - (predatorSprite.getHeight() / 2));
+        stage.getBatch().end();
+        stage.draw();
+        if (predatorSpriteFlipped){
+            predatorSprite.flip(true,false);
+        }
+    }
+
     public boolean[] generateObstacles(int Section) {
         if (Section == 2) {
             boolean[] obstacles1 = {true, false, true, true, false, false, false, true, true, false};
@@ -717,12 +772,12 @@ public abstract class Level extends AbstractScreen {
             for (boolean o : obstacles) {
                 int xpos = (worldSize / 40) * i;
                 if (o && !inPlayerView(new Vector2(xpos / PPM, preySpawnHeight / PPM))) {
-                    Body p = createBox(xpos, preySpawnHeight, width, height, false, false, toxicOptions[rnd]);
+                    Body p = createBox(xpos, (waterPrey) ? preySpawnHeight - (new Random().nextInt(600) - 300 ): preySpawnHeight , width, height, false, false, toxicOptions[rnd]);
                     if (!gravityAffected)
                         p.setGravityScale(0);
                     prey.add(p);
                 }
-                i++;
+
                 i++;
             }
         }
@@ -751,8 +806,7 @@ public abstract class Level extends AbstractScreen {
 
     public void setEndGoal(Sprite endGoalSprite, int height) {
         if (toggle) {
-            endGoal = createBox(worldSize - 300, height, (int) endGoalSprite.getWidth(), (int) endGoalSprite.getHeight(), true, true, "End Goal");
-            System.out.println(endGoal);
+            endGoal = createBox(worldSize - spacing/2f, height, (int) endGoalSprite.getWidth(), (int) endGoalSprite.getHeight(), true, true, "End Goal");
         }
     }
 
@@ -814,6 +868,14 @@ public abstract class Level extends AbstractScreen {
 
     public void setMinNumPrey(int minNumPrey) {
         this.minNumPrey = minNumPrey;
+    }
+
+    public void setPredator(boolean predator) {
+        this.predator = predator;
+    }
+
+    public void setPredatorSprite(Sprite predatorSprite) {
+        this.predatorSprite = predatorSprite;
     }
 
     @Override
