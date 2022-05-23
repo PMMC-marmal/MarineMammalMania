@@ -32,7 +32,11 @@ public class OrcaLevel extends Level {
     private Sprite toxicFood;
 
     public OrcaLevel(GameLauncher game) {
-        super(game);
+        super(game, new ArrayList<>(Arrays.asList(
+                Gdx.audio.newSound(Gdx.files.internal("sounds/orca_1.wav")),
+                Gdx.audio.newSound(Gdx.files.internal("sounds/orca_2.wav")),
+                Gdx.audio.newSound(Gdx.files.internal("sounds/orca_3.wav"))
+        )));
         preySpawnHeight = -1000;
         preyDespawnable = false;
         preySpeed = 18;

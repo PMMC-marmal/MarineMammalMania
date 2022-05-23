@@ -33,7 +33,10 @@ public class PolarBearLevel extends Level {
     private Sprite toxicFood;
 
     public PolarBearLevel(final GameLauncher game) {
-        super(game);
+        super(game, new ArrayList<>(Arrays.asList(
+                Gdx.audio.newSound(Gdx.files.internal("sounds/polar_bear_1.mp3")),
+                Gdx.audio.newSound(Gdx.files.internal("sounds/polar_bear_2.mp3"))
+        )));
         choices1 = new ArrayList<>();
         choices2 = new ArrayList<>();
         choices3 = new ArrayList<>();

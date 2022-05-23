@@ -2,6 +2,7 @@ package com.pmmc.app;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pmmc.app.screen.LevelMenuScreen;
 import com.pmmc.app.screen.MainMenuScreen;
@@ -17,14 +18,18 @@ public class GameLauncher extends Game {
 	private PolarBearLevel polarBearLevel;
 
 	public SpriteBatch batch;
-
+	public Music music;
 
 	@Override
 	public void create () {
+		// Music
+		music = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu_music.mp3"));
+		music.setLooping(true);
+		music.setVolume(0.2f);
+		music.play();
 
 		this.mainMenuScreen = new MainMenuScreen(this);
 		this.levelMenuScreen = new LevelMenuScreen(this);
-		this.polarBearLevel = new PolarBearLevel(this);
 		this.batch = new SpriteBatch();
 
 		// Load assets
@@ -45,5 +50,6 @@ public class GameLauncher extends Game {
 		levelMenuScreen.dispose();
 		polarBearLevel.dispose();
 		AssetHandler.dispose();
+		music.dispose();
 	}
 }
