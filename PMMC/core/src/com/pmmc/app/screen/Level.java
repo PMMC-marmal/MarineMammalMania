@@ -95,11 +95,7 @@ public abstract class Level extends AbstractScreen {
         stage = new Stage();
         stage.setViewport(extendViewport);
 
-        game.music.stop();
-        game.music = Gdx.audio.newMusic(Gdx.files.internal("sounds/tropical_music.mp3"));
-        game.music.setLooping(true);
-        game.music.setVolume(0.2f);
-        game.music.play();
+        changeMusic("sounds/tropical_music.mp3", 0.7f);
 
         this.soundBank = soundBank;
         soundTimerRunning = false;
@@ -142,11 +138,7 @@ public abstract class Level extends AbstractScreen {
     private void update(float deltaTime) {
         if (gameOverLost) {
             transitionScreen(new LevelMenuScreen(game));
-            game.music.stop();
-            game.music = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu_music.mp3"));
-            game.music.setLooping(true);
-            game.music.setVolume(0.1f);
-            game.music.play();
+            changeMusic("sounds/menu_music.mp3", 0.5f);
         }
         if (gameOverWon){
             game.setScreen(new Quiz(game, generateQuestionBank(), this.getClass().toString().substring(26)));
@@ -229,11 +221,7 @@ public abstract class Level extends AbstractScreen {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(new LevelMenuScreen(game));
-            game.music.stop();
-            game.music = Gdx.audio.newMusic(Gdx.files.internal("sounds/menu_music.mp3"));
-            game.music.setLooping(true);
-            game.music.setVolume(0.1f);
-            game.music.play();
+            changeMusic("sounds/menu_music.mp3", 0.5f);
         }
 
         // touch input
@@ -903,6 +891,14 @@ public abstract class Level extends AbstractScreen {
 
     public void setPredatorSprite(Sprite predatorSprite) {
         this.predatorSprite = predatorSprite;
+    }
+
+    private void changeMusic(String musicPath, float volume){
+        game.music.stop();
+        game.music = Gdx.audio.newMusic(Gdx.files.internal(musicPath));
+        game.music.setLooping(true);
+        game.music.setVolume(volume);
+        game.music.play();
     }
 
     private final Timer.Task makeAnimalSound = new Timer.Task() {
