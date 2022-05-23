@@ -60,22 +60,6 @@ public class Quiz extends Menu {
         }
     }
 
-    public BitmapFont generateFont(int size, Color color){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Gila-qZBPV.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
-
-        parameters.genMipMaps = true;
-        parameters.color = color;
-        //parameters.size = (int)Math.ceil(size);
-        parameters.size = size * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-        parameters.magFilter = Texture.TextureFilter.MipMapLinearNearest;
-        parameters.minFilter = Texture.TextureFilter.Nearest;
-        generator.scaleForPixelHeight((int)Math.ceil(size));
-
-        return generator.generateFont(parameters);
-    }
-
-
     @Override
     public void render(float delta) {
         renderBackground(new Sprite(AssetHandler.assetManager.get(AssetHandler.levelMenuBackground, Texture.class)));

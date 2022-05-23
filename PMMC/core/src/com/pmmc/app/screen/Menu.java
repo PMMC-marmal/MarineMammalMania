@@ -1,9 +1,12 @@
 package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.pmmc.app.GameLauncher;
@@ -67,6 +70,21 @@ public abstract class Menu extends AbstractScreen {
         return (Gdx.input.getX() > x) && (Gdx.input.getX() < (x + buttonWidth)) &&
                 (Gdx.input.getY() > yConverted) && (Gdx.input.getY() < (yConverted + buttonHeight)
                 && Gdx.input.justTouched());
+    }
+
+    public BitmapFont generateFont(int size, Color color){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Gila-qZBPV.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameters.genMipMaps = true;
+        parameters.color = color;
+        //parameters.size = (int)Math.ceil(size);
+        parameters.size = size * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+        parameters.magFilter = Texture.TextureFilter.MipMapLinearNearest;
+        parameters.minFilter = Texture.TextureFilter.Nearest;
+        generator.scaleForPixelHeight((int)Math.ceil(size));
+
+        return generator.generateFont(parameters);
     }
 
     @Override
