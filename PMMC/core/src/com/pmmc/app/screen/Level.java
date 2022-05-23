@@ -139,7 +139,7 @@ public abstract class Level extends AbstractScreen {
 
     private void update(float deltaTime) {
         if (gameOverLost) {
-            transitionScreen(new LevelMenuScreen(game));
+            transitionScreen(new DeathScreen(game, player));
             changeMusic("sounds/menu_music.mp3", 0.5f);
         }
         if (gameOverWon){
