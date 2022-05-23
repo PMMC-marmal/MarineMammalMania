@@ -1,10 +1,12 @@
 package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Timer;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.character.SeaLion;
@@ -12,6 +14,8 @@ import com.pmmc.app.screen.quiz.Question;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class SeaLionLevel extends Level {
@@ -34,7 +38,11 @@ public class SeaLionLevel extends Level {
     private Sprite toxicFood;
 
     public SeaLionLevel(GameLauncher game) {
-        super(game);
+        super(game, new ArrayList<>(Arrays.asList(
+                Gdx.audio.newSound(Gdx.files.internal("sounds/sea_lion_1.mp3")),
+                Gdx.audio.newSound(Gdx.files.internal("sounds/sea_lion_2.mp3")),
+                Gdx.audio.newSound(Gdx.files.internal("sounds/sea_lion_3.mp3"))
+        )));
         preySpawnHeight = -500;
         preyDespawnable = false;
         preySpeed = 20;
@@ -50,7 +58,6 @@ public class SeaLionLevel extends Level {
         setBoatYAxis(0);
         setWaterWorld(false);
         setPredator(true);
-
     }
 
     @Override
@@ -111,11 +118,6 @@ public class SeaLionLevel extends Level {
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Add background
-
-        // Add Obstacles
-
-
         game.batch.begin();
         renderBackground(backdrop, 0, true);
         renderBackground(background, -1 * getOceanDepth() - 50,false);
@@ -135,7 +137,6 @@ public class SeaLionLevel extends Level {
         renderHealthBars();
         renderBackground(blur, -1 * getOceanDepth() - 50,false);
         game.batch.end();
-//
     }
 
     public HashMap<Integer, Question> generateQuestionBank() {
@@ -168,5 +169,4 @@ public class SeaLionLevel extends Level {
 
         return questionBank;
     }
-
 }

@@ -32,7 +32,11 @@ public class DolphinLevel extends Level {
     private Sprite toxicFood;
 
     public DolphinLevel(GameLauncher game) {
-        super(game);
+        super(game, new ArrayList<>(Arrays.asList(
+                Gdx.audio.newSound(Gdx.files.internal("sounds/dolphin_1.wav")),
+                Gdx.audio.newSound(Gdx.files.internal("sounds/dolphin_2.wav")),
+                Gdx.audio.newSound(Gdx.files.internal("sounds/dolphin_3.wav"))
+        )));
         preySpawnHeight = -1000;
         preyDespawnable = false;
         preySpeed = 20;

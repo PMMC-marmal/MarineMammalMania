@@ -27,7 +27,10 @@ public class BlueWhaleLevel extends Level {
     private Sprite background, blur, staticWhale, food, toxicFood;
 
     public BlueWhaleLevel(GameLauncher game) {
-        super(game);
+        super(game, new ArrayList<>(Arrays.asList(
+                Gdx.audio.newSound(Gdx.files.internal("sounds/blue_whale_1.mp3")),
+                Gdx.audio.newSound(Gdx.files.internal("sounds/blue_whale_2.mp3"))
+        )));
         preySpawnHeight = -1000;
         preyDespawnable = false;
         preySpeed = 10;

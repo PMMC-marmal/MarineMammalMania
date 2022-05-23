@@ -2,6 +2,7 @@ package com.pmmc.app.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
@@ -20,8 +22,9 @@ import com.pmmc.app.character.B2dContactListener;
 import com.pmmc.app.character.CharacterAbstraction;
 import com.pmmc.app.screen.quiz.Question;
 import com.pmmc.app.screen.quiz.Quiz;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -75,11 +78,14 @@ public abstract class Level extends AbstractScreen {
     private boolean directionLeft = false;
     private boolean gameOverWon = false;
     private int minNumPrey = 5;
+
+    private ArrayList<Sound> soundBank;
+    private boolean soundTimerRunning;
+
     private int predatorScale = 1;
     private boolean boatRunning;
 
-
-    public Level(GameLauncher game) {
+    public Level(GameLauncher game, ArrayList<Sound> soundBank) {
         super(game);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, idealGameWidth, idealGameHeight);
@@ -90,6 +96,11 @@ public abstract class Level extends AbstractScreen {
         extendViewport = new ExtendViewport(idealGameWidth, idealGameHeight, camera);
         stage = new Stage();
         stage.setViewport(extendViewport);
+
+        changeMusic("sounds/tropical_music.mp3", 0.7f);
+
+        this.soundBank = soundBank;
+        soundTimerRunning = false;
     }
 
     public static Body createBox(float x, float y, int width, int height, boolean isStatic, boolean fixedRotation, String b2dType) {
@@ -129,6 +140,7 @@ public abstract class Level extends AbstractScreen {
     private void update(float deltaTime) {
         if (gameOverLost) {
             transitionScreen(new LevelMenuScreen(game));
+            changeMusic("sounds/menu_music.mp3", 0.5f);
         }
         if (gameOverWon){
             game.setScreen(new Quiz(game, generateQuestionBank(), this.getClass().toString().substring(26)));
@@ -159,6 +171,10 @@ public abstract class Level extends AbstractScreen {
         hazardsUpdate();
         cameraUpdate();
         stage.getBatch().setProjectionMatrix(camera.combined);
+
+        // Make noise
+        if(!soundTimerRunning){Timer.schedule(makeAnimalSound, 7f);}
+        soundTimerRunning = true;
     }
 
     private void inputUpdate() {
@@ -207,6 +223,7 @@ public abstract class Level extends AbstractScreen {
         }
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             game.setScreen(new LevelMenuScreen(game));
+            changeMusic("sounds/menu_music.mp3", 0.5f);
         }
 
         // touch input
@@ -914,6 +931,23 @@ public abstract class Level extends AbstractScreen {
         this.predatorSprite = predatorSprite;
     }
 
+    private void changeMusic(String musicPath, float volume){
+        game.music.stop();
+        game.music = Gdx.audio.newMusic(Gdx.files.internal(musicPath));
+        game.music.setLooping(true);
+        game.music.setVolume(volume);
+        game.music.play();
+    }
+
+    private final Timer.Task makeAnimalSound = new Timer.Task() {
+        @Override
+        public void run() {
+            Collections.shuffle(soundBank);
+            soundBank.get(0).play();
+            soundTimerRunning = false;
+        }
+    };
+
     public void setPredatorScale(int predatorScale) {
         this.predatorScale = predatorScale;
     }
@@ -927,6 +961,7 @@ public abstract class Level extends AbstractScreen {
     @Override
     public void dispose() {
         world.dispose();
+        makeAnimalSound.cancel();
     }
 
 }
