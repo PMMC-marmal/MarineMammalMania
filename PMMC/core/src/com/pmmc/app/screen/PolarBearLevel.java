@@ -42,8 +42,8 @@ public class PolarBearLevel extends Level {
         choices3 = new ArrayList<>();
         obstacles1 = generateObstacles(1);
         obstacles2 = generateObstacles(2);
-        obstacles3 = generateObstacles(3);
-        preySpawnHeight = 200;
+        obstacles3 = generateObstacles(4);
+        preySpawnHeight = 100;
         preyDespawnable = true;
         preySpeed = 15;
         waterPrey = false;
@@ -99,7 +99,7 @@ public class PolarBearLevel extends Level {
         placeBox2DObstacles(3, new Vector2[]{new Vector2(0, 0), new Vector2((spacing) / PPM, 0), new Vector2((spacing / 2f) / PPM, -200 / PPM)}, obstacles3, 0, false, "IceBerg");
 
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, true);
-        addPrey(3, generateObstacles(2), preyWidth, preyHeight, true);
+        addPrey(3, generateObstacles(3), preyWidth, preyHeight, true);
 
 
         choices1.add(iceberg1);
@@ -121,7 +121,7 @@ public class PolarBearLevel extends Level {
 
         game.batch.begin();
         // Add background
-        renderBackground(backdrop, -100, true);
+        renderBackground(backdrop, -100, false);
         renderBackground(background, -1 * getOceanDepth() - 50,false);
 
         renderPrey2D(food, toxicFood);

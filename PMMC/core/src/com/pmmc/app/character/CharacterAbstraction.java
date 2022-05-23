@@ -239,6 +239,10 @@ public abstract class CharacterAbstraction extends Sprite {
         return jumpForce;
     }
 
+    public int getMaxLevels() {
+        return maxLevels;
+    }
+
     public void setJumpForce(int jumpForce) {
         this.jumpForce = jumpForce;
     }

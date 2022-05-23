@@ -90,7 +90,7 @@ public class DolphinLevel extends Level {
         }
 
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
-        addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
+        addPrey(3, generateObstacles(3), preyWidth, preyHeight, false);
 
     }
 

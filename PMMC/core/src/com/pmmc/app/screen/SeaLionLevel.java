@@ -81,9 +81,11 @@ public class SeaLionLevel extends Level {
 
         this.sandArea = new Sprite(AssetHandler.assetManager.get(AssetHandler.sandArea, Texture.class));
         Sprite bouy = new Sprite(AssetHandler.assetManager.get(AssetHandler.bouy, Texture.class));
+
         setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoat, Texture.class)));
 
         setPredatorSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class)));
+        setPredatorScale(3);
 
         Sprite pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionFoodPop, Texture.class));
         Sprite pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionHabitatPop, Texture.class));
@@ -103,7 +105,7 @@ public class SeaLionLevel extends Level {
 
 
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
-        addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
+        addPrey(3, generateObstacles(3), preyWidth, preyHeight, false);
 
         makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(600 / PPM, -10 / PPM), new Vector2(1850 / PPM, -1200 / PPM), new Vector2(0, -1000 / PPM)}, 0, 0, true, "Sand");
         makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(0, -1000 / PPM), new Vector2(-(1850 / PPM), -1200 / PPM), new Vector2(-600 / PPM, -10 / PPM)}, getWorldSize(), 0, true, "Sand");

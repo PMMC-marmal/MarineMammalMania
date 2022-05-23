@@ -85,7 +85,7 @@ public class OrcaLevel extends Level {
         popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(3000, 0), new Vector2(5000, 0), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 0)};//slect location
 
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
-        addPrey(3, generateObstacles(2), preyWidth, preyHeight, false);
+        addPrey(3, generateObstacles(3), preyWidth, preyHeight, false);
     }
 
     @Override
