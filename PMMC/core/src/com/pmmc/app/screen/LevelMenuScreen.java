@@ -101,21 +101,21 @@ public class LevelMenuScreen extends Menu {
             transitionScreen(new PolarBearLevel(game));
         }
 
-        // Draw checkmarks if level passed
+        // Make buttons solid if level passed
         if(pref.getBoolean("SeaLionLevel", false)) {
-            game.batch.draw(seaLionSprite, Gdx.graphics.getWidth() * .80f, Gdx.graphics.getHeight() * .70f);
+            game.batch.draw(seaLionButtonActive, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT);
         }
         if(pref.getBoolean("DolphinLevel", false)) {
-            game.batch.draw(dolphinSprite, Gdx.graphics.getWidth() * -.08f, Gdx.graphics.getHeight() * .60f);
+            game.batch.draw(dolphinButtonActive, x, y_sea_lion - BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT);
         }
         if(pref.getBoolean("OrcaLevel", false)) {
-            game.batch.draw(killerWhaleSprite, Gdx.graphics.getWidth() * .75f, Gdx.graphics.getHeight() * .37f);
+            game.batch.draw(killerWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING * 2, BUTTON_WIDTH, BUTTON_HEIGHT);
         }
         if(pref.getBoolean("BlueWhaleLevel", false)) {
-            game.batch.draw(blueWhaleSprite, 0 - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .12f);
+            game.batch.draw(blueWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING * 3, BUTTON_WIDTH, BUTTON_HEIGHT);
         }
         if(pref.getBoolean("PolarBearLevel", false)) {
-            game.batch.draw(polarBearSprite, Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .08f);
+            game.batch.draw(polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING * 4, BUTTON_WIDTH, BUTTON_HEIGHT);
         }
 
         // Draw characters on screen
