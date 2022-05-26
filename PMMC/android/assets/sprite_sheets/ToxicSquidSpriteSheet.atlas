@@ -1,0 +1,19 @@
+
+ToxicSquidSpriteSheet.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+1
+  rotate: false
+  xy: 1, 301
+  size: 821, 298
+  orig: 821, 298
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 1, 1
+  size: 821, 298
+  orig: 821, 298
+  offset: 0, 0
+  index: -1

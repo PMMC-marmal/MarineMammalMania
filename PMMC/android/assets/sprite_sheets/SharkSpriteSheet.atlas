@@ -1,0 +1,19 @@
+
+SharkSpriteSheet.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+1
+  rotate: false
+  xy: 1, 1
+  size: 479, 230
+  orig: 479, 230
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 482, 1
+  size: 479, 230
+  orig: 479, 230
+  offset: 0, 0
+  index: -1
