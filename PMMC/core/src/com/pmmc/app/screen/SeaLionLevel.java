@@ -133,8 +133,8 @@ public class SeaLionLevel extends Level {
 
         renderEndGoal2D(staticSeaLion);
         renderPlayer2D();
-        renderHealthBars();
         renderBackground(blur, -1 * getOceanDepth() - 50,1);
+        renderHealthBars();
         game.batch.end();
     }
 

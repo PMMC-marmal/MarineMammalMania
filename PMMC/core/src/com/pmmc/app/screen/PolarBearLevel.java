@@ -132,8 +132,8 @@ public class PolarBearLevel extends Level {
         renderOil();
         renderEndGoal2D(staticBear);
         renderPlayer2D();
-        renderHealthBars();
         renderBackground(blur, -1 * getOceanDepth() - 50, 1);
+        renderHealthBars();
         game.batch.end();
 //
     }
