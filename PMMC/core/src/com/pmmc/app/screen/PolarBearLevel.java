@@ -158,9 +158,9 @@ public class PolarBearLevel extends Level {
                 new ArrayList<>(Arrays.asList("The Arctic", "Antarctica", "Asia", "All answers are correct"))
         ));
         questionBank.put(3, new Question(
-                "Which of these is NOT a threat to polar bears?",
-                "Heavy boat traffic",
-                new ArrayList<>(Arrays.asList("Heavy boat traffic", "Oil spills", "Melting ice", "Pollution"))
+                "What is causing polar bears to starve?",
+                "Climate change",
+                new ArrayList<>(Arrays.asList("Climate change", "Plastics", "Chemical pollutants", "Fishing gear"))
         ));
         questionBank.put(4, new Question(
                 "The Arctic is heating up by...?",
@@ -168,9 +168,9 @@ public class PolarBearLevel extends Level {
                 new ArrayList<>(Arrays.asList("14% each decade!", "1% each decade!", "4% each decade!", "10% each decade!"))
         ));
         questionBank.put(5, new Question(
-                "What can you do to stop the Arctic from melting?",
-                "TBA (Correct)",
-                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+                "What can you do to reduce the effects of climate change?",
+                "Carpool, ride your bike, or walk",
+                new ArrayList<>(Arrays.asList("Carpool, ride your bike, or walk", "Eat organic food", "Avoid using fertilizers", "Make drought friendly landscapes"))
         ));
 
         return questionBank;

@@ -128,12 +128,12 @@ public class OrcaLevel extends Level {
         questionBank.put(4, new Question(
                 "Which of the following is a threat to the southern resident killer whales?",
                 "All answers are correct",
-                new ArrayList<>(Arrays.asList("All answers are correct", "Decreased quality of prey", "Disturbance from ship presence", "None of these"))
+                new ArrayList<>(Arrays.asList("All answers are correct", "Decreased quality of prey", "Disturbance from ship presence", "Fisheries, gill nets, ropes"))
         ));
         questionBank.put(5, new Question(
-                "What can you do to help preserve our southern resident killer whales?",
-                "TBA (Correct)",
-                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+                "What can you do to prevent our southern resident killer whales from dying?",
+                "Select sustainably caught fish",
+                new ArrayList<>(Arrays.asList("Select sustainably caught fish", "Make drought friendly landscapes", "Avoid fertilizers", "Carpool or ride your bike"))
         ));
 
         return questionBank;

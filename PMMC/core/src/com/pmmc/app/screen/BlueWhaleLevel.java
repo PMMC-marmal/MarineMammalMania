@@ -122,9 +122,9 @@ public class BlueWhaleLevel extends Level {
                 new ArrayList<>(Arrays.asList("All answers are correct", "Ship strikes", "Entanglement from fishing gear", "Ocean pollution"))
         ));
         questionBank.put(5, new Question(
-                "In order to keep our world’s blue whale population, what can you do to help?",
-                "TBA (Correct)",
-                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+                "In order to keep our blue whale population, what can you do to help?",
+                "Eat sustainably caught fish",
+                new ArrayList<>(Arrays.asList("Eat sustainably caught fish", "Avoid fertilizer", "Lessen algal bloom", "Use single-use plastic"))
         ));
 
         return questionBank;

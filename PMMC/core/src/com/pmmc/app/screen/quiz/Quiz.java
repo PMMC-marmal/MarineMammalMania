@@ -147,7 +147,7 @@ public class Quiz extends Menu {
     public void renderFinalScoreScreen(){
         float scorePercent = ((float)score/5)*100;
         String finishLine = "Oh no! That's only " + (int)scorePercent + "%\nMake sure to try again!";
-        if (score >= 4){
+        if (score == 5){
             finishLine = "Nice Job! That's " + (int)scorePercent + "%";
             saveQuizResults(true);
         }
