@@ -71,7 +71,7 @@ public class PolarBearLevel extends Level {
         setEndGoal(staticBear, 100);
 
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.ringedSeal, TextureAtlas.class).findRegion("1"));
-        this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSeal, Texture.class));
+        this.toxicFood =  new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicRingedSeal, TextureAtlas.class).findRegion("1"));
 
         preyWidth = (int) food.getWidth() / 2;
         preyHeight = (int) food.getHeight() / 2;
@@ -119,6 +119,7 @@ public class PolarBearLevel extends Level {
     public void render(float delta) {
         Render();
         currentFrame++;
+        updateSprite(toxicFood, AssetHandler.assetManager.get(AssetHandler.toxicRingedSeal, TextureAtlas.class), currentFrame);
         currentFrame = updateSprite(food, AssetHandler.assetManager.get(AssetHandler.ringedSeal, TextureAtlas.class), currentFrame);
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 import com.pmmc.app.AssetHandler;
@@ -36,6 +37,7 @@ public class SeaLionLevel extends Level {
     private Sprite staticSeaLion;
     private Sprite food;
     private Sprite toxicFood;
+    private int currentFrame = 0;
 
     public SeaLionLevel(GameLauncher game) {
         super(game, new ArrayList<>(Arrays.asList(
@@ -73,8 +75,8 @@ public class SeaLionLevel extends Level {
         staticSeaLion.flip(true, false);
         setEndGoal(staticSeaLion, 200);
 
-        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.squid, Texture.class));
-        this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSquid, Texture.class));
+        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.squid2, TextureAtlas.class).findRegion("1"));
+        this.toxicFood =  new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSquid2, TextureAtlas.class).findRegion("1"));
 
         preyWidth = (int) food.getWidth() /3;
         preyHeight = (int) food.getHeight() /3;
@@ -115,6 +117,10 @@ public class SeaLionLevel extends Level {
     @Override
     public void render(float delta) {
         Render();
+        currentFrame++;
+        updateSprite(toxicFood, AssetHandler.assetManager.get(AssetHandler.toxicSquid2, TextureAtlas.class), currentFrame);
+        currentFrame = updateSprite(food, AssetHandler.assetManager.get(AssetHandler.squid2, TextureAtlas.class), currentFrame);
+
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

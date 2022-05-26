@@ -131,7 +131,11 @@ public class AssetHandler {
             x_mark = "quiz/x_mark.png",
 
     // food
-    ringedSeal = "sprite_sheets/RingedSealSpriteSheet.atlas";
+    ringedSeal = "sprite_sheets/RingedSealSpriteSheet.atlas",
+    toxicRingedSeal = "sprite_sheets/ToxicRingedSealSpriteSheet.atlas",
+    squid2 = "sprite_sheets/SquidSpriteSheet.atlas",
+    toxicSquid2 = "sprite_sheets/ToxicSquidSpriteSheet.atlas";
+
 
     public static void load() {
         assetManager.load(continueButton, Texture.class);
@@ -257,6 +261,10 @@ public class AssetHandler {
         assetManager.load(x_mark, Texture.class);
 
         assetManager.load(ringedSeal, TextureAtlas.class);
+        assetManager.load(toxicRingedSeal, TextureAtlas.class);
+        assetManager.load(squid2, TextureAtlas.class);
+        assetManager.load(toxicSquid2, TextureAtlas.class);
+
 
     }
 
