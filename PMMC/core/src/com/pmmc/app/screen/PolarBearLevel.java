@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
@@ -31,6 +32,7 @@ public class PolarBearLevel extends Level {
     private Sprite staticBear;
     private Sprite food;
     private Sprite toxicFood;
+    private int currentFrame;
 
     public PolarBearLevel(final GameLauncher game) {
         super(game, new ArrayList<>(Arrays.asList(
@@ -68,8 +70,8 @@ public class PolarBearLevel extends Level {
         staticBear.flip(true, false);
         setEndGoal(staticBear, 100);
 
-        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.seal, Texture.class));
-        this.toxicFood = new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicSeal, Texture.class));
+        this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.ringedSeal, TextureAtlas.class).findRegion("1"));
+        this.toxicFood =  new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicRingedSeal, TextureAtlas.class).findRegion("1"));
 
         preyWidth = (int) food.getWidth() / 2;
         preyHeight = (int) food.getHeight() / 2;
@@ -116,6 +118,9 @@ public class PolarBearLevel extends Level {
     @Override
     public void render(float delta) {
         Render();
+        currentFrame++;
+        updateSprite(toxicFood, AssetHandler.assetManager.get(AssetHandler.toxicRingedSeal, TextureAtlas.class), currentFrame);
+        currentFrame = updateSprite(food, AssetHandler.assetManager.get(AssetHandler.ringedSeal, TextureAtlas.class), currentFrame);
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
