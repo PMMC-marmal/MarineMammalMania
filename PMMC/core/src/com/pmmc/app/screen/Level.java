@@ -47,6 +47,8 @@ public abstract class Level extends AbstractScreen {
     public CharacterAbstraction player;
     public boolean isTouchingObstacle = false;
     public int preySpawnHeight;
+    public int forwardIndex = 0;
+    public int backwardIndex;
     public boolean preyDespawnable = false;
     public boolean toggle = true;
     public boolean gameOverLost = false;
@@ -63,6 +65,8 @@ public abstract class Level extends AbstractScreen {
     private final ArrayList<Body> prey = new ArrayList<>();
     private final ArrayList<Body> trashes = new ArrayList<>();
     private final ArrayList<Body> oil = new ArrayList<>();
+    private HashMap<Integer, Integer> RandomXs = new HashMap<>();
+    private HashMap<Integer, Integer> RandomYs = new HashMap<>();
     private boolean atSurface = false;
     private boolean waterWorld = false;
     private boolean boatStrike = false;
@@ -180,6 +184,9 @@ public abstract class Level extends AbstractScreen {
         // Make noise
         if(!soundTimerRunning){Timer.schedule(makeAnimalSound, 7f);}
         soundTimerRunning = true;
+
+        forwardIndex = (forwardIndex < worldSize) ? forwardIndex + 1 : 0;
+        backwardIndex = (backwardIndex > 0) ? backwardIndex - 1 : worldSize;
     }
 
     private void inputUpdate() {
@@ -250,12 +257,13 @@ public abstract class Level extends AbstractScreen {
             }
 
             if (yTouchPixels < 2 * (Gdx.graphics.getHeight() / 4f) && player.getSwimming()) {
-                if (isTouchingObstacle && (player2d.getPosition().y * PPM > -10)) {
+                if ((isTouchingObstacle && (player2d.getPosition().y * PPM > -10)) || (waterWorld && atSurface)) {
                     player.updateFrame(false, false, false); // REPLACE WITH JUMP ANIMATION
-                    this.jumpforce = 7;
+                    this.jumpforce = player.getJumpForce();
 
-                } else if (player2d.getPosition().y * PPM > -10) {
+                } else if (player2d.getPosition().y * PPM < -10) {
                     player.updateFrame(false, false, false);
+
                     verticalForce += 1;
                 }
             }
@@ -471,29 +479,29 @@ public abstract class Level extends AbstractScreen {
                 }
             }
         }
-        if (oilSpill && oilSprite != null) {
+        if (oilSpill && oilSprite != null)
             if (oil.size() < 3) {
                 if (obstacles2 != null && obstacles3 != null){
-                int n = new Random().nextInt(30)+10;
-                int i = n%10;
-                int xpos = (worldSize / 40) * n;
-                if (n < 30 && !obstacles2[i]){
-
-                    Body p = createBox(xpos, 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
-                    System.out.println(p);
-                    oil.add(p);
-                } else if (n >= 30 && !obstacles3[i]){
-                    Body p = createBox(xpos, 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
-                    System.out.println(p);
-                    oil.add(p);
-                }
+                    int n = new Random().nextInt(20);
+                    if (n<10 && !obstacles2[n]){
+                        int xpos = (worldSize / 30) * (n+10);
+                        Body p = createBox(xpos, 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
+                        System.out.println(p.getPosition().x*PPM);
+                        oil.add(p);
+                    }
+                    else if (n>10 && !obstacles3[n-10]){
+                        int xpos = (worldSize / 40) * (n+30);
+                        Body p = createBox(xpos, 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
+                        System.out.println(p.getPosition().x*PPM);
+                        oil.add(p);
+                    }
                 } else {
                     Body p = createBox(new Random().nextInt(worldSize - (4*spacing)) + (2*spacing), 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
                     oil.add(p);
                 }
 
             }
-        }
+
         if (trash && trashSprite != null) {
             if (trashes.size() < 5) {
                 Body p = createBox(new Random().nextInt(worldSize - (4*spacing)) + (2*spacing), -new Random().nextInt(oceanDepth), (int) trashSprite.getWidth(), (int) trashSprite.getHeight(), false, true, "Trash");
@@ -688,10 +696,10 @@ public abstract class Level extends AbstractScreen {
         }
     }
 
-    public void renderCustom(Sprite img, int x, float y, float width, float height) {
+    public void renderCustom(Sprite img, int x, float y, float width, float height, float scale) {
         stage.act();
         stage.getBatch().begin();
-        stage.getBatch().draw(img, x, y, width, height);
+        stage.getBatch().draw(img, x, y, width * scale, height * scale);
         stage.getBatch().end();
         stage.draw();
     }
@@ -917,6 +925,7 @@ public abstract class Level extends AbstractScreen {
 
     public void setWorldSize(int worldSize) {
         this.worldSize = worldSize;
+        this.backwardIndex = worldSize;
     }
 
     public int getOceanDepth() {
@@ -981,6 +990,29 @@ public abstract class Level extends AbstractScreen {
         game.music.setLooping(true);
         game.music.setVolume(volume);
         game.music.play();
+    }
+
+    public int getRandomX(int key){
+        if (!RandomXs.containsKey(key)) {
+            RandomXs.put(key, new Random().nextInt(worldSize - (spacing * 4)) + (spacing * 2));
+        }
+        return RandomXs.get(key);
+    }
+
+    public int getRandomY(int key){
+        if (!RandomYs.containsKey(key)) {
+            RandomYs.put(key, new Random().nextInt(oceanDepth));
+        }
+        return RandomYs.get(key);
+    }
+
+    public int moveImage(int offset){
+        if (offset<0){
+            return (backwardIndex + offset < 0) ? worldSize - (backwardIndex + offset) : backwardIndex + offset;
+        } else {
+            return (forwardIndex + offset > worldSize) ? worldSize - (forwardIndex + offset) : forwardIndex + offset;
+
+        }
     }
 
     private final Timer.Task makeAnimalSound = new Timer.Task() {

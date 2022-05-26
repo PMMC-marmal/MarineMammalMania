@@ -112,12 +112,12 @@ public class DolphinLevel extends Level {
         renderTrash();
         renderEndGoal2D(staticDolphin);
         staticDolphin.flip(true,false);
-        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(0),preySpawnHeight + 200, staticDolphin.getWidth()/3,staticDolphin.getHeight()/3);
-        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(1),preySpawnHeight + 100, staticDolphin.getWidth()/2,staticDolphin.getHeight()/2);
-        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(2),preySpawnHeight, staticDolphin.getWidth()/2,staticDolphin.getHeight()/2);
-        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(3),preySpawnHeight - 300, staticDolphin.getWidth()/1.5f,staticDolphin.getHeight()/1.5f);
-        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(4),preySpawnHeight - 400, staticDolphin.getWidth()/2,staticDolphin.getHeight()/2);
-        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(5),preySpawnHeight - 500, staticDolphin.getWidth()/1.3f,staticDolphin.getHeight()/1.3f);
+        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(0),preySpawnHeight + 200, staticDolphin.getWidth(),staticDolphin.getHeight(),.33f);
+        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(1),preySpawnHeight + 100, staticDolphin.getWidth(),staticDolphin.getHeight(),.5f);
+        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(2),preySpawnHeight + 000, staticDolphin.getWidth(),staticDolphin.getHeight(),.5f);
+        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(3),preySpawnHeight - 300, staticDolphin.getWidth(),staticDolphin.getHeight(),.66f);
+        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(4),preySpawnHeight - 400, staticDolphin.getWidth(),staticDolphin.getHeight(),.5f);
+        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(5),preySpawnHeight - 500, staticDolphin.getWidth(),staticDolphin.getHeight(),.77f);
         staticDolphin.flip(true,false);
         renderPlayer2D();
         renderBackground(blur, -1 * getOceanDepth() - 50,1);
