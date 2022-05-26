@@ -157,14 +157,14 @@ public class SeaLionLevel extends Level {
                 new ArrayList<>(Arrays.asList("Malnourishment", "Loss of hearing", "Blindness", "Reproductive failure"))
         ));
         questionBank.put(4, new Question(
-                "What do California Sea Lions use to recognize other individuals?",
-                "Sight, sound, and scent",
-                new ArrayList<>(Arrays.asList("Sight, sound, and scent", "Only sight and scent", "Scent, touch, and sound", "None of these"))
+                "What product made out of oil causes cancer, and is often mistaken as food?",
+                "Plastic",
+                new ArrayList<>(Arrays.asList("Plastic", "Algae", "Metal debris", "Fishing gear"))
         ));
         questionBank.put(5, new Question(
-                "What can you do to help the California Sea Lions?",
-                "TBA (Correct)",
-                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+                "What can you do to prevent California Sea Lions from getting sick?",
+                "Avoid single-use plastics",
+                new ArrayList<>(Arrays.asList("Avoid single-use plastics", "Carpool, ride your bike, or walk", "Eat organic food", "None of these"))
         ));
 
         return questionBank;

@@ -136,19 +136,19 @@ public class DolphinLevel extends Level {
                 new ArrayList<>(Arrays.asList("Seaweed", "Herring", "Shrimp", "Squid"))
         ));
         questionBank.put(3, new Question(
-                "Dolphins mainly suffer from what due to coastal development and pollution?",
+                "Dolphins mainly suffer from what due to coastal development?",
                 "Habitat loss",
                 new ArrayList<>(Arrays.asList("Habitat loss", "Overfeeding", "Disease", "Reproductive failure"))
         ));
         questionBank.put(4, new Question(
-                "Dolphins travel in groups composed of juveniles, nursery groups, and ...?",
-                "Strongly bonded adult males",
-                new ArrayList<>(Arrays.asList("Strongly bonded adult males", "Elderly dolphins", "Small fish", "Protective sharks"))
+                "What is making the sea life, including dolphins, very sick?",
+                "Chemical pollution and plastics",
+                new ArrayList<>(Arrays.asList("Chemical pollution and plastics", "Climate change", "Harmful algal blooms", "Fertilizers"))
         ));
         questionBank.put(5, new Question(
-                "What can you do to help the bottlenose dolphins keep their habitats?",
-                "TBA (Correct)",
-                new ArrayList<>(Arrays.asList("TBA (Correct)", "TBA", "TBA", "TBA"))
+                "What can you do to help the bottlenose dolphins from getting sick?",
+                "Use environmentally safe products",
+                new ArrayList<>(Arrays.asList("Use environmentally safe products", "Carpool, bike, or walk", "Avoid using fertilizers", "Use the Seafood Watch app"))
         ));
 
         return questionBank;
