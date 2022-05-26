@@ -1,0 +1,19 @@
+
+RingedSealSpriteSheet.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+1
+  rotate: false
+  xy: 1, 1
+  size: 420, 213
+  orig: 420, 213
+  offset: 0, 0
+  index: -1
+2
+  rotate: false
+  xy: 423, 47
+  size: 426, 167
+  orig: 426, 167
+  offset: 0, 0
+  index: -1

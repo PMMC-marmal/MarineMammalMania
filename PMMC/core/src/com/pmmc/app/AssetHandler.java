@@ -128,8 +128,10 @@ public class AssetHandler {
     choiceButton = "quiz/choiceButton.png",
             choiceButtonActivated = "quiz/choiceButtonActivated.png",
             check = "quiz/check.png",
-            x_mark = "quiz/x_mark.png";
+            x_mark = "quiz/x_mark.png",
 
+    // food
+    ringedSeal = "sprite_sheets/RingedSealSpriteSheet.atlas";
 
     public static void load() {
         assetManager.load(continueButton, Texture.class);
@@ -253,6 +255,9 @@ public class AssetHandler {
         assetManager.load(choiceButtonActivated, Texture.class);
         assetManager.load(check, Texture.class);
         assetManager.load(x_mark, Texture.class);
+
+        assetManager.load(ringedSeal, TextureAtlas.class);
+
     }
 
     public static void dispose() {

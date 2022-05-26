@@ -6,6 +6,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -376,6 +378,7 @@ public abstract class Level extends AbstractScreen {
                 addPrey(2, generateObstacles(2), preyWidth, preyHeight, !waterPrey);
                 addPrey(3, generateObstacles(3), preyWidth, preyHeight, !waterPrey);
             }
+            // prey movement???
             for (Body p : prey) {
                  if (inPlayerView(p.getPosition())) {
                     int xforce = new Random().nextInt(preySpeed) - (preySpeed / 2);
@@ -597,6 +600,15 @@ public abstract class Level extends AbstractScreen {
         }
         stage.getBatch().end();
         stage.draw();
+    }
+
+    public int updateSprite(Sprite sprite, TextureAtlas textureAtlas, int currentFrame){
+        if (currentFrame >= textureAtlas.getRegions().size * 16) {
+            currentFrame = 1;
+        }
+//        System.out.println(currentFrame / 16 + 1);
+        sprite.setRegion(textureAtlas.findRegion(Integer.toString(currentFrame / 16 + 1)));
+        return currentFrame;
     }
 
     public void renderOil() {
