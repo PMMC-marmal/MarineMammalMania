@@ -26,7 +26,6 @@ public class SeaLionLevel extends Level {
      */
 
     boolean[][] seenPopUps;
-    boolean[] obstacles2, obstacles3;
     ArrayList<Sprite> choices1, popUps;
     private Vector2[] popUpLocations;
     private Sprite background;
@@ -48,11 +47,11 @@ public class SeaLionLevel extends Level {
         preySpeed = 20;
         waterPrey = true;
         choices1 = new ArrayList<>();
-        obstacles2 = generateObstacles(2);
-        obstacles3 = generateObstacles(3);
+        obstacles2 = generateObstacles(4);
+        obstacles3 = generateObstacles(4);
         setWorldSize(28000);
         setOceanDepth(1000);
-        setSpacing(400);
+        setSpacing(500);
         setMinNumPrey(5);
         setBoatStrike(true);
         setBoatYAxis(0);
@@ -85,7 +84,7 @@ public class SeaLionLevel extends Level {
         setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoat, Texture.class)));
 
         setPredatorSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class)));
-        setPredatorScale(3);
+        setPredatorScale(2);
 
         Sprite pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionFoodPop, Texture.class));
         Sprite pop2 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionHabitatPop, Texture.class));
@@ -119,8 +118,8 @@ public class SeaLionLevel extends Level {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        renderBackground(backdrop, 0, true);
-        renderBackground(background, -1 * getOceanDepth() - 50,false);
+        renderBackground(backdrop, 0, 5);
+        renderBackground(background, -1 * getOceanDepth() - 50,1);
         renderCustom(sandArea, 0, -1 * sandArea.getHeight() - 350, sandArea.getWidth(), sandArea.getHeight() + 500);
         sandArea.flip(true, false);
         renderCustom(sandArea, (int) (getWorldSize() - sandArea.getWidth()), -1 * sandArea.getHeight() - 350, sandArea.getWidth(), sandArea.getHeight() + 500);
@@ -135,7 +134,7 @@ public class SeaLionLevel extends Level {
         renderEndGoal2D(staticSeaLion);
         renderPlayer2D();
         renderHealthBars();
-        renderBackground(blur, -1 * getOceanDepth() - 50,false);
+        renderBackground(blur, -1 * getOceanDepth() - 50,1);
         game.batch.end();
     }
 

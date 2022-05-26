@@ -87,14 +87,14 @@ public class BlueWhaleLevel extends Level {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        renderBackground(background, -1 * getOceanDepth() - 50,false);
+        renderBackground(background, -1 * getOceanDepth() - 50,1);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
         renderBoat();
         renderOil();
         renderEndGoal2D(staticWhale);
         renderPlayer2D();
-        renderBackground(blur, -1 * getOceanDepth() - 50,false);
+        renderBackground(blur, -1 * getOceanDepth() - 50,1);
         renderHealthBars();
         game.batch.end();
     }

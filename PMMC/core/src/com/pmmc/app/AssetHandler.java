@@ -49,9 +49,9 @@ public class AssetHandler {
             seaLionBackground = "backgrounds/sealion_background.png",
             seaLionBackground1 = "backgrounds/sealion-background1.png",
             skyBackground = "backgrounds/sky_background.png",
-            skyBackground2 = "backgrounds/sky_background.png",
-            skyBackground3 = "backgrounds/sky_background.png",
-            skyBackground4 = "backgrounds/sky_background.png",
+            skyBackground2 = "backgrounds/sky_background2.png",
+            skyBackground3 = "backgrounds/sky_background3.png",
+            skyBackground4 = "backgrounds/sky_background4.png",
 
     icebergAddon = "obstacles/iceberg-background.png",
             iceberg1 = "obstacles/starting_ice_berg.png",

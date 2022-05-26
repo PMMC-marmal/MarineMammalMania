@@ -21,7 +21,7 @@ import java.util.Random;
  */
 
 public class PolarBearLevel extends Level {
-    boolean[] obstacles1, obstacles2, obstacles3;
+    boolean[] obstacles1;
     boolean[][] seenPopUps;
     ArrayList<Sprite> choices1, choices2, choices3, popUps;
     private Vector2[] popUpLocations;
@@ -51,7 +51,7 @@ public class PolarBearLevel extends Level {
         setOceanDepth(1000);
         setSpacing(700);
         setWaterWorld(false);
-//        setOilSpill(true);
+        setOilSpill(true);
 
     }
 
@@ -121,8 +121,8 @@ public class PolarBearLevel extends Level {
 
         game.batch.begin();
         // Add background
-        renderBackground(backdrop, -100, false);
-        renderBackground(background, -1 * getOceanDepth() - 50,false);
+        renderBackground(backdrop, -100, 1);
+        renderBackground(background, -1 * getOceanDepth() - 50,1);
 
         renderPrey2D(food, toxicFood);
         renderObstacles(1, choices1, obstacles1, 540, 0, false);
@@ -133,7 +133,7 @@ public class PolarBearLevel extends Level {
         renderEndGoal2D(staticBear);
         renderPlayer2D();
         renderHealthBars();
-        renderBackground(blur, -1 * getOceanDepth() - 50, false);
+        renderBackground(blur, -1 * getOceanDepth() - 50, 1);
         game.batch.end();
 //
     }

@@ -60,7 +60,7 @@ public class OrcaLevel extends Level {
 
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
-        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.skyBackground, Texture.class));
+        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.skyBackground2, Texture.class));
 
         this.staticOrca = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class));
         staticOrca.flip(true, false);
@@ -95,15 +95,15 @@ public class OrcaLevel extends Level {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        renderBackground(backdrop, 100, true);
-        renderBackground(background, -1 * getOceanDepth() - 50, false);
+        renderBackground(backdrop, -300, 3);
+        renderBackground(background, -1 * getOceanDepth() - 50, 1);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
         renderBoat();
         renderOil();
         renderEndGoal2D(staticOrca);
         renderPlayer2D();
-        renderBackground(blur, -1 * getOceanDepth() - 50,false);
+        renderBackground(blur, -1 * getOceanDepth() - 50,1);
         renderHealthBars();
         game.batch.end();
     }

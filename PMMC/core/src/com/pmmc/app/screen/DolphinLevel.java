@@ -25,7 +25,7 @@ public class DolphinLevel extends Level {
     ArrayList<Sprite> popUps;
     ArrayList<Integer> backgroundDolphins;
     private Vector2[] popUpLocations;
-    private Sprite background;
+    private Sprite background, backdrop;
     private Sprite blur;
     private Sprite staticDolphin;
     private Sprite food;
@@ -61,6 +61,8 @@ public class DolphinLevel extends Level {
         player.setSwimming(true);
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
+        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.skyBackground4, Texture.class));
+
         this.staticDolphin = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinSprite, Texture.class));
         staticDolphin.flip(true, false);
         setEndGoal(staticDolphin, preySpawnHeight-100);
@@ -82,7 +84,7 @@ public class DolphinLevel extends Level {
         Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinThreatsPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
         popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(3000, 200), new Vector2(5000, 200), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, 200)};//slect location
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(spacing, 0), new Vector2(1000, 0), new Vector2(getWorldSize()-spacing, (getEndGoal().getPosition().y * PPM )+100), new Vector2(2000, 0)};//slect location
 
         backgroundDolphins = new ArrayList<>();
         for (int i = 0; i < 6; i++){
@@ -101,7 +103,8 @@ public class DolphinLevel extends Level {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
-        renderBackground(background, -1 * getOceanDepth() - 50,false);
+        renderBackground(backdrop,-600,1);
+        renderBackground(background, -1 * getOceanDepth() - 50,1);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
         renderBoat();
@@ -117,7 +120,7 @@ public class DolphinLevel extends Level {
         renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(5),preySpawnHeight - 500, staticDolphin.getWidth()/1.3f,staticDolphin.getHeight()/1.3f);
         staticDolphin.flip(true,false);
         renderPlayer2D();
-        renderBackground(blur, -1 * getOceanDepth() - 50,false);
+        renderBackground(blur, -1 * getOceanDepth() - 50,1);
         renderHealthBars();
         game.batch.end();
 //        renderBackground(blur);
