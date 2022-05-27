@@ -3,8 +3,11 @@ package com.pmmc.app;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.pmmc.app.screen.LevelMenuScreen;
+import com.pmmc.app.screen.LoadingScreen;
 import com.pmmc.app.screen.MainMenuScreen;
 
 import com.pmmc.app.screen.PolarBearLevel;
@@ -29,14 +32,16 @@ public class GameLauncher extends Game {
 		music.play();
 
 		this.mainMenuScreen = new MainMenuScreen(this);
-		this.levelMenuScreen = new LevelMenuScreen(this);
 		this.batch = new SpriteBatch();
 
-		// Load assets
+		// Load assets WITH loading screen
+		//setScreen(new LoadingScreen(this));
+
+		// Load assets WITHOUT loading screen
 		AssetHandler.load();
 		AssetHandler.assetManager.finishLoading();
+		setScreen(mainMenuScreen);
 
-		this.setScreen(this.mainMenuScreen);
 	}
 
 	@Override

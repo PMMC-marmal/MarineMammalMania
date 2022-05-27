@@ -94,7 +94,7 @@ public abstract class Level extends AbstractScreen {
     private int predatorScale = 1;
     private boolean boatRunning;
 
-    public Level(GameLauncher game, ArrayList<Sound> soundBank) {
+    public Level(GameLauncher game, String musicPath, ArrayList<Sound> soundBank) {
         super(game);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, idealGameWidth, idealGameHeight);
@@ -106,7 +106,7 @@ public abstract class Level extends AbstractScreen {
         stage = new Stage();
         stage.setViewport(extendViewport);
 
-        changeMusic("sounds/tropical_music.mp3", 0.7f);
+        changeMusic(musicPath, 0.7f);
 
         this.soundBank = soundBank;
         soundTimerRunning = false;

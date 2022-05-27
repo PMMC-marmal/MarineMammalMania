@@ -32,7 +32,7 @@ public class DolphinLevel extends Level {
     private Sprite toxicFood;
 
     public DolphinLevel(GameLauncher game) {
-        super(game, new ArrayList<>(Arrays.asList(
+        super(game, "sounds/tropical_music.mp3", new ArrayList<>(Arrays.asList(
                 Gdx.audio.newSound(Gdx.files.internal("sounds/dolphin_1.wav")),
                 Gdx.audio.newSound(Gdx.files.internal("sounds/dolphin_2.wav")),
                 Gdx.audio.newSound(Gdx.files.internal("sounds/dolphin_3.wav"))

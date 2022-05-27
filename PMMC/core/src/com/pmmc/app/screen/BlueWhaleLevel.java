@@ -27,7 +27,7 @@ public class BlueWhaleLevel extends Level {
     private Sprite background, blur, staticWhale, food, toxicFood;
 
     public BlueWhaleLevel(GameLauncher game) {
-        super(game, new ArrayList<>(Arrays.asList(
+        super(game, "sounds/tropical_music.mp3", new ArrayList<>(Arrays.asList(
                 Gdx.audio.newSound(Gdx.files.internal("sounds/blue_whale_1.mp3")),
                 Gdx.audio.newSound(Gdx.files.internal("sounds/blue_whale_2.mp3"))
         )));

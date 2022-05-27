@@ -42,7 +42,7 @@ public class SeaLionLevel extends Level {
     private int currentFrame = 0;
 
     public SeaLionLevel(GameLauncher game) {
-        super(game, new ArrayList<>(Arrays.asList(
+        super(game, "sounds/tropical_music.mp3", new ArrayList<>(Arrays.asList(
                 Gdx.audio.newSound(Gdx.files.internal("sounds/sea_lion_1.mp3")),
                 Gdx.audio.newSound(Gdx.files.internal("sounds/sea_lion_2.mp3")),
                 Gdx.audio.newSound(Gdx.files.internal("sounds/sea_lion_3.mp3"))

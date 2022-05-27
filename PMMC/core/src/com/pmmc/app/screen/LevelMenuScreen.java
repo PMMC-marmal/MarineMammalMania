@@ -119,16 +119,22 @@ public class LevelMenuScreen extends Menu {
         }
 
         // Draw characters on screen
-        game.batch.draw(seaLionSprite, Gdx.graphics.getWidth() * .80f, Gdx.graphics.getHeight() * .70f);
+        game.batch.draw(seaLionSprite, (Gdx.graphics.getWidth() - (x * 1.75f)), y_sea_lion);
 
-        game.batch.draw(dolphinSprite, Gdx.graphics.getWidth() * -.08f, Gdx.graphics.getHeight() * .60f);
+        float dolphinX = -x;
+        if (Gdx.graphics.getWidth() > 1500){dolphinX = 0;}
+        game.batch.draw(dolphinSprite, dolphinX, y_sea_lion - (BUTTON_SPACING * 0.75f));
 
-        game.batch.draw(killerWhaleSprite, Gdx.graphics.getWidth() * .75f, Gdx.graphics.getHeight() * .37f);
+        game.batch.draw(killerWhaleSprite, (Gdx.graphics.getWidth() - (x * 2f)), (y_sea_lion - BUTTON_SPACING * 2f));
 
-        game.batch.draw(blueWhaleSprite, 0 - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .12f);
+        float blueWhaleX = -x * 3f;
+        if (Gdx.graphics.getWidth() > 1500){blueWhaleX = -x;}
+        game.batch.draw(blueWhaleSprite, blueWhaleX, y_sea_lion - BUTTON_SPACING * 3.5f);
 
-        game.batch.draw(polarBearSprite, Gdx.graphics.getWidth() - Gdx.graphics.getWidth() / 4f, Gdx.graphics.getHeight() * .08f);
+        game.batch.draw(polarBearSprite, (Gdx.graphics.getWidth() - (x * 2f)), y_sea_lion - BUTTON_SPACING * 4);
 
         game.batch.end();
+
+        System.out.println("Width: " + blueWhaleSprite.getWidth()/(Gdx.graphics.getWidth()/1000f));
     }
 }
