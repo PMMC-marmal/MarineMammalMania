@@ -72,21 +72,6 @@ public abstract class Menu extends AbstractScreen {
                 && Gdx.input.justTouched());
     }
 
-    public BitmapFont generateFont(int size, Color color){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Gila-qZBPV.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
-
-        parameters.genMipMaps = true;
-        parameters.color = color;
-        //parameters.size = (int)Math.ceil(size);
-        parameters.size = size * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
-        parameters.magFilter = Texture.TextureFilter.MipMapLinearNearest;
-        parameters.minFilter = Texture.TextureFilter.Nearest;
-        generator.scaleForPixelHeight((int)Math.ceil(size));
-
-        return generator.generateFont(parameters);
-    }
-
     @Override
     public void resize(int width, int height){
         camera.setToOrtho(false, width, height);

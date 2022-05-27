@@ -1,8 +1,13 @@
 package com.pmmc.app.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.pmmc.app.GameLauncher;
 import com.pmmc.app.transitions.FadeIn;
 import com.pmmc.app.transitions.FadeOut;
@@ -65,5 +70,20 @@ public abstract class AbstractScreen implements Screen {
         effects.add(new FadeIn(0.5f));
 
         game.setScreen(new TransitionScreen(game, current, next, effects));
+    }
+
+    public BitmapFont generateFont(int size, Color color){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/Gila-qZBPV.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameters = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameters.genMipMaps = true;
+        parameters.color = color;
+        //parameters.size = (int)Math.ceil(size);
+        parameters.size = size * Gdx.graphics.getWidth() / Gdx.graphics.getHeight();
+        parameters.magFilter = Texture.TextureFilter.MipMapLinearNearest;
+        parameters.minFilter = Texture.TextureFilter.Nearest;
+        generator.scaleForPixelHeight((int)Math.ceil(size));
+
+        return generator.generateFont(parameters);
     }
 }
