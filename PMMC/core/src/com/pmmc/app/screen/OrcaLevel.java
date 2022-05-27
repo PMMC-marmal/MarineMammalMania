@@ -32,7 +32,7 @@ public class OrcaLevel extends Level {
     private Sprite toxicFood;
 
     public OrcaLevel(GameLauncher game) {
-        super(game, new ArrayList<>(Arrays.asList(
+        super(game, "sounds/tropical_music.mp3", new ArrayList<>(Arrays.asList(
                 Gdx.audio.newSound(Gdx.files.internal("sounds/orca_1.wav")),
                 Gdx.audio.newSound(Gdx.files.internal("sounds/orca_2.wav")),
                 Gdx.audio.newSound(Gdx.files.internal("sounds/orca_3.wav"))

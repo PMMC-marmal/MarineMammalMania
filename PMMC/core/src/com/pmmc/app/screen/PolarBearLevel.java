@@ -35,7 +35,7 @@ public class PolarBearLevel extends Level {
     private int currentFrame;
 
     public PolarBearLevel(final GameLauncher game) {
-        super(game, new ArrayList<>(Arrays.asList(
+        super(game, "sounds/POL-water-drops-short.wav", new ArrayList<>(Arrays.asList(
                 Gdx.audio.newSound(Gdx.files.internal("sounds/polar_bear_1.mp3")),
                 Gdx.audio.newSound(Gdx.files.internal("sounds/polar_bear_2.mp3"))
         )));

@@ -35,12 +35,12 @@ public class GameLauncher extends Game {
 		this.batch = new SpriteBatch();
 
 		// Load assets WITH loading screen
-		setScreen(new LoadingScreen(this));
+		//setScreen(new LoadingScreen(this));
 
 		// Load assets WITHOUT loading screen
-		//AssetHandler.load();
-		//AssetHandler.assetManager.finishLoading();
-		//setScreen(mainMenuScreen);
+		AssetHandler.load();
+		AssetHandler.assetManager.finishLoading();
+		setScreen(mainMenuScreen);
 
 	}
 
