@@ -13,7 +13,7 @@ public class BlueWhale extends CharacterAbstraction {
         setAirLossRate(1000);
         setFoodLossRate(200);
         setDamageRate(100);
-        setJumpForce(8);
+        setJumpForce(7);
     }
 
     // Power related to polar bear (method here)

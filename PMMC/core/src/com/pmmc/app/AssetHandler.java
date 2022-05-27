@@ -44,6 +44,7 @@ public class AssetHandler {
             toxicBar = "player-bars/toxic/toxic_bar.png",
 
     polarBackdrop = "backgrounds/polar_background_blur.png",
+    whaleBackground = "backgrounds/ocean-2.png",
             waterWithSand = "backgrounds/ocean-no-blur.png",
             blur = "backgrounds/water_overlay.png",
             seaLionBackground = "backgrounds/sealion_background.png",
@@ -181,6 +182,7 @@ public class AssetHandler {
 
 
         assetManager.load(waterWithSand, Texture.class);
+        assetManager.load(whaleBackground, Texture.class);
         assetManager.load(polarBackdrop, Texture.class);
         assetManager.load(blur, Texture.class);
         assetManager.load(seaLionBackground, Texture.class);

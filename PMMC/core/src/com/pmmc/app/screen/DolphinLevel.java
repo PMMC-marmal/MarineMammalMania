@@ -59,9 +59,9 @@ public class DolphinLevel extends Level {
         setPlayer(dolphin);
 
         player.setSwimming(true);
-        this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.waterWithSand, Texture.class));
+        this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleBackground, Texture.class));
         this.blur = new Sprite(AssetHandler.assetManager.get(AssetHandler.blur, Texture.class));
-        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.skyBackground4, Texture.class));
+        this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.skyBackground, Texture.class));
 
         this.staticDolphin = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinSprite, Texture.class));
         staticDolphin.flip(true, false);
@@ -82,9 +82,10 @@ public class DolphinLevel extends Level {
         Sprite pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinLifePop, Texture.class));
         Sprite pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinSocialPop, Texture.class));
         Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinThreatsPop, Texture.class));
-        seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
-        popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(spacing, 0), new Vector2(1000, 0), new Vector2(getWorldSize()-spacing, (getEndGoal().getPosition().y * PPM )+100), new Vector2(2000, 0)};//slect location
+        Sprite pop6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinHelpPop, Texture.class));
+        seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false, false}, new boolean[]{false, false, false, false, false, false}};
+        popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5, pop6)); //order maters
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(spacing, preySpawnHeight), new Vector2(1000, preySpawnHeight), new Vector2(getWorldSize()-spacing, (getEndGoal().getPosition().y * PPM )+100), new Vector2(2000, preySpawnHeight), new Vector2(3000, preySpawnHeight)};//slect location
 
         backgroundDolphins = new ArrayList<>();
         for (int i = 0; i < 6; i++){

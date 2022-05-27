@@ -45,7 +45,7 @@ public class PolarBearLevel extends Level {
         obstacles1 = generateObstacles(1);
         obstacles2 = generateObstacles(2);
         obstacles3 = generateObstacles(4);
-        preySpawnHeight = 100;
+        preySpawnHeight = 200;
         preyDespawnable = true;
         preySpeed = 15;
         waterPrey = false;
@@ -73,6 +73,7 @@ public class PolarBearLevel extends Level {
         this.food = new Sprite(AssetHandler.assetManager.get(AssetHandler.ringedSeal, TextureAtlas.class).findRegion("1"));
         this.toxicFood =  new Sprite(AssetHandler.assetManager.get(AssetHandler.toxicRingedSeal, TextureAtlas.class).findRegion("1"));
 
+
         preyWidth = (int) food.getWidth() / 2;
         preyHeight = (int) food.getHeight() / 2;
 
@@ -91,10 +92,11 @@ public class PolarBearLevel extends Level {
         Sprite pop3 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarLifePop, Texture.class));
         Sprite pop4 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarSocialPop, Texture.class));
         Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarThreatsPop, Texture.class));
-        seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
+        Sprite pop6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.polarHelpPop, Texture.class));
+        seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false, false}, new boolean[]{false, false, false, false, false, false}};
 
-        popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5)); //order maters
-        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+100), new Vector2(1000, 200), new Vector2(3000, 200), new Vector2(getWorldSize()-(spacing/2f)-(pop5.getWidth()/2), (getEndGoal().getPosition().y * PPM)+100), new Vector2(9000, 200)};//slect location
+        popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5, pop6)); //order maters
+        popUpLocations = new Vector2[]{new Vector2(spacing * 7.5f, preySpawnHeight), new Vector2(1000, preySpawnHeight), new Vector2(3000, preySpawnHeight), new Vector2(getWorldSize()-(spacing/2f)-(pop5.getWidth()/2), (getEndGoal().getPosition().y * PPM)+100), new Vector2(9000, preySpawnHeight), new Vector2(11000, preySpawnHeight)};//slect location
 
         placeBox2DObstacles(1, new Vector2[]{}, obstacles1, 0, false, "IceBerg");
         placeBox2DObstacles(2, new Vector2[]{new Vector2(0, 0), new Vector2((spacing * 2) / PPM, 0), new Vector2((spacing) / PPM, -200 / PPM)}, obstacles2, 0, true, "IceBerg");
@@ -139,6 +141,7 @@ public class PolarBearLevel extends Level {
         renderPlayer2D();
         renderBackground(blur, -1 * getOceanDepth() - 50, 1);
         renderHealthBars();
+
         game.batch.end();
 //
     }

@@ -12,7 +12,7 @@ public class Dolphin extends CharacterAbstraction {
         setAirLossRate(500);
         setFoodLossRate(250);
         setDamageRate(100);
-        setJumpForce(10);
+        setJumpForce(9);
     }
 
     // Power related to polar bear (method here)

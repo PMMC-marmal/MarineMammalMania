@@ -100,7 +100,7 @@ public class SeaLionLevel extends Level {
         Sprite pop5 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionThreatsPop, Texture.class));
         Sprite pop6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.lionHelpPop, Texture.class));
 
-        seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false}, new boolean[]{false, false, false, false, false}};
+        seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false, false}, new boolean[]{false, false, false, false, false, false}};
 
         popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5, pop6)); //order maters
         popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(500, 200), new Vector2(5000, preySpawnHeight), new Vector2(getWorldSize()-(spacing/2f)-(pop5.getWidth()/2), (getEndGoal().getPosition().y* PPM)+100), new Vector2(9000, preySpawnHeight), new Vector2(getWorldSize()-(spacing*4), preySpawnHeight)};//slect location
@@ -134,15 +134,34 @@ public class SeaLionLevel extends Level {
         renderBackground(backdrop, 0, 5);
         renderBackground(background, -1 * getOceanDepth() - 50,1);
 
-        renderCustom(staticSunfish, moveImage(getRandomX(11)), -getRandomY(1),staticSunfish.getWidth(),staticSunfish.getHeight(),0.3f);
+        renderCustom(staticSunfish, moveImage(getRandomX(51)), -getRandomY(1),staticSunfish.getWidth(),staticSunfish.getHeight(),0.3f);
         staticSunfish.flip(true,false);
-        renderCustom(staticSunfish, moveImage(-getRandomX(12)), -getRandomY(2),staticSunfish.getWidth(),staticSunfish.getHeight(),0.3f);
+        renderCustom(staticSunfish, moveImage(-getRandomX(52)), -getRandomY(2),staticSunfish.getWidth(),staticSunfish.getHeight(),0.3f);
         staticSunfish.flip(true,false);
-        renderCustom(staticSwordfish, moveImage(getRandomX(13)), -getRandomY(3),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
+        renderCustom(staticSwordfish, moveImage(getRandomX(53)), -getRandomY(3),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
         staticSwordfish.flip(true,false);
-        renderCustom(staticSwordfish, moveImage(-getRandomX(14)), -getRandomY(4),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
+        renderCustom(staticSwordfish, moveImage(-getRandomX(54)), -getRandomY(4),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
+        staticSwordfish.flip(true,false);
+        renderCustom(staticSunfish, moveImage(getRandomX(55)), -getRandomY(5),staticSunfish.getWidth(),staticSunfish.getHeight(),0.3f);
+        staticSunfish.flip(true,false);
+        renderCustom(staticSunfish, moveImage(-getRandomX(56)), -getRandomY(6),staticSunfish.getWidth(),staticSunfish.getHeight(),0.3f);
+        staticSunfish.flip(true,false);
+        renderCustom(staticSwordfish, moveImage(getRandomX(57)), -getRandomY(7),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
+        staticSwordfish.flip(true,false);
+        renderCustom(staticSwordfish, moveImage(-getRandomX(58)), -getRandomY(8),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
+        staticSwordfish.flip(true,false);
+        renderCustom(staticSunfish, moveImage(getRandomX(59)), -getRandomY(9),staticSunfish.getWidth(),staticSunfish.getHeight(),0.3f);
+        staticSunfish.flip(true,false);
+        renderCustom(staticSunfish, moveImage(-getRandomX(60)), -getRandomY(10),staticSunfish.getWidth(),staticSunfish.getHeight(),0.3f);
+        staticSunfish.flip(true,false);
+        renderCustom(staticSwordfish, moveImage(getRandomX(61)), -getRandomY(11),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
+        staticSwordfish.flip(true,false);
+        renderCustom(staticSwordfish, moveImage(-getRandomX(62)), -getRandomY(12),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
         staticSwordfish.flip(true,false);
 
+//        renderBackground(blur, -1 * getOceanDepth() - 50,1);
+//        renderBackground(blur, -1 * getOceanDepth() - 50,1);
+//        renderBackground(blur, -1 * getOceanDepth() - 50,1);
 
         renderCustom(sandArea, 0, -1 * sandArea.getHeight() - 550, sandArea.getWidth(), sandArea.getHeight() + 700,1);
         sandArea.flip(true, false);
@@ -155,8 +174,8 @@ public class SeaLionLevel extends Level {
         renderPredator();
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
 
-        for (int i =0 ; i< 10;i++){
-            renderCustom(new Sprite(AssetHandler.assetManager.get(AssetHandler.kelpForBackground, Texture.class)), getRandomX(i), -getOceanDepth()-150,500,500,1);
+        for (int i =0 ; i< 20;i++){
+            renderCustom(new Sprite(AssetHandler.assetManager.get(AssetHandler.kelpForBackground, Texture.class)), getRandomX(i), -getOceanDepth()-50,474,342,1);
         }
 
         renderEndGoal2D(staticSeaLion);

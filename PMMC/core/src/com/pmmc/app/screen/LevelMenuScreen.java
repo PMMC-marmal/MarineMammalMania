@@ -135,6 +135,5 @@ public class LevelMenuScreen extends Menu {
 
         game.batch.end();
 
-        System.out.println("Width: " + blueWhaleSprite.getWidth()/(Gdx.graphics.getWidth()/1000f));
     }
 }

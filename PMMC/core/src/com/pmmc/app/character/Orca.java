@@ -12,7 +12,7 @@ public class Orca extends CharacterAbstraction {
         setAirLossRate(500);
         setFoodLossRate(500);
         setDamageRate(100);
-        setJumpForce(7);
+        setJumpForce(8);
     }
 
     // Power related to polar bear (method here)
