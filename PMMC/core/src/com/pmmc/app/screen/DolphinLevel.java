@@ -27,7 +27,7 @@ public class DolphinLevel extends Level {
     private Vector2[] popUpLocations;
     private Sprite background, backdrop;
     private Sprite blur;
-    private Sprite staticDolphin;
+    private Sprite staticDolphin, staticSeaLion, staticOrca, staticShark;
     private Sprite food;
     private Sprite toxicFood;
 
@@ -64,6 +64,9 @@ public class DolphinLevel extends Level {
         this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.skyBackground, Texture.class));
 
         this.staticDolphin = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinSprite, Texture.class));
+//        this.staticSeaLion = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
+        this.staticOrca = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class));
+        this.staticShark = new Sprite(AssetHandler.assetManager.get(AssetHandler.shark, Texture.class));
         staticDolphin.flip(true, false);
         setEndGoal(staticDolphin, preySpawnHeight-100);
 
@@ -85,7 +88,7 @@ public class DolphinLevel extends Level {
         Sprite pop6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinHelpPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false, false}, new boolean[]{false, false, false, false, false, false}};
         popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5, pop6)); //order maters
-        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(spacing, preySpawnHeight), new Vector2(1000, preySpawnHeight), new Vector2(getWorldSize()-spacing, (getEndGoal().getPosition().y * PPM )+100), new Vector2(2000, preySpawnHeight), new Vector2(3000, preySpawnHeight)};//slect location
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f), preySpawnHeight), new Vector2(1000, 0), new Vector2(3000, preySpawnHeight), new Vector2(getWorldSize()-spacing, (getEndGoal().getPosition().y * PPM )+100), new Vector2(7000, preySpawnHeight),new Vector2(getWorldSize()-(spacing*3), preySpawnHeight)};//slect location
 
         backgroundDolphins = new ArrayList<>();
         for (int i = 0; i < 6; i++){
@@ -106,6 +109,33 @@ public class DolphinLevel extends Level {
         game.batch.begin();
         renderBackground(backdrop,-600,1);
         renderBackground(background, -1 * getOceanDepth() - 50,1);
+
+//        renderCustom(staticSeaLion, moveImage(getRandomX(59)), -getRandomY(9),staticSeaLion.getWidth(),staticSeaLion.getHeight(),.5f);
+        renderCustom(staticOrca, moveImage(getRandomX(60)), -getRandomY(10),staticOrca.getWidth(),staticOrca.getHeight(),.5f);
+        renderCustom(staticShark, moveImage(getRandomX(61)), -getRandomY(11),staticShark.getWidth(),staticShark.getHeight(),.5f);
+//        staticSeaLion.flip(true,false);
+        staticOrca.flip(true,false);
+        staticShark.flip(true,false);
+//        renderCustom(staticSeaLion, moveImage(-getRandomX(62)), -getRandomY(12),staticSeaLion.getWidth(),staticSeaLion.getHeight(),.5f);
+        renderCustom(staticOrca, moveImage(-getRandomX(63)), -getRandomY(13),staticOrca.getWidth(),staticOrca.getHeight(),.5f);
+        renderCustom(staticShark, moveImage(-getRandomX(64)), -getRandomY(14),staticShark.getWidth(),staticShark.getHeight(),.5f);
+//        staticSeaLion.flip(true,false);
+        staticOrca.flip(true,false);
+        staticShark.flip(true,false);
+//        renderCustom(staticSeaLion, moveImage(getRandomX(65)), -getRandomY(15),staticSeaLion.getWidth(),staticSeaLion.getHeight(),.5f);
+        renderCustom(staticOrca, moveImage(getRandomX(66)), -getRandomY(16),staticOrca.getWidth(),staticOrca.getHeight(),.5f);
+        renderCustom(staticShark, moveImage(getRandomX(67)), -getRandomY(17),staticShark.getWidth(),staticShark.getHeight(),.5f);
+//        staticSeaLion.flip(true,false);
+        staticOrca.flip(true,false);
+        staticShark.flip(true,false);
+//        renderCustom(staticSeaLion, moveImage(-getRandomX(68)), -getRandomY(18),staticSeaLion.getWidth(),staticSeaLion.getHeight(),.5f);
+        renderCustom(staticOrca, moveImage(-getRandomX(69)), -getRandomY(19),staticOrca.getWidth(),staticOrca.getHeight(),.5f);
+        renderCustom(staticShark, moveImage(-getRandomX(70)), -getRandomY(20),staticShark.getWidth(),staticShark.getHeight(),.5f);
+//        staticSeaLion.flip(true,false);
+        staticOrca.flip(true,false);
+        staticShark.flip(true,false);
+
+        renderBackground(blur, -1 * getOceanDepth() - 50,1);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
         renderBoat();

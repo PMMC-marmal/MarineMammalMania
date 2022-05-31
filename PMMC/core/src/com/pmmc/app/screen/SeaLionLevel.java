@@ -103,7 +103,7 @@ public class SeaLionLevel extends Level {
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false, false}, new boolean[]{false, false, false, false, false, false}};
 
         popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5, pop6)); //order maters
-        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(500, 200), new Vector2(5000, preySpawnHeight), new Vector2(getWorldSize()-(spacing/2f)-(pop5.getWidth()/2), (getEndGoal().getPosition().y* PPM)+100), new Vector2(9000, preySpawnHeight), new Vector2(getWorldSize()-(spacing*4), preySpawnHeight)};//slect location
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f), preySpawnHeight), new Vector2(800, 200), new Vector2(5000, preySpawnHeight), new Vector2(getWorldSize()-(800), (getEndGoal().getPosition().y* PPM)+100), new Vector2(9000, preySpawnHeight), new Vector2(getWorldSize()-(spacing*4), preySpawnHeight)};//slect location
 
         for (boolean ignored : obstacles2) {
             choices1.add(bouy);
@@ -159,9 +159,8 @@ public class SeaLionLevel extends Level {
         renderCustom(staticSwordfish, moveImage(-getRandomX(62)), -getRandomY(12),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.5f);
         staticSwordfish.flip(true,false);
 
-//        renderBackground(blur, -1 * getOceanDepth() - 50,1);
-//        renderBackground(blur, -1 * getOceanDepth() - 50,1);
-//        renderBackground(blur, -1 * getOceanDepth() - 50,1);
+        renderBackground(blur, -1 * getOceanDepth() - 50,1);
+
 
         renderCustom(sandArea, 0, -1 * sandArea.getHeight() - 550, sandArea.getWidth(), sandArea.getHeight() + 700,1);
         sandArea.flip(true, false);

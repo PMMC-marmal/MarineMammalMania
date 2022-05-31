@@ -44,7 +44,7 @@ public class OrcaLevel extends Level {
         setWaterWorld(true);
         setWorldSize(24000);
         setOceanDepth(2000);
-        setSpacing(1200);
+        setSpacing(600);
         setMinNumPrey(5);
         setBoatStrike(true);
         setOilSpill(true);
@@ -55,7 +55,6 @@ public class OrcaLevel extends Level {
     public void show() {
         Orca orca = new Orca();
         setPlayer(orca);
-        setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoat, Texture.class)));
         player.setSwimming(true);
 
         this.background = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleBackground, Texture.class));
@@ -72,7 +71,7 @@ public class OrcaLevel extends Level {
         preyWidth = (int) food.getWidth() /3;
         preyHeight = (int) food.getHeight() /3;
 
-        setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.smallBoatFishingLine, Texture.class)));
+        setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.trashBoat, Texture.class)));
         setOilSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.oilSpill, Texture.class)));
 
         Sprite pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaFoodPop, Texture.class));
@@ -83,7 +82,7 @@ public class OrcaLevel extends Level {
         Sprite pop6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaHelpPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false, false}, new boolean[]{false, false, false, false, false, false}};
         popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5, pop6)); //order maters
-        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(3000, preySpawnHeight), new Vector2(5000, preySpawnHeight), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000, preySpawnHeight), new Vector2(11000, preySpawnHeight)};//slect location
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f), preySpawnHeight), new Vector2(1000, 0), new Vector2(3000, preySpawnHeight), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y *PPM +100), new Vector2(9000, preySpawnHeight), new Vector2(getWorldSize()-(spacing*3), preySpawnHeight)};//slect location
 
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
         addPrey(3, generateObstacles(3), preyWidth, preyHeight, false);

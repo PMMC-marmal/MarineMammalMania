@@ -99,7 +99,6 @@ public abstract class Level extends AbstractScreen {
     private int predatorScale = 1;
     private boolean boatRunning;
     public boolean frozenSate;
-    public Sprite currentPopup;
     private boolean continued;
     private int waitTime;
 
@@ -164,9 +163,7 @@ public abstract class Level extends AbstractScreen {
             game.setScreen(new Quiz(game, generateQuestionBank(), this.getClass().toString().substring(26)));
         }
         if (frozenSate) {
-            System.out.println("FROZEN");
             if (Gdx.input.isTouched() && waitTime > 100) {
-                System.out.println("UNFROZEN");
                 frozenSate = false;
                 continued = true;
                 waitTime = 0;
@@ -764,6 +761,7 @@ public abstract class Level extends AbstractScreen {
                     seen[1][i] = true;
                 } else {
                     seen[0][i] = true;
+                    if (continued)
                     seen[1][i] = false;
                     continued = false;
                 }
@@ -1033,9 +1031,9 @@ public abstract class Level extends AbstractScreen {
 
     public int moveImage(int offset) {
         if (offset < 0) {
-            return (backwardIndex + offset < 0) ? worldSize - (backwardIndex + offset) : backwardIndex + offset;
+            return (backwardIndex + offset < 0) ? worldSize + (backwardIndex + offset) : backwardIndex + offset;
         } else {
-            return (forwardIndex + offset > worldSize) ? worldSize - (forwardIndex + offset) : forwardIndex + offset;
+            return (forwardIndex + offset > worldSize) ? forwardIndex + offset - worldSize : forwardIndex + offset;
 
         }
     }

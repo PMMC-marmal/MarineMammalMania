@@ -120,6 +120,8 @@ public class AssetHandler {
             smallBoat = "threats/boat_small.png",
             smallBoatFishingLine = "threats/boat_small_fishing_line.png",
             trashBag = "threats/trashbag.png",
+            trashBoat = "threats/garbage_barge.png",
+            shark = "threats/shark.png",
 
     salmon = "food/chinook_salmon.png",
             herring = "food/herring.png",
@@ -259,6 +261,8 @@ public class AssetHandler {
         assetManager.load(smallBoatFishingLine, Texture.class);
         assetManager.load(oilSpill, Texture.class);
         assetManager.load(trashBag, Texture.class);
+        assetManager.load(trashBoat, Texture.class);
+        assetManager.load(shark, Texture.class);
 
         assetManager.load(salmon, Texture.class);
         assetManager.load(herring, Texture.class);

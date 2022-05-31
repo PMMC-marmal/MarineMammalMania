@@ -24,7 +24,7 @@ public class BlueWhaleLevel extends Level {
     boolean[][] seenPopUps;
     ArrayList<Sprite> popUps;
     private Vector2[] popUpLocations;
-    private Sprite background, blur, staticWhale, food, toxicFood;
+    private Sprite background, blur, staticWhale, staticSunfish, staticSwordfish, staticShark, food, toxicFood;
     private Sprite backdrop;
 
     public BlueWhaleLevel(GameLauncher game) {
@@ -57,6 +57,10 @@ public class BlueWhaleLevel extends Level {
         this.backdrop = new Sprite(AssetHandler.assetManager.get(AssetHandler.skyBackground3, Texture.class));
 
         this.staticWhale = new Sprite(AssetHandler.assetManager.get(AssetHandler.blueWhaleSprite, Texture.class));
+        this.staticSunfish = new Sprite(AssetHandler.assetManager.get(AssetHandler.sunfishForBackground, Texture.class));
+        this.staticSwordfish = new Sprite(AssetHandler.assetManager.get(AssetHandler.swordfishForBackground, Texture.class));
+        this.staticShark = new Sprite(AssetHandler.assetManager.get(AssetHandler.shark, Texture.class));
+
         staticWhale.flip(true, false);
         setEndGoal(staticWhale, preySpawnHeight);
 
@@ -77,7 +81,7 @@ public class BlueWhaleLevel extends Level {
         Sprite pop6 = new Sprite(AssetHandler.assetManager.get(AssetHandler.whaleHelpPop, Texture.class));
         seenPopUps = new boolean[][]{new boolean[]{false, false, false, false, false, false}, new boolean[]{false, false, false, false, false, false}};
         popUps = new ArrayList<>(Arrays.asList(pop1, pop2, pop3, pop4, pop5, pop6)); //order maters
-        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f)-(pop1.getWidth()/2), preySpawnHeight+200), new Vector2(spacing, preySpawnHeight), new Vector2(5000, preySpawnHeight), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y+200), new Vector2(9000,preySpawnHeight), new Vector2(11000,preySpawnHeight)};//slect location
+        popUpLocations = new Vector2[]{new Vector2((spacing* 7.5f), preySpawnHeight), new Vector2(1000, 0), new Vector2(5000, preySpawnHeight), new Vector2(getWorldSize()-spacing-(pop5.getWidth()/2), getEndGoal().getPosition().y*PPM+100), new Vector2(9000,preySpawnHeight), new Vector2(getWorldSize()-(spacing*3), preySpawnHeight)};//slect location
 
 
         addPrey(2, generateObstacles(2), preyWidth, preyHeight, false);
@@ -93,6 +97,37 @@ public class BlueWhaleLevel extends Level {
         game.batch.begin();
         renderBackground(backdrop, -1000, 3);
         renderBackground(background, -1 * getOceanDepth() - 50,1);
+
+        renderCustom(staticSunfish, moveImage(getRandomX(1)), -getRandomY(1),staticSunfish.getWidth(),staticSunfish.getHeight(),0.1f);
+        renderCustom(staticShark, moveImage(getRandomX(2)), -getRandomY(2),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(staticSwordfish, moveImage(getRandomX(3)), -getRandomY(3),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.4f);
+
+        staticSunfish.flip(true,false);
+        staticShark.flip(true,false);
+        staticSwordfish.flip(true,false);
+        renderCustom(staticSunfish, moveImage(-getRandomX(4)), -getRandomY(4),staticSunfish.getWidth(),staticSunfish.getHeight(),0.1f);
+        renderCustom(staticShark, moveImage(-getRandomX(5)), -getRandomY(5),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(staticSwordfish, moveImage(-getRandomX(6)), -getRandomY(6),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.4f);
+        staticSunfish.flip(true,false);
+        staticShark.flip(true,false);
+        staticSwordfish.flip(true,false);
+
+        renderCustom(staticSunfish, moveImage(getRandomX(7)), -getRandomY(7),staticSunfish.getWidth(),staticSunfish.getHeight(),0.1f);
+        renderCustom(staticShark, moveImage(getRandomX(8)), -getRandomY(8),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(staticSwordfish, moveImage(getRandomX(9)), -getRandomY(9),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.4f);
+
+        staticSunfish.flip(true,false);
+        staticShark.flip(true,false);
+        staticSwordfish.flip(true,false);
+        renderCustom(staticSunfish, moveImage(-getRandomX(10)), -getRandomY(10),staticSunfish.getWidth(),staticSunfish.getHeight(),0.1f);
+        renderCustom(staticShark, moveImage(-getRandomX(11)), -getRandomY(11),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(staticSwordfish, moveImage(-getRandomX(12)), -getRandomY(12),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.4f);
+        staticSunfish.flip(true,false);
+        staticShark.flip(true,false);
+        staticSwordfish.flip(true,false);
+        renderBackground(blur, -1 * getOceanDepth() - 50,1);
+
+
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
         renderBoat();
