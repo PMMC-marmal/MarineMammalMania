@@ -44,6 +44,7 @@ public class BlueWhaleLevel extends Level {
         setBoatStrike(true);
         setOilSpill(true);
         setBoatYAxis(-250);
+        setBoatSpeed(50);
     }
 
     @Override

@@ -49,6 +49,8 @@ public class OrcaLevel extends Level {
         setBoatStrike(true);
         setOilSpill(true);
         setBoatYAxis(-250);
+        setBoatSpeed(20);
+        setBoatDisturbance(true);
     }
 
     @Override
@@ -99,7 +101,7 @@ public class OrcaLevel extends Level {
         renderBackground(background, -1 * getOceanDepth() - 50, 1);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
-        renderBoat(4,-500);
+        renderBoat(4,-600);
         renderOil();
         renderEndGoal2D(staticOrca);
         renderPlayer2D();

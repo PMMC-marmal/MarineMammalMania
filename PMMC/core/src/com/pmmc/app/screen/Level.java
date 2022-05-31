@@ -77,6 +77,8 @@ public abstract class Level extends AbstractScreen {
     private Sprite trashSprite;
     private Sprite boatModel;
     private Body boat2D;
+    private int boatSpeed;
+    private boolean boatDisturbance;
     private boolean predator;
     private Sprite predatorSprite;
     private Body predator2D;
@@ -97,7 +99,7 @@ public abstract class Level extends AbstractScreen {
         }
     };
     private int predatorScale = 1;
-    private boolean boatRunning;
+    private boolean boatRunning = false;
     public boolean frozenSate;
     private boolean continued;
     private int waitTime;
@@ -424,6 +426,9 @@ public abstract class Level extends AbstractScreen {
             // prey movement???
             for (Body p : prey) {
                 if (inPlayerView(p.getPosition())) {
+                    if (boatDisturbance && boat2D != null && (boat2D.getPosition().x*PPM- 1000 < p.getPosition().x*PPM && p.getPosition().x*PPM < boat2D.getPosition().x*PPM + 1000)){
+                        toRemove.add(p);
+                    }
                     int xforce = new Random().nextInt(preySpeed) - (preySpeed / 2);
                     int yforce = new Random().nextInt(preySpeed / 2) - (preySpeed / 4);
                     if ((p.getPosition().x * PPM > worldSize && xforce > 0) || (p.getPosition().x * PPM < 0 && xforce < 0))
@@ -442,6 +447,10 @@ public abstract class Level extends AbstractScreen {
                     world.destroyBody(prey.get(prey.indexOf(contactor.getBody())));
                 }
             }
+            if (prey.size() < minNumPrey) {
+                addPrey(2, generateObstacles(2), preyWidth, preyHeight, !waterPrey);
+                addPrey(3, generateObstacles(3), preyWidth, preyHeight, !waterPrey);
+            }
             for (Body p : prey) {
                 if (p.getPosition().x * PPM > worldSize || p.getPosition().x * PPM < 0 || p.getPosition().y * PPM < -oceanDepth) {
                     toRemove.add(p);
@@ -452,10 +461,7 @@ public abstract class Level extends AbstractScreen {
                     p.setLinearVelocity(p.getPosition().y * PPM < 0 ? preySpeed : 8, p.getPosition().y * PPM < 0 ? -2 : 0);
                 }
             }
-            if (prey.size() < minNumPrey) {
-                addPrey(2, generateObstacles(2), preyWidth, preyHeight, !waterPrey);
-                addPrey(3, generateObstacles(3), preyWidth, preyHeight, !waterPrey);
-            }
+
         }
         for (Body p : toRemove) {
             prey.remove(p);
@@ -467,22 +473,23 @@ public abstract class Level extends AbstractScreen {
             if (boat2D == null) {
                 if (atSurface) {
                     if (player2d.getPosition().x * PPM < worldSize / 2f) {
-                        boat2D = (boatYAxis != 0) ? makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(500 / PPM, 0), new Vector2(133 / PPM, -250 / PPM)}, worldSize - (spacing * 3), 0, false, "Boat") : createBox(worldSize - (spacing * 3), 0, 500, 5, false, true, "Boat");
+                        boat2D = (boatYAxis != 0) ? makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(500 / PPM, 0), new Vector2(133 / PPM, -250 / PPM)}, worldSize - (spacing * 3), 0, false, "Boat") : createBox(worldSize - (spacing * 4), 0, 500, 5, false, true, "Boat");
                         directionLeft = true;
                     } else {
-                        boat2D = (boatYAxis != 0) ? makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(500 / PPM, 0), new Vector2(350 / PPM, -250 / PPM)}, (spacing * 3), 0, false, "Boat") : createBox((spacing * 3), 0, 500, 5, false, true, "Boat");
+                        boat2D = (boatYAxis != 0) ? makePolygonShapeBody(new Vector2[]{new Vector2(0, 0), new Vector2(500 / PPM, 0), new Vector2(350 / PPM, -250 / PPM)}, (spacing * 3), 0, false, "Boat") : createBox((spacing * 4), 0, 500, 5, false, true, "Boat");
                         directionLeft = false;
                     }
                     boat2D.setGravityScale(0);
                 }
             } else if (boat2D.getUserData().equals("Boat")) {
 
-                if ((boat2D.getPosition().x * PPM) < spacing || (boat2D.getPosition().x * PPM) > (worldSize - spacing) || (boatRunning && boat2D.getInertia() == 0)) {
+                if ((boat2D.getPosition().x * PPM) < spacing*2 || (boat2D.getPosition().x * PPM) > (worldSize - spacing*2) || (boatRunning && Math.abs(boat2D.getLinearVelocity().x)< 10)) {
                     world.destroyBody(boat2D);
                     boat2D = null;
                     boatRunning = false;
                 } else {
-                    int xForce = (!directionLeft) ? 50 : -50;
+                    System.out.println(boat2D.getLinearVelocity().x);
+                    int xForce = (!directionLeft) ? boatSpeed : -boatSpeed;
                     float yForce;
                     if (boat2D.getPosition().y > 0) {
                         yForce = -boat2D.getPosition().y * PPM;
@@ -492,8 +499,8 @@ public abstract class Level extends AbstractScreen {
                         yForce = 0;
                     }
                     boat2D.setLinearVelocity(xForce, yForce);
-                    boatRunning = true;
-
+                    if (boat2D.getLinearVelocity().x != 0)
+                        boatRunning = true;
                 }
             }
         }
@@ -922,7 +929,8 @@ public abstract class Level extends AbstractScreen {
         float tbound = playerposy + idealGameHeight / 2;
         float lbound = playerposx - idealGameWidth / 2;
         float bbound = playerposy - idealGameHeight / 2;
-        return (lbound < pos.x * PPM && pos.x * PPM < rbound) && (bbound < pos.y * PPM && pos.y * PPM < tbound);
+        return (lbound < pos.x * PPM && pos.x * PPM < rbound);
+//        return (lbound < pos.x * PPM && pos.x * PPM < rbound) && (bbound < pos.y * PPM && pos.y * PPM < tbound);
     }
 
     public void setPlayer(CharacterAbstraction player) {
@@ -1041,6 +1049,16 @@ public abstract class Level extends AbstractScreen {
     public void setPredatorScale(int predatorScale) {
         this.predatorScale = predatorScale;
     }
+
+    public void setBoatSpeed(int boatSpeed) {
+        this.boatSpeed = boatSpeed;
+    }
+
+    public void setBoatDisturbance(boolean boatDisturbance) {
+        this.boatDisturbance = boatDisturbance;
+    }
+
+
 
     @Override
     public void resize(int width, int height) {

@@ -50,6 +50,7 @@ public class DolphinLevel extends Level {
         setOilSpill(true);
         setTrash(true);
         setBoatYAxis(-250);
+        setBoatSpeed(50);
     }
 
     @Override

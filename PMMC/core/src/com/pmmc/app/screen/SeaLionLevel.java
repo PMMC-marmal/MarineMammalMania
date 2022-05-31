@@ -62,6 +62,7 @@ public class SeaLionLevel extends Level {
         setBoatYAxis(0);
         setWaterWorld(false);
         setPredator(true);
+        setBoatSpeed(50);
     }
 
     @Override
