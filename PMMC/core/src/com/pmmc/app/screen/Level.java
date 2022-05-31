@@ -1015,14 +1015,6 @@ public abstract class Level extends AbstractScreen {
         this.predatorSprite = predatorSprite;
     }
 
-    private void changeMusic(String musicPath, float volume) {
-        game.music.stop();
-        game.music = Gdx.audio.newMusic(Gdx.files.internal(musicPath));
-        game.music.setLooping(true);
-        game.music.setVolume(volume);
-        game.music.play();
-    }
-
     public int getRandomX(int key) {
         if (!RandomXs.containsKey(key)) {
             RandomXs.put(key, new Random().nextInt(worldSize - (spacing * 4)) + (spacing * 2));
