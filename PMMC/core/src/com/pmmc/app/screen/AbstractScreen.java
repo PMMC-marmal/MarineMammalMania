@@ -86,4 +86,12 @@ public abstract class AbstractScreen implements Screen {
 
         return generator.generateFont(parameters);
     }
+
+    public void changeMusic(String musicPath, float volume) {
+        game.music.stop();
+        game.music = Gdx.audio.newMusic(Gdx.files.internal(musicPath));
+        game.music.setLooping(true);
+        game.music.setVolume(volume);
+        game.music.play();
+    }
 }

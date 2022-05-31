@@ -48,7 +48,12 @@ public class Quiz extends Menu {
         this.stage = new Stage();
         this.choice = new Sprite(AssetHandler.assetManager.get(AssetHandler.choiceButton, Texture.class));
         this.choiceActivated = new Sprite(AssetHandler.assetManager.get(AssetHandler.choiceButtonActivated, Texture.class));
-        this.font = generateFont(40, Color.WHITE);
+        if (Gdx.graphics.getWidth() > 1280) {
+            this.font = generateFont(40, Color.WHITE);
+        }
+        else{
+            this.font = generateFont(20, Color.WHITE);
+        }
         this.answerY = -1;
         this.answerCorrect = -1;
         this.timerRunning = false;
@@ -71,6 +76,7 @@ public class Quiz extends Menu {
             renderFinalScoreScreen();
             if (Gdx.input.justTouched()){
                 game.setScreen(new LevelMenuScreen(game));
+                changeMusic("sounds/menu_music.mp3", 0.5f);
             }
         }
     }
