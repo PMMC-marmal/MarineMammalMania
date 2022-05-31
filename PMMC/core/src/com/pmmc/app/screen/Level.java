@@ -693,7 +693,7 @@ public abstract class Level extends AbstractScreen {
         }
     }
 
-    public void renderBoat() {
+    public void renderBoat(int scale, int offset) {
         if (boat2D != null) {
             if (directionLeft) {
                 boatModel.flip(true, false);
@@ -701,9 +701,9 @@ public abstract class Level extends AbstractScreen {
             stage.act();
             stage.getBatch().begin();
             if (boatYAxis != 0) {
-                stage.getBatch().draw(boatModel, boat2D.getPosition().x * PPM - (boatModel.getWidth() / 2), boat2D.getPosition().y * PPM - (boatModel.getHeight() / 2));
+                stage.getBatch().draw(boatModel, boat2D.getPosition().x * PPM - (boatModel.getWidth() / 2), boat2D.getPosition().y * PPM - (boatModel.getHeight() / 2)+offset,boatModel.getWidth()*scale,boatModel.getHeight()*scale);
             } else {
-                stage.getBatch().draw(boatModel, boat2D.getPosition().x * PPM - (boatModel.getWidth() / 2), boat2D.getPosition().y * PPM - 20);
+                stage.getBatch().draw(boatModel, boat2D.getPosition().x * PPM - (boatModel.getWidth() / 2), boat2D.getPosition().y * PPM - 20,boatModel.getWidth()*scale,boatModel.getHeight()*scale);
             }
             stage.getBatch().end();
             stage.draw();

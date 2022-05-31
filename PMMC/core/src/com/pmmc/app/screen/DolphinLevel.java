@@ -138,7 +138,7 @@ public class DolphinLevel extends Level {
         renderBackground(blur, -1 * getOceanDepth() - 50,1);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
-        renderBoat();
+        renderBoat(1,0);
         renderOil();
         renderTrash();
         renderEndGoal2D(staticDolphin);

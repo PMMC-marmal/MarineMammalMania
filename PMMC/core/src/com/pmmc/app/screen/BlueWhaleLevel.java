@@ -130,7 +130,7 @@ public class BlueWhaleLevel extends Level {
 
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
-        renderBoat();
+        renderBoat(1,0);
         renderOil();
         renderEndGoal2D(staticWhale);
         renderPlayer2D();

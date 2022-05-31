@@ -99,7 +99,7 @@ public class OrcaLevel extends Level {
         renderBackground(background, -1 * getOceanDepth() - 50, 1);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
         renderPrey2D(food, toxicFood);
-        renderBoat();
+        renderBoat(4,-500);
         renderOil();
         renderEndGoal2D(staticOrca);
         renderPlayer2D();

@@ -169,7 +169,7 @@ public class SeaLionLevel extends Level {
         renderObstacles(2, choices1, obstacles3, 10, 700, false);
         renderObstacles(3, choices1, obstacles3, 10, 700, false);
         renderPrey2D(food, toxicFood);
-        renderBoat();
+        renderBoat(1,0);
         renderPredator();
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
 
