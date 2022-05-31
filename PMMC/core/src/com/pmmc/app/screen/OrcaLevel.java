@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
@@ -30,6 +31,8 @@ public class OrcaLevel extends Level {
     private Sprite staticOrca;
     private Sprite food;
     private Sprite toxicFood;
+    private Sprite boat;
+    private int currentFrame = 0;
 
     public OrcaLevel(GameLauncher game) {
         super(game, "sounds/tropical_music.mp3", new ArrayList<>(Arrays.asList(
@@ -71,7 +74,8 @@ public class OrcaLevel extends Level {
         preyWidth = (int) food.getWidth() /3;
         preyHeight = (int) food.getHeight() /3;
 
-        setBoatModel(new Sprite(AssetHandler.assetManager.get(AssetHandler.trashBoat, Texture.class)));
+        this.boat = new Sprite(AssetHandler.assetManager.get(AssetHandler.garbageBoat, TextureAtlas.class).findRegion("1"));
+        setBoatModel(boat);
         setOilSprite(new Sprite(AssetHandler.assetManager.get(AssetHandler.oilSpill, Texture.class)));
 
         Sprite pop1 = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaFoodPop, Texture.class));
@@ -91,6 +95,9 @@ public class OrcaLevel extends Level {
     @Override
     public void render(float delta) {
         Render();
+        currentFrame++;
+        currentFrame = updateSprite(boat, AssetHandler.assetManager.get(AssetHandler.garbageBoat, TextureAtlas.class), currentFrame);
+        setBoatModel(boat);
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

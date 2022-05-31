@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
@@ -24,8 +26,9 @@ public class BlueWhaleLevel extends Level {
     boolean[][] seenPopUps;
     ArrayList<Sprite> popUps;
     private Vector2[] popUpLocations;
-    private Sprite background, blur, staticWhale, staticSunfish, staticSwordfish, staticShark, food, toxicFood;
+    private Sprite background, blur, staticWhale, staticSunfish, staticSwordfish, shark, food, toxicFood;
     private Sprite backdrop;
+    private int currentFrame = 0;
 
     public BlueWhaleLevel(GameLauncher game) {
         super(game, "sounds/tropical_music.mp3", new ArrayList<>(Arrays.asList(
@@ -59,7 +62,7 @@ public class BlueWhaleLevel extends Level {
         this.staticWhale = new Sprite(AssetHandler.assetManager.get(AssetHandler.blueWhaleSprite, Texture.class));
         this.staticSunfish = new Sprite(AssetHandler.assetManager.get(AssetHandler.sunfishForBackground, Texture.class));
         this.staticSwordfish = new Sprite(AssetHandler.assetManager.get(AssetHandler.swordfishForBackground, Texture.class));
-        this.staticShark = new Sprite(AssetHandler.assetManager.get(AssetHandler.shark, Texture.class));
+        this.shark = new Sprite(AssetHandler.assetManager.get(AssetHandler.snappingShark, TextureAtlas.class).findRegion("1"));
 
         staticWhale.flip(true, false);
         setEndGoal(staticWhale, preySpawnHeight);
@@ -91,6 +94,8 @@ public class BlueWhaleLevel extends Level {
     @Override
     public void render(float delta) {
         Render();
+        currentFrame++;
+        currentFrame = updateSprite(shark, AssetHandler.assetManager.get(AssetHandler.snappingShark, TextureAtlas.class), currentFrame);
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -99,31 +104,31 @@ public class BlueWhaleLevel extends Level {
         renderBackground(background, -1 * getOceanDepth() - 50,1);
 
         renderCustom(staticSunfish, moveImage(getRandomX(1)), -getRandomY(1),staticSunfish.getWidth(),staticSunfish.getHeight(),0.1f);
-        renderCustom(staticShark, moveImage(getRandomX(2)), -getRandomY(2),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(shark, moveImage(getRandomX(2)), -getRandomY(2),shark.getWidth(),shark.getHeight(),.5f);
         renderCustom(staticSwordfish, moveImage(getRandomX(3)), -getRandomY(3),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.4f);
 
         staticSunfish.flip(true,false);
-        staticShark.flip(true,false);
+        shark.flip(true,false);
         staticSwordfish.flip(true,false);
         renderCustom(staticSunfish, moveImage(-getRandomX(4)), -getRandomY(4),staticSunfish.getWidth(),staticSunfish.getHeight(),0.1f);
-        renderCustom(staticShark, moveImage(-getRandomX(5)), -getRandomY(5),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(shark, moveImage(-getRandomX(5)), -getRandomY(5),shark.getWidth(),shark.getHeight(),.5f);
         renderCustom(staticSwordfish, moveImage(-getRandomX(6)), -getRandomY(6),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.4f);
         staticSunfish.flip(true,false);
-        staticShark.flip(true,false);
+        shark.flip(true,false);
         staticSwordfish.flip(true,false);
 
         renderCustom(staticSunfish, moveImage(getRandomX(7)), -getRandomY(7),staticSunfish.getWidth(),staticSunfish.getHeight(),0.1f);
-        renderCustom(staticShark, moveImage(getRandomX(8)), -getRandomY(8),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(shark, moveImage(getRandomX(8)), -getRandomY(8),shark.getWidth(),shark.getHeight(),.5f);
         renderCustom(staticSwordfish, moveImage(getRandomX(9)), -getRandomY(9),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.4f);
 
         staticSunfish.flip(true,false);
-        staticShark.flip(true,false);
+        shark.flip(true,false);
         staticSwordfish.flip(true,false);
         renderCustom(staticSunfish, moveImage(-getRandomX(10)), -getRandomY(10),staticSunfish.getWidth(),staticSunfish.getHeight(),0.1f);
-        renderCustom(staticShark, moveImage(-getRandomX(11)), -getRandomY(11),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(shark, moveImage(-getRandomX(11)), -getRandomY(11),shark.getWidth(),shark.getHeight(),.5f);
         renderCustom(staticSwordfish, moveImage(-getRandomX(12)), -getRandomY(12),staticSwordfish.getWidth(),staticSwordfish.getHeight(),0.4f);
         staticSunfish.flip(true,false);
-        staticShark.flip(true,false);
+        shark.flip(true,false);
         staticSwordfish.flip(true,false);
         renderBackground(blur, -1 * getOceanDepth() - 50,1);
 
