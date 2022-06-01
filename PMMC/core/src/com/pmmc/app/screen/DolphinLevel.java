@@ -32,7 +32,7 @@ public class DolphinLevel extends Level {
     private Sprite food;
     private Sprite toxicFood;
     private int sharkFrame = 0;
-    private int orcaFrame = 0;
+//    private int orcaFrame = 0;
 
     public DolphinLevel(GameLauncher game) {
         super(game, "sounds/tropical_music.mp3", new ArrayList<>(Arrays.asList(
@@ -109,9 +109,9 @@ public class DolphinLevel extends Level {
     public void render(float delta) {
         Render();
         sharkFrame++;
-        orcaFrame++;
+//        orcaFrame++;
         // slow down orca
-        orcaFrame = updateSprite(orca, AssetHandler.assetManager.get(AssetHandler.orcaSwimming, TextureAtlas.class), 0);
+//        orcaFrame = updateSprite(orca, AssetHandler.assetManager.get(AssetHandler.orcaSwimming, TextureAtlas.class), 0);
         sharkFrame = updateSprite(shark, AssetHandler.assetManager.get(AssetHandler.snappingShark, TextureAtlas.class), sharkFrame);
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -155,7 +155,7 @@ public class DolphinLevel extends Level {
         staticDolphin.flip(true,false);
         renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(0),preySpawnHeight + 200, staticDolphin.getWidth(),staticDolphin.getHeight(),.33f);
         renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(1),preySpawnHeight + 100, staticDolphin.getWidth(),staticDolphin.getHeight(),.5f);
-        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(2),preySpawnHeight + 000, staticDolphin.getWidth(),staticDolphin.getHeight(),.5f);
+        renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(2),preySpawnHeight, staticDolphin.getWidth(),staticDolphin.getHeight(),.5f);
         renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(3),preySpawnHeight - 300, staticDolphin.getWidth(),staticDolphin.getHeight(),.66f);
         renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(4),preySpawnHeight - 400, staticDolphin.getWidth(),staticDolphin.getHeight(),.5f);
         renderCustom(staticDolphin,getWorldSize()-backgroundDolphins.get(5),preySpawnHeight - 500, staticDolphin.getWidth(),staticDolphin.getHeight(),.77f);

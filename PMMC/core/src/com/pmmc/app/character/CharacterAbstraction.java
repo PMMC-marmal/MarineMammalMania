@@ -21,13 +21,11 @@ public abstract class CharacterAbstraction extends Sprite {
     private int hunger;
     private int toxicity;
     private int currentFrame;
-    private float x_position;
-    private float y_position;
     private boolean isSwimming;
     // manages the sprites in a sprite sheet
     private TextureAtlas textureAtlas;
-    private TextureAtlas walkingAtlas;
-    private TextureAtlas swimmingAtlas;
+    private final TextureAtlas walkingAtlas;
+    private final TextureAtlas swimmingAtlas;
 
 
     public CharacterAbstraction(TextureAtlas walkingAtlas, TextureAtlas swimmingAtlas) {
@@ -40,8 +38,6 @@ public abstract class CharacterAbstraction extends Sprite {
         hunger = 5;
         toxicity = 0;
         maxLevels = 5;
-        x_position = 0;
-        y_position = 0;
         isSwimming = false;
         this.textureAtlas = walkingAtlas;
         this.walkingAtlas = walkingAtlas;
@@ -82,12 +78,6 @@ public abstract class CharacterAbstraction extends Sprite {
         return toxicity;
     }
 
-    public void setToxicity(int toxicity) {
-        if (toxicity < maxLevels && toxicity >= 0) {
-            this.toxicity = toxicity;
-        }
-    }
-
     public float getSpeed() {
         return speed;
     }
@@ -96,22 +86,6 @@ public abstract class CharacterAbstraction extends Sprite {
         if (speed >= 0) {
             this.speed = speed;
         }
-    }
-
-    public float getX_position() {
-        return x_position;
-    }
-
-    public void setX_position(float x_position) {
-        this.x_position = x_position;
-    }
-
-    public float getY_position() {
-        return y_position;
-    }
-
-    public void setY_position(float y_position) {
-        this.y_position = y_position;
     }
 
     public boolean getSwimming() {
@@ -216,10 +190,6 @@ public abstract class CharacterAbstraction extends Sprite {
 
     public int getTimeSinceDamage() {
         return timeSinceDamage;
-    }
-
-    public void setTimeSinceDamage(int timeSinceDamage) {
-        this.timeSinceDamage = timeSinceDamage;
     }
 
     public void incrementTimeSinceDamage() {

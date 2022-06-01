@@ -1,7 +1,5 @@
 package com.pmmc.app.character;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -11,7 +9,7 @@ import com.pmmc.app.screen.Level;
 
 public class B2dContactListener implements ContactListener {
 
-    private Level parent;
+    private final Level parent;
 
     public B2dContactListener(Level parent){
         this.parent = parent;
@@ -19,10 +17,8 @@ public class B2dContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        System.out.println("Contact");
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
-        System.out.println(fa.getBody().getUserData()+" has hit "+ fb.getBody().getUserData());
         parent.contactor = fa;
         parent.contacting = fb;
 
@@ -43,10 +39,7 @@ public class B2dContactListener implements ContactListener {
 
     @Override
     public void endContact(Contact contact) {
-        System.out.println("End Contact");
         parent.isTouchingObstacle = false;
-//        Fixture fa = contact.getFixtureA();
-//        Fixture fb = contact.getFixtureB();
         parent.contacting = null;
 
 

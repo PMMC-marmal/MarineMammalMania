@@ -66,8 +66,8 @@ public abstract class Level extends AbstractScreen {
     private Body endGoal;
     private int worldSize = 24000;
     private int jumpforce;
-    private HashMap<Integer, Integer> RandomXs = new HashMap<>();
-    private HashMap<Integer, Integer> RandomYs = new HashMap<>();
+    private final HashMap<Integer, Integer> RandomXs = new HashMap<>();
+    private final HashMap<Integer, Integer> RandomYs = new HashMap<>();
     private boolean atSurface = false;
     private boolean waterWorld = false;
     private boolean boatStrike = false;
@@ -88,7 +88,7 @@ public abstract class Level extends AbstractScreen {
     private boolean gameOverWon = false;
     private int minNumPrey = 5;
     private boolean jumpedGulp;
-    private ArrayList<Sound> soundBank;
+    private final ArrayList<Sound> soundBank;
     private boolean soundTimerRunning;
     private final Timer.Task makeAnimalSound = new Timer.Task() {
         @Override
@@ -488,7 +488,6 @@ public abstract class Level extends AbstractScreen {
                     boat2D = null;
                     boatRunning = false;
                 } else {
-                    System.out.println(boat2D.getLinearVelocity().x);
                     int xForce = (!directionLeft) ? boatSpeed : -boatSpeed;
                     float yForce;
                     if (boat2D.getPosition().y > 0) {
@@ -511,12 +510,10 @@ public abstract class Level extends AbstractScreen {
                     if (n < 10 && !obstacles2[n]) {
                         int xpos = (worldSize / 30) * (n + 10);
                         Body p = createBox(xpos, 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
-                        System.out.println(p.getPosition().x * PPM);
                         oil.add(p);
                     } else if (n > 10 && !obstacles3[n - 10]) {
                         int xpos = (worldSize / 40) * (n + 30);
                         Body p = createBox(xpos, 10, (int) oilSprite.getWidth(), 5, true, true, "Oil");
-                        System.out.println(p.getPosition().x * PPM);
                         oil.add(p);
                     }
                 } else {
@@ -924,11 +921,11 @@ public abstract class Level extends AbstractScreen {
 
     public boolean inPlayerView(Vector2 pos) {
         float playerposx = player2d.getPosition().x * PPM;
-        float playerposy = player2d.getPosition().y * PPM;
+//        float playerposy = player2d.getPosition().y * PPM;
         float rbound = playerposx + idealGameWidth / 2;
-        float tbound = playerposy + idealGameHeight / 2;
+//        float tbound = playerposy + idealGameHeight / 2;
         float lbound = playerposx - idealGameWidth / 2;
-        float bbound = playerposy - idealGameHeight / 2;
+//        float bbound = playerposy - idealGameHeight / 2;
         return (lbound < pos.x * PPM && pos.x * PPM < rbound);
 //        return (lbound < pos.x * PPM && pos.x * PPM < rbound) && (bbound < pos.y * PPM && pos.y * PPM < tbound);
     }
