@@ -55,6 +55,7 @@ public class LevelMenuScreen extends Menu {
 
         // Characters
         this.seaLionSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
+        this.seaLionSprite.flip(true, false);
         this.dolphinSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinSprite, Texture.class));
         this.killerWhaleSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class));
         this.blueWhaleSprite = new Sprite(AssetHandler.assetManager.get(AssetHandler.blueWhaleSprite, Texture.class));
@@ -119,7 +120,7 @@ public class LevelMenuScreen extends Menu {
         }
 
         // Draw characters on screen
-        game.batch.draw(seaLionSprite, (Gdx.graphics.getWidth() - (x * 1.75f)), y_sea_lion);
+        game.batch.draw(seaLionSprite, (Gdx.graphics.getWidth() - (x * 1.75f)), y_sea_lion - y_sea_lion*0.05f);
 
         float dolphinX = -x;
         if (Gdx.graphics.getWidth() > 1500){dolphinX = 0;}
@@ -129,9 +130,10 @@ public class LevelMenuScreen extends Menu {
 
         float blueWhaleX = -x * 3f;
         if (Gdx.graphics.getWidth() > 1500){blueWhaleX = -x;}
-        game.batch.draw(blueWhaleSprite, blueWhaleX, y_sea_lion - BUTTON_SPACING * 3.5f);
+        else if (Gdx.graphics.getWidth() <= 1280){blueWhaleX = -x * 4f;}
+        game.batch.draw(blueWhaleSprite, blueWhaleX, y_sea_lion - BUTTON_SPACING * 4f);
 
-        game.batch.draw(polarBearSprite, (Gdx.graphics.getWidth() - (x * 2f)), y_sea_lion - BUTTON_SPACING * 4);
+        game.batch.draw(polarBearSprite, (Gdx.graphics.getWidth() - (x * 2f)), y_sea_lion - BUTTON_SPACING * 4.15f);
 
         game.batch.end();
 

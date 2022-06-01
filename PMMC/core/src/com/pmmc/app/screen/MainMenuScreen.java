@@ -79,4 +79,10 @@ public class MainMenuScreen extends Menu {
         pref.clear();
         pref.flush();
     }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        Gdx.input.setInputProcessor(null);
+    }
 }
