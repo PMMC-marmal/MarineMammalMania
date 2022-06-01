@@ -98,23 +98,23 @@ public class Quiz extends Menu {
 
     public void renderQuestionAndAnswers(int questionID){
         game.batch.begin();
-        if(displayButton(choice, choiceActivated, x, firstY, BUTTON_WIDTH, BUTTON_HEIGHT)){
+        if(displayButton(choice, x, firstY, BUTTON_WIDTH, BUTTON_HEIGHT)){
             // Check if this choice is the answer
             answerY = firstY;
             if(!timerRunning){checkAnswer(0, questionID);}
         }
 
-        if(displayButton(choice, choiceActivated, x, firstY * 3, BUTTON_WIDTH, BUTTON_HEIGHT)){
+        if(displayButton(choice, x, firstY * 3, BUTTON_WIDTH, BUTTON_HEIGHT)){
             answerY = firstY * 3;
             if(!timerRunning){checkAnswer(1, questionID);}
         }
 
-        if(displayButton(choice, choiceActivated, x, firstY * 5, BUTTON_WIDTH, BUTTON_HEIGHT)){
+        if(displayButton(choice, x, firstY * 5, BUTTON_WIDTH, BUTTON_HEIGHT)){
             answerY = firstY * 5;
             if(!timerRunning){checkAnswer(2, questionID);}
         }
 
-        if(displayButton(choice, choiceActivated, x, firstY * 7, BUTTON_WIDTH, BUTTON_HEIGHT)){
+        if(displayButton(choice, x, firstY * 7, BUTTON_WIDTH, BUTTON_HEIGHT)){
             answerY = firstY * 7;
             if(!timerRunning){checkAnswer(3, questionID);}
         }

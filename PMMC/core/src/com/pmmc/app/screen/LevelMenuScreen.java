@@ -86,19 +86,19 @@ public class LevelMenuScreen extends Menu {
         }
 
 
-        if (displayButton(seaLionButton, seaLionButtonActive, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+        if (displayButton(seaLionButton, x, y_sea_lion, BUTTON_WIDTH, BUTTON_HEIGHT)) {
             transitionScreen(new SeaLionLevel(game));
         }
-        if (displayButton(dolphinButton, dolphinButtonActive, x, y_sea_lion - BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+        if (displayButton(dolphinButton, x, y_sea_lion - BUTTON_SPACING, BUTTON_WIDTH, BUTTON_HEIGHT)) {
             transitionScreen(new DolphinLevel(game));
         }
-        if (displayButton(killerWhaleButton, killerWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING * 2, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+        if (displayButton(killerWhaleButton, x, y_sea_lion - BUTTON_SPACING * 2, BUTTON_WIDTH, BUTTON_HEIGHT)) {
             transitionScreen(new OrcaLevel(game));
         }
-        if (displayButton(blueWhaleButton, blueWhaleButtonActive, x, y_sea_lion - BUTTON_SPACING * 3, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+        if (displayButton(blueWhaleButton, x, y_sea_lion - BUTTON_SPACING * 3, BUTTON_WIDTH, BUTTON_HEIGHT)) {
             transitionScreen(new BlueWhaleLevel(game));
         }
-        if (displayButton(polarBearButton, polarBearButtonActive, x, y_sea_lion - BUTTON_SPACING * 4, BUTTON_WIDTH, BUTTON_HEIGHT)) {
+        if (displayButton(polarBearButton, x, y_sea_lion - BUTTON_SPACING * 4, BUTTON_WIDTH, BUTTON_HEIGHT)) {
             transitionScreen(new PolarBearLevel(game));
         }
 
