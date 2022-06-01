@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.pmmc.app.AssetHandler;
 import com.pmmc.app.GameLauncher;
@@ -27,9 +28,11 @@ public class DolphinLevel extends Level {
     private Vector2[] popUpLocations;
     private Sprite background, backdrop;
     private Sprite blur;
-    private Sprite staticDolphin, staticSeaLion, staticOrca, staticShark;
+    private Sprite staticDolphin, staticSeaLion, orca, shark;
     private Sprite food;
     private Sprite toxicFood;
+    private int sharkFrame = 0;
+    private int orcaFrame = 0;
 
     public DolphinLevel(GameLauncher game) {
         super(game, "sounds/tropical_music.mp3", new ArrayList<>(Arrays.asList(
@@ -66,8 +69,9 @@ public class DolphinLevel extends Level {
 
         this.staticDolphin = new Sprite(AssetHandler.assetManager.get(AssetHandler.dolphinSprite, Texture.class));
 //        this.staticSeaLion = new Sprite(AssetHandler.assetManager.get(AssetHandler.seaLionSprite, Texture.class));
-        this.staticOrca = new Sprite(AssetHandler.assetManager.get(AssetHandler.killerWhaleSprite, Texture.class));
-        this.staticShark = new Sprite(AssetHandler.assetManager.get(AssetHandler.shark, Texture.class));
+
+        this.orca = new Sprite(AssetHandler.assetManager.get(AssetHandler.orcaSwimming, TextureAtlas.class).findRegion("1"));
+        this.shark = new Sprite(AssetHandler.assetManager.get(AssetHandler.snappingShark, TextureAtlas.class).findRegion("1"));
         staticDolphin.flip(true, false);
         setEndGoal(staticDolphin, preySpawnHeight-100);
 
@@ -104,6 +108,11 @@ public class DolphinLevel extends Level {
     @Override
     public void render(float delta) {
         Render();
+        sharkFrame++;
+        orcaFrame++;
+        // slow down orca
+        orcaFrame = updateSprite(orca, AssetHandler.assetManager.get(AssetHandler.orcaSwimming, TextureAtlas.class), 0);
+        sharkFrame = updateSprite(shark, AssetHandler.assetManager.get(AssetHandler.snappingShark, TextureAtlas.class), sharkFrame);
         Gdx.gl.glClearColor(0.8f, 0.9f, 1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -112,29 +121,29 @@ public class DolphinLevel extends Level {
         renderBackground(background, -1 * getOceanDepth() - 50,1);
 
 //        renderCustom(staticSeaLion, moveImage(getRandomX(59)), -getRandomY(9),staticSeaLion.getWidth(),staticSeaLion.getHeight(),.5f);
-        renderCustom(staticOrca, moveImage(getRandomX(60)), -getRandomY(10),staticOrca.getWidth(),staticOrca.getHeight(),.5f);
-        renderCustom(staticShark, moveImage(getRandomX(61)), -getRandomY(11),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(orca, moveImage(getRandomX(60)), -getRandomY(10),orca.getWidth(),orca.getHeight(),.5f);
+        renderCustom(shark, moveImage(getRandomX(61)), -getRandomY(11),shark.getWidth(),shark.getHeight(),.5f);
 //        staticSeaLion.flip(true,false);
-        staticOrca.flip(true,false);
-        staticShark.flip(true,false);
+        orca.flip(true,false);
+        shark.flip(true,false);
 //        renderCustom(staticSeaLion, moveImage(-getRandomX(62)), -getRandomY(12),staticSeaLion.getWidth(),staticSeaLion.getHeight(),.5f);
-        renderCustom(staticOrca, moveImage(-getRandomX(63)), -getRandomY(13),staticOrca.getWidth(),staticOrca.getHeight(),.5f);
-        renderCustom(staticShark, moveImage(-getRandomX(64)), -getRandomY(14),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(orca, moveImage(-getRandomX(63)), -getRandomY(13),orca.getWidth(),orca.getHeight(),.5f);
+        renderCustom(shark, moveImage(-getRandomX(64)), -getRandomY(14),shark.getWidth(),shark.getHeight(),.5f);
 //        staticSeaLion.flip(true,false);
-        staticOrca.flip(true,false);
-        staticShark.flip(true,false);
+        orca.flip(true,false);
+        shark.flip(true,false);
 //        renderCustom(staticSeaLion, moveImage(getRandomX(65)), -getRandomY(15),staticSeaLion.getWidth(),staticSeaLion.getHeight(),.5f);
-        renderCustom(staticOrca, moveImage(getRandomX(66)), -getRandomY(16),staticOrca.getWidth(),staticOrca.getHeight(),.5f);
-        renderCustom(staticShark, moveImage(getRandomX(67)), -getRandomY(17),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(orca, moveImage(getRandomX(66)), -getRandomY(16),orca.getWidth(),orca.getHeight(),.5f);
+        renderCustom(shark, moveImage(getRandomX(67)), -getRandomY(17),shark.getWidth(),shark.getHeight(),.5f);
 //        staticSeaLion.flip(true,false);
-        staticOrca.flip(true,false);
-        staticShark.flip(true,false);
+        orca.flip(true,false);
+        shark.flip(true,false);
 //        renderCustom(staticSeaLion, moveImage(-getRandomX(68)), -getRandomY(18),staticSeaLion.getWidth(),staticSeaLion.getHeight(),.5f);
-        renderCustom(staticOrca, moveImage(-getRandomX(69)), -getRandomY(19),staticOrca.getWidth(),staticOrca.getHeight(),.5f);
-        renderCustom(staticShark, moveImage(-getRandomX(70)), -getRandomY(20),staticShark.getWidth(),staticShark.getHeight(),.5f);
+        renderCustom(orca, moveImage(-getRandomX(69)), -getRandomY(19),orca.getWidth(),orca.getHeight(),.5f);
+        renderCustom(shark, moveImage(-getRandomX(70)), -getRandomY(20),shark.getWidth(),shark.getHeight(),.5f);
 //        staticSeaLion.flip(true,false);
-        staticOrca.flip(true,false);
-        staticShark.flip(true,false);
+        orca.flip(true,false);
+        shark.flip(true,false);
 
         renderBackground(blur, -1 * getOceanDepth() - 50,1);
         seenPopUps = renderPopUps(seenPopUps, popUpLocations, popUps);
