@@ -34,6 +34,7 @@ public class GameLauncher extends Game {
 		this.mainMenuScreen = new MainMenuScreen(this);
 		this.batch = new SpriteBatch();
 
+
 		// Load assets WITH loading screen
 		//setScreen(new LoadingScreen(this));
 
